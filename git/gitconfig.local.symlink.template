@@ -1,0 +1,8 @@
+# This file is included by the main .gitconfig file, and is not versioned. It is
+# generated from a template file, which *is* versioned.
+
+[user]
+        name = AUTHORNAME
+        email = AUTHOREMAIL
+[credential]
+        helper = GIT_CREDENTIAL_HELPER

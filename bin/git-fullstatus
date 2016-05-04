@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Like git status, but displays unmodified files too. From http://stackoverflow.com/a/22647655
+
+git ls-files | while read -r line;
+do
+    st=$(git status -s "$line");
+    if [ -n "$st" ]; then
+        echo "$st";
+    else
+        echo "   $line";
+    fi;
+done
