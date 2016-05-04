@@ -30,9 +30,6 @@ load-plugin-list() {
   zgen oh-my-zsh plugins/python
   zgen oh-my-zsh plugins/sudo
 
-  # Alias for man-preview in osx plugin
-  alias manp=man-preview
-
   # Load oh-my-zsh theme
   zgen oh-my-zsh themes/tjkirch
 
@@ -71,3 +68,9 @@ if [ $(get_file_modification_time $0) -gt $(get_file_modification_time ~/.zgen/i
   echo "Zgen config updated"
   load-plugin-list
 fi
+
+# Alias for man-preview in osx plugin
+alias manp=man-preview
+
+# Remove the g=git alias from oh-my-zsh git plugin
+unalias g
