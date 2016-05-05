@@ -40,30 +40,34 @@ parse_git_state() {
     GIT_STATE=$GIT_STATE${GIT_PROMPT_BEHIND//NUM/$NUM_BEHIND}
   fi
 
-  # Add a space after ahead/behind if present
-  if [[ -n $GIT_STATE ]]; then
-    GIT_STATE="$GIT_STATE "
-  fi
-
+  # Merge indicator and traffic light
+  local GIT_STATE_2
   local GIT_DIR="$(git rev-parse --git-dir 2> /dev/null)"
   if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
+    GIT_STATE_2=$GIT_STATE_2$GIT_PROMPT_MERGING
   fi
 
   if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
+    GIT_STATE_2=$GIT_STATE_2$GIT_PROMPT_UNTRACKED
   fi
 
   if ! git diff --quiet 2> /dev/null; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
+    GIT_STATE_2=$GIT_STATE_2$GIT_PROMPT_MODIFIED
   fi
 
   if ! git diff --cached --quiet 2> /dev/null; then
-    GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
+    GIT_STATE_2=$GIT_STATE_2$GIT_PROMPT_STAGED
+  fi
+  
+  # Add space to first part if second part is not empty
+  if [[ -n $GIT_STATE && -n $GIT_STATE_2 ]]; then
+  	GIT_STATE="$GIT_STATE "
   fi
 
+  # Concatenate first and second part, then print prepended with a space if not empty
+  GIT_STATE="$GIT_STATE$GIT_STATE_2"
   if [[ -n $GIT_STATE ]]; then
-    echo "$GIT_STATE"
+    echo " $GIT_STATE"
   fi
 
 }
@@ -71,7 +75,7 @@ parse_git_state() {
 # If inside a Git repository, print its branch and state
 prompt_git_block() {
   local git_where="$(parse_git_branch)"
-  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)} $(parse_git_state)$GIT_PROMPT_SUFFIX"
+  [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$(parse_git_state)$GIT_PROMPT_SUFFIX"
 }
 
 # Show username if not the default user
