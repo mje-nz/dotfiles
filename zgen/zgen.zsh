@@ -30,9 +30,6 @@ load-plugin-list() {
   zgen oh-my-zsh plugins/python
   zgen oh-my-zsh plugins/sudo
 
-  # Load oh-my-zsh theme
-  zgen oh-my-zsh themes/tjkirch
-
   # Load more completion files for zsh from the zsh-lovers github repo
   zgen load zsh-users/zsh-completions src
 
