@@ -1,3 +1,6 @@
+#!/usr/bin/env zsh
+# (shebang is just for syntax highlighting)
+
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
