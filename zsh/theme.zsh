@@ -1,13 +1,23 @@
-# Based on tjkirch plus the username hiding from agnoster
+# Based on tjkirch  (https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/tjkirch.zsh-theme)
+# Username hiding from agnoster  (https://gist.github.com/agnoster/3712874)
 # Git status based on https://gist.github.com/joshdick/4415470
 # -- Shows number of commits to push/pull, merge status, traffic lights for untracked/modified/staged
+# Execution time from pure  (https://github.com/sindresorhus/pure)
 # 
 # TODO: Tweak colours
 # TODO: Asynchronous git update as in pure
 # TODO: Execution time of last command if long
+# TODO: Maybe get rid of RPROMPT
 
 
 autoload -U colors && colors # Enable colors in prompt
+
+
+
+
+###############################################################################
+#                                      Git                                    #
+###############################################################################
 
 # Modify the colors and symbols in these variables as desired.
 GIT_PROMPT_PREFIX="%{$fg[green]%}(%{$reset_color%}"
@@ -78,6 +88,66 @@ prompt_git_block() {
   [ -n "$git_where" ] && echo "$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$(parse_git_state)$GIT_PROMPT_SUFFIX"
 }
 
+
+
+
+###############################################################################
+#                                Execution time                               #
+###############################################################################
+
+# turns seconds into human readable time
+# 165392 => 1d 21h 56m 32s
+# https://github.com/sindresorhus/pretty-time-zsh
+prompt_human_time_to_var() {
+	local human=" " total_seconds=$1 var=$2
+	local days=$(( total_seconds / 60 / 60 / 24 ))
+	local hours=$(( total_seconds / 60 / 60 % 24 ))
+	local minutes=$(( total_seconds / 60 % 60 ))
+	local seconds=$(( total_seconds % 60 ))
+	(( days > 0 )) && human+="${days}d "
+	(( hours > 0 )) && human+="${hours}h "
+	(( minutes > 0 )) && human+="${minutes}m "
+	human+="${seconds}s"
+
+	# store human readable time in variable as specified by caller
+	typeset -g "${var}"="${human}"
+}
+
+# stores (into prompt_cmd_exec_time) the exec time of the last command if set threshold was exceeded
+prompt_check_cmd_exec_time() {
+	integer elapsed
+	(( elapsed = EPOCHSECONDS - ${prompt_cmd_timestamp:-$EPOCHSECONDS} ))
+	prompt_cmd_exec_time=
+	(( elapsed > ${PURE_CMD_MAX_EXEC_TIME:=1} )) && {
+		prompt_human_time_to_var $elapsed "prompt_cmd_exec_time"
+	}
+}
+
+prompt_exec_time_block() {
+	if [[ -n "$prompt_cmd_exec_time" ]]; then
+		echo "⟳$prompt_cmd_exec_time "
+	fi
+}
+
+prompt_preexec() {
+	prompt_cmd_timestamp=$EPOCHSECONDS
+}
+
+prompt_precmd() {
+	prompt_check_cmd_exec_time
+}
+
+zmodload zsh/datetime
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd prompt_precmd
+add-zsh-hook preexec prompt_preexec
+
+
+
+###############################################################################
+#                               Everything else                               #
+###############################################################################
+
 # Show username if not the default user
 prompt_user_block() {
 	local user=`whoami`
@@ -97,7 +167,7 @@ prompt_jobs_block() {
 }
 
 PROMPT='$(prompt_user_block)%{$fg_bold[blue]%}%~%{$reset_color%} $(prompt_git_block)
-%_%(?..%{$fg[red]%}→%? %{$reset_color%})%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)$(prompt_char) '
+%_%(?..%{$fg[red]%}→%? %{$reset_color%})%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)$(prompt_exec_time_block)$(prompt_char) '
 
 RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
 
