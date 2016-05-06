@@ -6,11 +6,17 @@
 # 
 # TODO: Tweak colours
 # TODO: Asynchronous git update as in pure
-# TODO: Execution time of last command if long
-# TODO: Maybe get rid of RPROMPT
+# TODO: Break $PROMPT into functions more effectively
 
 
 autoload -U colors && colors # Enable colors in prompt
+
+# Display user unless it is this user
+DEFAULT_USER=${DEFAULT_USER:-Matthew}
+
+# Display execution time if greater than this value (in seconds)
+PROMPT_CMD_MAX_EXEC_TIME=${PROMPT_CMD_MAX_EXEC_TIME:-5}
+
 
 
 
@@ -96,18 +102,18 @@ prompt_git_block() {
 ###############################################################################
 
 # turns seconds into human readable time
-# 165392 => 1d 21h 56m 32s
-# https://github.com/sindresorhus/pretty-time-zsh
+# 165392.5 => 1d21h56m32.5s
+# Based on https://github.com/sindresorhus/pretty-time-zsh
 prompt_human_time_to_var() {
 	local human=" " total_seconds=$1 var=$2
-	local days=$(( total_seconds / 60 / 60 / 24 ))
-	local hours=$(( total_seconds / 60 / 60 % 24 ))
-	local minutes=$(( total_seconds / 60 % 60 ))
-	local seconds=$(( total_seconds % 60 ))
-	(( days > 0 )) && human+="${days}d "
-	(( hours > 0 )) && human+="${hours}h "
-	(( minutes > 0 )) && human+="${minutes}m "
-	human+="${seconds}s"
+	integer days=$(( total_seconds / 60 / 60 / 24 ))
+	integer hours=$(( total_seconds / 60 / 60 % 24 ))
+	integer minutes=$(( total_seconds / 60 % 60 ))
+	typeset -F seconds=$(( total_seconds % 60 ))
+	(( days > 0 )) && human+="${days}d"
+	(( hours > 0 )) && human+="${hours}h"
+	(( minutes > 0 )) && human+="${minutes}m"
+	human+="$(printf '%.1fs' $seconds)"
 
 	# store human readable time in variable as specified by caller
 	typeset -g "${var}"="${human}"
@@ -115,10 +121,11 @@ prompt_human_time_to_var() {
 
 # stores (into prompt_cmd_exec_time) the exec time of the last command if set threshold was exceeded
 prompt_check_cmd_exec_time() {
-	integer elapsed
-	(( elapsed = EPOCHSECONDS - ${prompt_cmd_timestamp:-$EPOCHSECONDS} ))
+	# Float variable
+	typeset -F elapsed
+	(( elapsed = EPOCHREALTIME - ${prompt_cmd_timestamp:-$EPOCHREALTIME} ))
 	prompt_cmd_exec_time=
-	(( elapsed > ${PURE_CMD_MAX_EXEC_TIME:=1} )) && {
+	(( elapsed > $PROMPT_CMD_MAX_EXEC_TIME )) && {
 		prompt_human_time_to_var $elapsed "prompt_cmd_exec_time"
 	}
 }
@@ -130,7 +137,7 @@ prompt_exec_time_block() {
 }
 
 prompt_preexec() {
-	prompt_cmd_timestamp=$EPOCHSECONDS
+	prompt_cmd_timestamp=$EPOCHREALTIME
 }
 
 prompt_precmd() {
@@ -168,15 +175,6 @@ prompt_jobs_block() {
 
 PROMPT='$(prompt_user_block)%{$fg_bold[blue]%}%~%{$reset_color%} $(prompt_git_block)
 %_%(?..%{$fg[red]%}→%? %{$reset_color%})%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)$(prompt_exec_time_block)$(prompt_char) '
-
-RPROMPT='%{$fg[green]%}[%*]%{$reset_color%}'
-
-
-
-
-
-
-
 
 
 
