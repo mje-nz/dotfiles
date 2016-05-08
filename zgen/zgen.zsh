@@ -69,7 +69,10 @@ fi
 # Alias for man-preview in osx plugin
 alias manp=man-preview
 
-# Remove some alias from from oh-my-zsh git plugin
+# Remove alias from oh-my-zsh
+unalias _
+
+# Remove some aliases from from oh-my-zsh git plugin
 unalias g
 unalias gl
 unalias gca
