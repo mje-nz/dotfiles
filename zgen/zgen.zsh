@@ -77,3 +77,7 @@ unalias g
 unalias gl
 unalias gca
 unalias gca!
+
+# Tweak to prevent slow pasting of long strings 
+# See https://github.com/zsh-users/zsh-syntax-highlighting/issues/295
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
