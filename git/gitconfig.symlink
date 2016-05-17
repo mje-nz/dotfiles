@@ -9,7 +9,7 @@
 [alias]
         co = checkout
         st = status
-        fullstatus = !$ZSH/bin/git-fullstatus
+        fullstatus = !$DOTFILES/bin/git-fullstatus
 #TODO Does every git-x in bin/ have to be here?
 
 [color]
