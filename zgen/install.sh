@@ -4,7 +4,7 @@
 
 if [ ! -f ~/.zgen/zgen.zsh ]; then
   pushd ~
-  echo "Installing zgen"
+  echo "> Installing zgen"
   git clone https://github.com/tarjoilija/zgen.git .zgen
   popd
 fi

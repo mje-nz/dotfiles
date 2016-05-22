@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 #
-# Run all any files named 'install/sh' in topic dirs.
+# Run all files named 'install.sh' in topic dirs.
 
 set -e
 
 cd "$(dirname $0)"/..
+
+echo 'Running installers...'
 
 # find the installers and run them iteratively
 find . -name install.sh | while read installer ; do sh -c "${installer}" ; done
