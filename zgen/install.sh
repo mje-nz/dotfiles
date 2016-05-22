@@ -2,6 +2,8 @@
 # 
 # Based on https://github.com/unixorn/zsh-quickstart-kit/blob/master/zsh/.zgen-setup
 
+set -e
+
 if [ ! -f ~/.zgen/zgen.zsh ]; then
   pushd ~
   echo "> Installing zgen"

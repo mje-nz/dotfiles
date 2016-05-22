@@ -9,8 +9,7 @@ if test "$(uname)" = "Darwin"
 then
 
 	# Install Homebrew if necessary
-	if test ! $(which brew)
-	then
+	if test ! $(which brew); then
 		echo "> Installing Homebrew"
 		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	fi
@@ -19,11 +18,9 @@ then
 	echo "› brew update"
 	brew update
 
-	( # Run the Brewfile through Homebrew
-		echo "› brew bundle"
-		cd "$(dirname $0)"/..
-		brew bundle
-	)
+	# Run the Brewfile through Homebrew
+	echo "› brew bundle"
+	pushd "$(dirname $0)"
+	brew bundle
+	popd
 fi
-
-exit 0

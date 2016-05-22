@@ -2,12 +2,9 @@
 #
 # Perform initial setup
 
-cd "$(dirname "$0")/.."
-DOTFILES_ROOT=$(pwd -P)
+cd "$(dirname "$0")"
+DOTFILES=$(pwd -P)
 
-set -e
-
-echo ''
 
 info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
@@ -24,31 +21,20 @@ success () {
 fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
-  exit
+  exit 1
 }
 
-# Set up a file to include into .gitconfig which sets the author name and email
-setup_gitconfig () {
-  if ! [ -f git/gitconfig.local.symlink ]
-  then
-    info 'setup gitconfig'
 
-    # See https://help.github.com/articles/caching-your-github-password-in-git/ 
-    git_credential='cache'
-    if [ "$(uname -s)" == "Darwin" ]
-    then
-      git_credential='osxkeychain'
-    fi
+source $DOTFILES/functions/find_in_topics
 
-    user ' - What is your Git author name?'
-    read -e git_authorname
-    user ' - What is your Git author email?'
-    read -e git_authoremail
 
-    sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.template > git/gitconfig.local.symlink
+# Run all files named 'install.sh' in topic dirs.
+run_installers() {
+  info "Running installers..."
 
-    success 'gitconfig'
-  fi
+  for installer in $(find_in_topics -name install.sh); do
+    sh -c "$installer"  || fail "$installer failed"
+  done
 }
 
 
@@ -122,26 +108,26 @@ link_file () {
 
   if [ "$skip" != "true" ]  # "false" or empty
   then
-    ln -s "$1" "$2"
+    ln -s "$1" "$2" || fail "Could not link $1 to $2"
     success "linked $1 to $2"
   fi
 }
 
+
 install_dotfiles () {
-  info 'installing dotfiles'
+  info "Installing dotfiles"
 
   local overwrite_all=false backup_all=false skip_all=false
 
-  for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
-  do
+  for src in $(find_in_topics -name "*.symlink"); do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
   done
 }
 
-setup_gitconfig
+
+run_installers
 install_dotfiles
-source script/run_installers
 
 echo ''
 echo '  All installed!'
