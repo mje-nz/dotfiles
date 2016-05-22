@@ -9,8 +9,8 @@
 [alias]
         co = checkout
         st = status
-        fullstatus = !$DOTFILES/bin/git-fullstatus
-#TODO Does every git-x in bin/ have to be here?
+        fullstatus = !$DOTFILES/git/git-fullstatus
+        undo = !DOTFILES/git/git-undo
 
 [color]
         diff = auto
