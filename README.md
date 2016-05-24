@@ -14,10 +14,9 @@ Mac OSX-only dotfiles and scripts go in the osx-only/ subfolder, and the same fo
 
 There's a few special files in the hierarchy.
 
-- **Brewfile**: This is a list of applications for [Homebrew](http://brew.sh) to   install. Might want to edit this file before running any initial setup.
 - **<topic>/\*.zsh**: Any files ending in `.zsh` get loaded into your environment.
 - **<topic>/install.sh**: Any file name `install.sh` in executed when `setup` runs.
-- **<topic>/\*.symlink**: Any files ending in `*.symlink` get symlinked into your `$HOME`. This is so you can keep all of those versioned in your dotfiles but still keep those autoloaded files in your home directory. These get symlinked in when you run `setup`.
+- **<topic>/\*.symlink**: Any files ending in `*.symlink` get symlinked into your `$HOME`.  This is so you can keep all of those versioned in your dotfiles but still keep those autoloaded files in your home directory. These get symlinked in when you run `setup`.
 
 ## pre-install
 
@@ -33,9 +32,9 @@ git clone https://github.com/MatthewJEdwards/dotfiles.git ~/.dotfiles
 ~/.dotfiles/setup
 ```
 
-This will symlink the appropriate files from `.dotfiles` into your home directory. Everything is configured and tweaked within `~/.dotfiles`.
+This will symlink the appropriate files from `.dotfiles` into your home directory. Everything is configured within `~/.dotfiles`.
 
-The main file you'll want to change right off the bat is `zsh/zshrc.symlink`, which sets up a few paths that'll be different on your particular machine.
+Before you run setup, you should probably check everything out and tweak stuff.  Notably on OSX, you may not want to install Homebrew and my list of packages.  The install script is `osx-only/homebrew/install.sh` and the list of packages is `osx-only/homebrew/Brewfile`.
 
 ## thanks
 
