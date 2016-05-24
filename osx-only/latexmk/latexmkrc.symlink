@@ -5,4 +5,5 @@
 $pdf_previewer = "open -a /Applications/Skim.app"; 
 $pdf_update_method = 4;
 $pdf_update_command = "~/.dotfiles/osx-only/latexmk/skim-reload %S";
-$clean_ext = "paux lox pdfsync out";
+
+$clean_ext = "paux lox pdfsync out cb cb2 bbl dvi";
