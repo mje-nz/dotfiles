@@ -10,7 +10,8 @@
         co = checkout
         st = status
         fullstatus = !$DOTFILES/git/git-fullstatus
-        undo = !DOTFILES/git/git-undo
+        undo = !$DOTFILES/git/git-undo
+        open = !$DOTFILES/git/git-open
 
 [color]
         diff = auto
