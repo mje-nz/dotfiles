@@ -17,8 +17,9 @@ then
   source ~/.localrc
 fi
 
-
-source $DOTFILES/functions/find_in_topics
+# Add functions/ to fpath and autoload all files in it
+fpath=($DOTFILES/functions $fpath)
+autoload -U $DOTFILES/functions/*(:t)
 
 # Source all the zsh files in the topic directories for the current OS
 for file in $(find_in_topics -name "*.zsh"); do
