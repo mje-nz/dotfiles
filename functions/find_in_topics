@@ -1,21 +1,23 @@
+#!/usr/bin/env zsh
 # Usage: find_in_topics <find-compatible arguments>
-# Description: Find files in the topic dirs for the current OS which match 
+# Find files in the topic dirs for the current OS which match 
 # a given pattern. All args are passed to find builtin.
 # Note: Used by the setup script and .zshrc
 # 
 # Author: Matthew Edwards
 
-local -a exclude
-exclude=("-not" "-path" "*/.git*")
-case "$(uname)" in
-  Darwin)
-    exclude+=("-not" "-path" "*/linux-only/*");;
-  Linux)
-    exclude+=("-not" "-path" "*/osx-only/*");;
-esac
+find_in_topics() {
+  local -a exclude
+  exclude=("-not" "-path" "*/.git*")
+  case "$(uname)" in
+    Darwin)
+      exclude+=("-not" "-path" "*/linux-only/*");;
+    Linux)
+      exclude+=("-not" "-path" "*/osx-only/*");;
+  esac
 
-local files="$(find -H "$DOTFILES" "${exclude[@]}" "$@")"
+  local files="$(find -H "$DOTFILES" "${exclude[@]}" "$@")"
 
-# Sort files so that *.1.zsh comes before *.2.zsh comes before everything else
-echo "$files" | rev | sort | rev     
-
+  # Sort files so that *.1.zsh comes before *.2.zsh comes before everything else
+  echo "$files" | rev | sort | rev     
+}
