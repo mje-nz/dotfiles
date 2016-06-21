@@ -174,6 +174,9 @@ prompt_jobs_block() {
 	echo '%(1j.%{$fg[gray]%}[%j+] %{$reset_color%}.)'
 }
 
+# TODO: Tweak colours? Blue is often hard to see
+# TODO: Colorize root folder of current git repo
+
 PROMPT='$(prompt_user_block)%{$fg_bold[blue]%}%~%{$reset_color%} $(prompt_git_block)
 %_%(?..%{$fg[red]%}→%? %{$reset_color%})%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)$(prompt_exec_time_block)$(prompt_char) '
 
