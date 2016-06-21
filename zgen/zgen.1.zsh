@@ -53,6 +53,10 @@ get_file_modification_time() {
 }
 
 
+# Only check for updates every 4 weeks
+export ZGEN_PLUGIN_UPDATE_DAYS=28
+export ZGEN_SYSTEM_UPDATE_DAYS=28
+
 source ~/.zgen/zgen.zsh
 
 # Check if there's an init.zsh file for zgen and generate one if not.
