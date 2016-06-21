@@ -36,6 +36,7 @@ GIT_PROMPT_MODIFIED="%{$fg[yellow]%}●%{$reset_color%}"
 GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 
 # Show Git branch/tag, or name-rev if on detached head
+# TODO: Handle detached HEAD as in https://medium.com/@porteneuve/mastering-git-submodules-34c65e940407#.heha3mnip
 parse_git_branch() {
   (git symbolic-ref -q HEAD || git name-rev --name-only --no-undefined --always HEAD) 2> /dev/null
 }
