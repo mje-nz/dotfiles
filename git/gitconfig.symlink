@@ -42,5 +42,6 @@
         prompt = false
 [diff]
         tool = Kaleidoscope
+        submodule = log
 [status]
 	submoduleSummary = true
