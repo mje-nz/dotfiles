@@ -1,5 +1,7 @@
 # zgen setup
 # 
+# Note that this must run before theme.zsh, or it will steamroll its changes
+# 
 # Based on https://github.com/unixorn/zsh-quickstart-kit/blob/master/zsh/.zgen-setup
 
 
