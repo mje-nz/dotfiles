@@ -6,6 +6,6 @@
 [subrepo]
 	remote = git@gitlab.com:mje-nz/git-latexdiff.git
 	branch = master
-	commit = 2bd89312493a8c05be3e23da53630bc0b70ee6c6
-	parent = cf2275d90d8c472fd073519c88e621e29b364abb
+	commit = cc84a707822e45d8e8d8d0014939e8376595d5bb
+	parent = 8bdf3e7faf42a36dea4edc73790d5460a0f6af65
 	cmdver = 0.3.0
