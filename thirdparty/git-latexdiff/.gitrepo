@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@gitlab.com:mje-nz/git-latexdiff.git
+	branch = master
+	commit = 2bd89312493a8c05be3e23da53630bc0b70ee6c6
+	parent = cf2275d90d8c472fd073519c88e621e29b364abb
+	cmdver = 0.3.0
