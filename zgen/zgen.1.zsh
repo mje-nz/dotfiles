@@ -81,7 +81,6 @@ unalias please
 
 # Remove some aliases from from oh-my-zsh git plugin
 unalias g
-unalias gl
 unalias gca
 unalias gca!
 
