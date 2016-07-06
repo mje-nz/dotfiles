@@ -500,7 +500,7 @@ tmpdir=$tmpdir_prefix/git-latexdiff.$$
 mkdir "$tmpdir" || die "Cannot create temporary directory."
 
 cd "$tmpdir" || die "Cannot cd to $tmpdir"
-if test $(uname -o) = "Msys"; then
+if test "$(uname -o 2>/dev/null)" = "Msys"; then
     tmpdir=$(pwd -W)
 else
     tmpdir=$(pwd)
