@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+# Usage: shrink_pdf <input file> <output file>
+# Shrink the given PDF using Ghostscript.
+# 
+# Author: Matthew Edwards
+
+shrink_pdf() {
+  local input_file=$1 output_file=$2
+
+  if [ -z "$input_file" -o -z "$output_file" ]; then
+    echo "Usage: shrink_pdf <input file> <output file>"
+    return 1
+  fi
+  
+  # Based on http://tex.stackexchange.com/a/41273
+  # See also manual here http://www.ghostscript.com/doc/current/Ps2pdf.htm
+  # "command" is needed as I have a gs alias
+  command gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -dColorImageResolution=600 -dNOPAUSE -dQUIET -dBATCH -sOutputFile="$output_file" "$input_file"
+
+  du -kh "$input_file"
+  du -kh "$output_file"
+}
