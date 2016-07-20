@@ -22,6 +22,9 @@ load-plugin-list() {
   # Warn you when you run a command that you've got an alias for
   zgen load djui/alias-tips
 
+  # Add "git open" command
+  zgen load paulirish/git-open
+
   # Load some oh-my-zsh plugins
   zgen oh-my-zsh plugins/brew
   zgen oh-my-zsh plugins/colored-man-pages
