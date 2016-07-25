@@ -19,11 +19,6 @@ There's a few special files in the hierarchy.
 - **<topic>/install.sh**: Any file name `install.sh` in executed when `setup` runs.
 - **<topic>/\*.symlink**: Any files ending in `*.symlink` get symlinked into your `$HOME`.  This is so you can keep all of those versioned in your dotfiles but still keep those autoloaded files in your home directory. These get symlinked in when you run `setup`.
 
-## pre-install
-
-For Ubuntu:
-sudo apt-get install zsh zsh-common
-
 ## install
 
 Run this:
@@ -35,7 +30,7 @@ git clone https://github.com/MatthewJEdwards/dotfiles.git ~/.dotfiles
 
 This will symlink the appropriate files from `.dotfiles` into your home directory. Everything is configured within `~/.dotfiles`.
 
-Before you run setup, you should probably check everything out and tweak stuff.  Notably on OSX, you may not want to install Homebrew and my list of packages.  The install script is `osx-only/homebrew/install.sh` and the list of packages is `osx-only/homebrew/Brewfile`.
+Before you run setup, you should probably check everything out and tweak stuff.  On OSX, you may not want to install Homebrew and my list of packages.  The install script is `osx-only/homebrew/install.sh` and the list of packages is `osx-only/homebrew/Brewfile`.  On Linux, you may not want to install my list of packages and change your login shell to zsh.  This is done in `linux-only/install.sh`.
 
 ## thanks
 
