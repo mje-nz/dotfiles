@@ -3,7 +3,7 @@
 # Perform initial setup
 
 cd "$(dirname "$0")"
-DOTFILES=$(pwd -P)
+export DOTFILES=$(pwd -P)
 
 source $DOTFILES/functions/find_in_topics
 source $DOTFILES/setup_common.sh

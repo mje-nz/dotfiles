@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Set up a file to include into .gitconfig which sets the author name and email
 # 

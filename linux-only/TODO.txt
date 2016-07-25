@@ -1,0 +1,3 @@
+Install ack and cheat
+Install git and tree
+Pre-install zsh and run chsh
