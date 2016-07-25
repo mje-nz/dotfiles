@@ -5,8 +5,10 @@
 set -e
 
 if [ ! -f ~/.zgen/zgen.zsh ]; then
-  pushd ~
-  echo "> Installing zgen"
-  git clone https://github.com/tarjoilija/zgen.git .zgen
-  popd
+	pushd ~
+	echo "Installing zgen"
+	git clone https://github.com/tarjoilija/zgen.git .zgen
+	popd
+
+	success "Installed zgen"
 fi
