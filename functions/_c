@@ -1,5 +1,17 @@
 #compdef c
-_files -W $PROJECTS -/
-_files -W $GOPATH/src/github.com -/
-
 # See further documentation in `functions/c`.
+
+_c() {
+	local -a special_subdirs
+	special_subdirs=(Personal Thirdparty Uni ROS)
+	
+	#TODO Why does the for loop also show other top-level folders?
+	#_files -W $PROJECTS -/ -F special_subdirs
+	
+	for special_subdir in $special_subdirs; do
+		_files -W $PROJECTS -/ -g "$special_subdir/*"
+	done
+}
+
+_c "$@"
+
