@@ -1,0 +1,8 @@
+#!/bin/sh
+# Place an external 1080p screen above the laptop's Retina screen
+#TODO: Handle connections other than HDMI, resolutions other than 1080p,
+#      positions other than above, etc.
+
+xrandr --output eDP1 --scale 1x1 --pos 320x2160
+xrandr --output HDMI1 --scale 2x2 --mode 1920x1080 --fb 3840x3760 --pos 0x0
+
