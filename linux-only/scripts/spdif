@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Enable/disable SPDIF (red light in headphone jack) on Macbook
+# From http://forums.fedoraforum.org/showthread.php?t=303660
+
+if [[ $1 = "on" ]]; then
+	amixer -c 0 sset "IEC958",16 $1
+elif [[ $1 = "off" ]]; then
+	amixer -c 0 sset "IEC958",16 $1
+else
+	echo "Do you want turn S/PDIF Digital Output on or off?"
+fi
+
