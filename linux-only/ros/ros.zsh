@@ -17,6 +17,7 @@ if [[ $ros_found == "true" ]]; then
   # My aliases
   alias iv='rosrun image_view image_view'
   alias iva='rosrun image_view image_view _autosize:=true'
+  alias rqt_reconfigure='rosrun rqt_reconfigure rqt_reconfigure'
   
   # Set ROS_MASTER_URI
   rosmaster() {
