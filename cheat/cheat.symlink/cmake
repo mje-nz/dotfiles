@@ -1,0 +1,10 @@
+# Build with debug symbols
+mkdir Debug
+cd Debug
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+make
+
+# Basic CMakeLists.txt
+cmake_minimum_required(VERSION 2.8)
+project(project_name)
+add_executable(main_binary file1.cc file2.cc)

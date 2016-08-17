@@ -1,5 +1,19 @@
 # To Revert a single file
 git checkout <filename>
+# To un-commit the last commit (without changing the working directory)
+git reset HEAD~  # i.e. --mixed
+# This changes the HEAD and the index
+
+# To completely discard the last commit (dangerous)
+git reset --hard
+# This changes the head, index and working tree
+
+# To split an older commit
+git rebase -i HEAD~3  # or however far back
+# then set the commit to split as "pick"
+git reset HEAD~
+# then make commits as desired
+git rebase --continue
 
 # Git commit in the past
 git commit --date="`date --date='2 day ago'`"
