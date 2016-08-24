@@ -33,7 +33,6 @@ load-plugin-list() {
   zgen oh-my-zsh plugins/osx
   zgen oh-my-zsh plugins/pip
   zgen oh-my-zsh plugins/python
-  zgen oh-my-zsh plugins/sudo
 
   # Load more completion files for zsh from the zsh-lovers github repo
   zgen load zsh-users/zsh-completions src
