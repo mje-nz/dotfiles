@@ -15,6 +15,9 @@ git reset HEAD~
 # then make commits as desired
 git rebase --continue
 
+# To unstage any staged changes
+git reset
+
 # Git commit in the past
 git commit --date="`date --date='2 day ago'`"
 git commit --date="Jun 13 18:30:25 IST 2015"
