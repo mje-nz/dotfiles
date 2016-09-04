@@ -1,0 +1,2 @@
+# To fix VM clock drift
+dinghy ssh 'sudo ntpclient -s -h pool.ntp.org'
