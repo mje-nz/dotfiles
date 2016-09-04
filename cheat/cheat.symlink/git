@@ -43,8 +43,8 @@ git clean -f -d
 # To remove untracked and ignored files
 git clean -f -d -x
 
-# View commits that will be pushed
-git log @{u}..
+# Show log with changes
+git log -p
 
 # Interactive rebase for the last 7 commits
 git rebase -i @~7
@@ -63,9 +63,5 @@ git reset --hard origin/master
 # Update all your submodules
 git submodule update --init --recursive
 
-# Perform a shallow clone to only get latest commits
-# (helps save data when cloning large repos)
-git clone --depth 1 <remote-url>
-
-# To unshallow a clone
-git pull --unshallow
+# To un-add a file
+git reset HEAD <file>
