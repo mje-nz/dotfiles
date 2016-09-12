@@ -9,6 +9,7 @@
 find_in_topics() {
   local -a exclude
   exclude=("-not" "-path" "*/.git*")
+  exclude+=("-not" "-path" "*.noexec/*")
   case "$(uname)" in
     Darwin)
       exclude+=("-not" "-path" "*/linux-only/*");;
