@@ -65,3 +65,8 @@ git submodule update --init --recursive
 
 # To un-add a file
 git reset HEAD <file>
+
+# To undo a rebase, find the old commit in the reflog
+git reflog
+# then reset the current branch to it
+git reset --hard HEAD@{n}
