@@ -1,0 +1,49 @@
+# Enable mouse control (clickable windows, panes, resizable panes)
+set -g mode-mouse on
+set -g mouse-select-window on
+set -g mouse-select-pane on
+set -g mouse-resize-pane on
+
+# reload config file (change file location to your the tmux.conf you want to use)
+bind r source-file ~/.tmux.conf
+
+
+######################
+###     Theme      ###
+######################
+
+set -g default-terminal "screen-256color"
+
+# Panes
+
+set -g pane-border-fg colour238
+set -g pane-active-border-fg colour51
+
+# Statusbar
+set -g status-position bottom
+set -g status-bg colour234
+set -g status-attr dim
+set -g status-left-fg colour255
+set -g status-right '#[fg=colour233,bg=colour241] %d/%m #[fg=colour233,bg=colour245] %H:%M:%S '
+set -g status-right-length 50
+set -g status-left-length 20
+
+setw -g window-status-current-fg colour81
+setw -g window-status-current-bg colour53
+setw -g window-status-current-attr bold
+setw -g window-status-current-format ' #I#[fg=colour250]:#[fg=colour255]#W#[fg=colour50]#F '
+
+setw -g window-status-fg colour249
+setw -g window-status-bg colour236
+setw -g window-status-attr none
+setw -g window-status-format ' #I:#:#W#F '
+
+
+# Messages
+#TODO: Figure out why message-command-bg and window-status-bell-bg don't work
+set -g message-fg colour232
+set -g message-bg colour166
+
+# Bell
+set -g bell-action any
+set -g visual-bell on
