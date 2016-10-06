@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+#
+# Quick shortcut to open/xdg-open as appropriate, defaulting to "open ." with no args.
+
+OPEN=xdg-open
+if [ "$(uname -s)" = "Darwin" ]; then
+	OPEN=open
+fi
+
+if [ "$1" = "" ] ; then
+	$OPEN .
+else
+	$OPEN "$1"
+fi
