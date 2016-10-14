@@ -92,3 +92,6 @@ unalias gca!
 # Tweak to prevent slow pasting of long strings 
 # See https://github.com/zsh-users/zsh-syntax-highlighting/issues/295
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+# Autoload some built-in functions
+autoload -Uz zcalc zmv
