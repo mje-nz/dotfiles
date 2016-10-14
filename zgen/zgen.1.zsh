@@ -57,6 +57,9 @@ get_file_modification_time() {
 }
 
 
+# Disable oh-my-zsh's updater
+export DISABLE_AUTO_UPDATE=true
+
 # Only check for updates every 4 weeks
 export ZGEN_PLUGIN_UPDATE_DAYS=28
 export ZGEN_SYSTEM_UPDATE_DAYS=28
