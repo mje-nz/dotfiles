@@ -4,6 +4,8 @@
 
 set -e
 
+source $DOTFILES/setup_common.sh
+
 if [ ! -f ~/.zgen/zgen.zsh ]; then
 	pushd ~
 	echo "Installing zgen"

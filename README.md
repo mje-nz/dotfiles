@@ -30,6 +30,8 @@ git clone https://github.com/MatthewJEdwards/dotfiles.git ~/.dotfiles
 
 This will symlink the appropriate files from `.dotfiles` into your home directory. Everything is configured within `~/.dotfiles`.
 
+You'll probably need to log out and in again to get your new shell.
+
 Before you run setup, you should probably check everything out and tweak stuff.  On OSX, you may not want to install Homebrew and my list of packages.  The install script is `osx-only/homebrew/install.sh` and the list of packages is `osx-only/homebrew/Brewfile`.  On Linux, you may not want to install my list of packages and change your login shell to zsh.  This is done in `linux-only/install.sh`.
 
 ## thanks
