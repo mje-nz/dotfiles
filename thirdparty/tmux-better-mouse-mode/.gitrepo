@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/nhdaly/tmux-better-mouse-mode
+	branch = master
+	commit = 4c686e5a1f381e072b102df63f3f8a17426fb107
+	parent = 17cde7212c1bc76284c0888287cae1774995219a
+	cmdver = 0.3.0
