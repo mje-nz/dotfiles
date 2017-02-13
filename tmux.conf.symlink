@@ -1,12 +1,15 @@
-# Enable mouse control (clickable windows, panes, resizable panes)
-set -g mode-mouse on
-set -g mouse-select-window on
-set -g mouse-select-pane on
-set -g mouse-resize-pane on
+## Key bindings
+unbind r  # unbind default binding to force redraw of attached client
+bind r source-file ~/.tmux.conf \; display "Finished sourcing ~/.tmux.conf ."
 
-# reload config file (change file location to your the tmux.conf you want to use)
-bind r source-file ~/.tmux.conf
+## Pane management
+set -g pane-base-index 1  # start pane indices at 1
 
+## Window management
+set -g base-index 1  # start window indices at 1
+# Automatically renumber windows
+# http://unix.stackexchange.com/questions/21742/renumbering-windows-in-tmux
+set -g renumber-windows on
 
 ######################
 ###     Theme      ###
@@ -14,12 +17,13 @@ bind r source-file ~/.tmux.conf
 
 set -g default-terminal "screen-256color"
 
-# Panes
-
+## Panes
 set -g pane-border-fg colour238
 set -g pane-active-border-fg colour51
+setw -g window-active-style 'bg=colour0'
+setw -g window-style 'bg=colour235'
 
-# Statusbar
+## Statusbar
 set -g status-position bottom
 set -g status-bg colour234
 set -g status-attr dim
@@ -38,12 +42,19 @@ setw -g window-status-bg colour236
 setw -g window-status-attr none
 setw -g window-status-format ' #I:#:#W#F '
 
-
-# Messages
+## Messages
 #TODO: Figure out why message-command-bg and window-status-bell-bg don't work
 set -g message-fg colour232
 set -g message-bg colour166
 
-# Bell
-set -g bell-action any
-set -g visual-bell on
+
+######################
+###     Mouse      ###
+######################
+# https://github.com/NHDaly/tmux-better-mouse-mode
+set -g @scroll-down-exit-copy-mode "on"
+set -g @scroll-without-changing-pane "on"
+set -g @scroll-in-moused-over-pane "on"
+set -g @scroll-speed-num-lines-per-scroll "1"
+set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"  # Fix scrolling in `less` etc
+run-shell ~/.dotfiles/thirdparty/tmux-better-mouse-mode/scroll_copy_mode.tmux
