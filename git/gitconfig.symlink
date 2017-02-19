@@ -1,10 +1,11 @@
-# Local/private config goes in a separate file
+# Local/private config and platform-specific configs go in separate files
 [include]
         path = ~/.gitconfig.local
+        path = ~/.gitconfig.platform
 
 [core]
         excludesfile = ~/.gitignore
-	editor = nano
+        editor = nano
 
 [alias]
         co = checkout
@@ -33,17 +34,3 @@
 [status]
         submoduleSummary = true
 
-
-# Kaleidoscope settings
-[mergetool "Kaleidoscope"]
-        cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" \"$REMOTE\"
-[difftool "Kaleidoscope"]
-        cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
-[mergetool]
-        prompt = false
-[difftool]
-        prompt = false
-[diff]
-        tool = Kaleidoscope
-[merge]
-        tool = Kaleidoscope

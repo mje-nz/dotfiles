@@ -1,0 +1,16 @@
+# Platform-specific settings
+
+# Use meld as diff and merge tool
+[mergetool "meld"]
+        cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+        #cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+[difftool "meld"]
+        cmd = meld "$LOCAL" "$REMOTE"
+[mergetool]
+        prompt = false
+[difftool]
+        prompt = false
+[merge]
+        tool = meld
+[diff]
+        tool = meld
