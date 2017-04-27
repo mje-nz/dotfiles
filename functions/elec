@@ -1,10 +1,10 @@
 #!/bin/zsh
 # SSH to UC hosts through the gateway (requires elec to be set up in ssh_config)
 
-if [[ -z $1 ]]; then
+if [[ -z $@ ]]; then
 	# Just ssh to the gateway
 	ssh elec
 else
 	# Forward an ssh connection through the gateway to the given host
-	ssh -o ProxyCommand="ssh -W %h:%p elec" $1
+	ssh -o ProxyCommand="ssh -W %h:%p elec" $@
 fi
