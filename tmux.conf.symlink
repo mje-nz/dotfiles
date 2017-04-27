@@ -22,6 +22,8 @@ set -g pane-border-fg colour238
 set -g pane-active-border-fg colour51
 setw -g window-active-style 'bg=colour0'
 setw -g window-style 'bg=colour235'
+set -g pane-border-status top
+set -g pane-border-format "#{pane_index} #{pane_current_command}"
 
 ## Statusbar
 set -g status-position bottom
@@ -52,6 +54,7 @@ set -g message-bg colour166
 ###     Mouse      ###
 ######################
 # https://github.com/NHDaly/tmux-better-mouse-mode
+set -g mouse on
 set -g @scroll-down-exit-copy-mode "on"
 set -g @scroll-without-changing-pane "on"
 set -g @scroll-in-moused-over-pane "on"
