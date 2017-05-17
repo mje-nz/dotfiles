@@ -1,0 +1,35 @@
+call plug#begin()
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
+Plug 'EinfachToll/DidYouMean'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'sheerun/vim-polyglot'
+Plug 'lervag/vimtex'
+call plug#end()
+
+" Enable vim-airline tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+
+" Disable LaTeX-Box from vim-polyglot
+let g:polyglot_disabled = ['latex']
+
+:set showcmd                      " Show partially-completed commands at bottom of screen
+:set undofile                     " Save undo tree to file
+:set undodir=~/.vim/undo          " Dir for undo files
+:set mouse=a                      " Mouse support
+:set hlsearch                     " Search hilighting
+:set scrolloff=2                  " Keep cursor 2 lines from edge when scrolling
+:set number                       " Show line numbers
+:set hidden                       " Allow modified buffers to be hidden
+
+:nnoremap <C-n> :bnext<CR>        " Next buffer
+:nnoremap <C-p> :bprevious<CR>    " Previous buffer
+
+" Source vim configuration upon save
+augroup vimrc
+  autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
+  autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+augroup END
