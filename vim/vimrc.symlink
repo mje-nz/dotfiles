@@ -7,15 +7,22 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'
 Plug 'lervag/vimtex'
+Plug 'tomasr/molokai'
 call plug#end()
 
 " Enable vim-airline tabline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
+" Set vim-airline theme
+let g:airline_theme = 'molokai'
+
 " Disable LaTeX-Box from vim-polyglot
 let g:polyglot_disabled = ['latex']
 
+colorscheme molokai
+
+:set noshowmode                   " Don't show mode in statusline (since airline does
 :set showcmd                      " Show partially-completed commands at bottom of screen
 :set undofile                     " Save undo tree to file
 :set undodir=~/.vim/undo          " Dir for undo files
@@ -24,12 +31,25 @@ let g:polyglot_disabled = ['latex']
 :set scrolloff=2                  " Keep cursor 2 lines from edge when scrolling
 :set number                       " Show line numbers
 :set hidden                       " Allow modified buffers to be hidden
+:set cursorline                   " Highlight line containing cursor
+:set wildmode=longest:full,full   " When completing commands, first complete longest common string and start wildmenu, then complete first match on next tab 
+:set splitbelow                   " Open new vertical splits below current window
+:set splitright                   " Open new horizontal splits to the right of current window
+:set list
+:set tabstop=4
+:set shiftwidth=4
 
-:nnoremap <C-n> :bnext<CR>        " Next buffer
-:nnoremap <C-p> :bprevious<CR>    " Previous buffer
+" Ignore generated files in wildmenu
+:set wildignore+=*.pyc
+:set wildignore+=*.o,*.obj,*.hex,*.bin
+:set wildignore+=*.aux,*.bbl,*.blg,*.fdb_latex,*.fls,*.out,*.synctex.gz,*.tdo,*.toc,*.bst
+
+" Next/previous buffer
+:nnoremap <C-n> :bnext<CR>
+:nnoremap <C-p> :bprevious<CR>
 
 " Source vim configuration upon save
 augroup vimrc
-  autocmd! BufWritePost $MYVIMRC source % | echom "Reloaded " . $MYVIMRC | redraw
-  autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so % | echom "Reloaded " . $MYGVIMRC | endif | redraw
+  autocmd! BufWritePost $MYVIMRC source %
+  autocmd! BufWritePost $MYGVIMRC if has('gui_running') | so %
 augroup END
