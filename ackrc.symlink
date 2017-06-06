@@ -1,0 +1,3 @@
+--ignore-file=ext:aux
+--ignore-file=ext:fls
+--ignore-file=ext:fdb_latexmk
