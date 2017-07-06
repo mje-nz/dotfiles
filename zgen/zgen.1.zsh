@@ -15,10 +15,6 @@ load-plugin-list() {
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load zsh-users/zsh-history-substring-search
 
-
-  # Automatically run zgen update and zgen selfupdate every 7 days
-  zgen load unixorn/autoupdate-zgen
-
   # Warn you when you run a command that you've got an alias for
   zgen load djui/alias-tips
 
