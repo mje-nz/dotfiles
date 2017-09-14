@@ -8,6 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'
 Plug 'lervag/vimtex'
 Plug 'tomasr/molokai'
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 " Enable vim-airline tabline
@@ -19,6 +20,9 @@ let g:airline_theme = 'molokai'
 
 " Disable LaTeX-Box from vim-polyglot
 let g:polyglot_disabled = ['latex']
+
+" Use Skim as LaTeX output viewer
+let g:vimtex_view_method = 'skim'
 
 colorscheme molokai
 
@@ -38,6 +42,7 @@ colorscheme molokai
 :set list
 :set tabstop=4
 :set shiftwidth=4
+:set linebreak                    " Break on word barriers
 
 " Ignore generated files in wildmenu
 :set wildignore+=*.pyc
@@ -46,7 +51,7 @@ colorscheme molokai
 
 " Next/previous buffer
 :nnoremap <C-n> :bnext<CR>
-:nnoremap <C-p> :bprevious<CR>
+:nnoremap <C-b> :bprevious<CR>
 
 " Source vim configuration upon save
 augroup vimrc
