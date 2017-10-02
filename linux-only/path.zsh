@@ -2,5 +2,5 @@
 
 # Add ./scripts folder to PATH
 
-path=($DOTFILES/linux-only/scripts $path)
+path=(~/.local/bin $DOTFILES/linux-only/scripts $path)
 
