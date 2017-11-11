@@ -4,9 +4,7 @@
 # -- Shows number of commits to push/pull, merge status, traffic lights for untracked/modified/staged
 # Execution time from pure  (https://github.com/sindresorhus/pure)
 # 
-# TODO: Tweak colours
 # TODO: Asynchronous git update as in pure
-# TODO: Break $PROMPT into functions more effectively
 
 
 autoload -U colors && colors # Enable colors in prompt
@@ -165,20 +163,29 @@ prompt_user_block() {
 	fi
 }
 
+prompt_working_dir_block() {
+	# Uses shrink_path function from functions dir
+	echo "%{$fg_bold[blue]%}$(shrink_path)%{$reset_color%} "
+}
+
+prompt_return_value_block() {
+	echo "%(?..%{$fg[red]%}→%? %{$reset_color%})"
+}
+
+prompt_jobs_block() {
+	echo "%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)"
+}
+
 # Red # for root, $ otherwise
 prompt_char() {
 	echo '%(!.%{$fg[red]%}#%{$reset_color%}.$)'
 }
 
-prompt_jobs_block() {
-	echo '%(1j.%{$fg[gray]%}[%j+] %{$reset_color%}.)'
-}
-
 # TODO: Tweak colours? Blue is often hard to see
 # TODO: Colorize root folder of current git repo
 
-PROMPT='$(prompt_user_block)%{$fg_bold[blue]%}%~%{$reset_color%} $(prompt_git_block)
-%_%(?..%{$fg[red]%}→%? %{$reset_color%})%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)$(prompt_exec_time_block)$(prompt_char) '
+PROMPT='$(prompt_user_block)$(prompt_working_dir_block)$(prompt_git_block)
+%_$(prompt_return_value_block)$(prompt_jobs_block)$(prompt_exec_time_block)$(prompt_char) '
 
 
 
