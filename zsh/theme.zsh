@@ -163,9 +163,22 @@ prompt_user_block() {
 	fi
 }
 
+prompt_working_dir_part() {
+	echo "%{$fg_bold[blue]%}$1%{$reset_color%}"
+}
+
 prompt_working_dir_block() {
 	# Uses shrink_path function from functions dir
-	echo "%{$fg_bold[blue]%}$(shrink_path)%{$reset_color%} "
+	local git_root=`git rev-parse --show-toplevel`
+	local output=''
+	if [[ -n $git_root ]]; then
+		output=`prompt_working_dir_part "$(shrink_path $git_root) "`
+		output+=`prompt_git_block`
+		output+=`prompt_working_dir_part ${$(pwd)#$git_root}`
+	else
+		output=`prompt_working_dir_part`
+	fi
+	echo "$output "
 }
 
 prompt_return_value_block() {
@@ -184,7 +197,7 @@ prompt_char() {
 # TODO: Tweak colours? Blue is often hard to see
 # TODO: Colorize root folder of current git repo
 
-PROMPT='$(prompt_user_block)$(prompt_working_dir_block)$(prompt_git_block)
+PROMPT='$(prompt_user_block)$(prompt_working_dir_block)
 %_$(prompt_return_value_block)$(prompt_jobs_block)$(prompt_exec_time_block)$(prompt_char) '
 
 
