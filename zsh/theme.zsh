@@ -163,39 +163,47 @@ prompt_user_block() {
 	fi
 }
 
+# Print one section of the working directory
 prompt_working_dir_part() {
 	echo "%{$fg_bold[blue]%}$1%{$reset_color%}"
 }
 
+# Print the working directory, with git information inserted where appropriate
 prompt_working_dir_block() {
 	# Uses shrink_path function from functions dir
-	local git_root=`git rev-parse --show-toplevel`
+	local git_root=`git rev-parse --show-toplevel 2>/dev/null`
 	local output=''
 	if [[ -n $git_root ]]; then
-		output=`prompt_working_dir_part "$(shrink_path $git_root) "`
-		output+=`prompt_git_block`
+		local git_root_parent=$git_root:h
+		local git_root_name=$git_root:t
+		# Recurse for each nested repo until we reach the top
+		output=`(cd $git_root_parent; prompt_working_dir_block)`
+
+		output+="$(prompt_working_dir_part /$git_root_name) $(prompt_git_block)"
 		output+=`prompt_working_dir_part ${$(pwd)#$git_root}`
 	else
-		output=`prompt_working_dir_part`
+		# Not in a git repo
+		output=`prompt_working_dir_part $(shrink_path)` 
 	fi
-	echo "$output "
+	echo $output
 }
 
+# Show the return value of the last command, if it wasn't zero
 prompt_return_value_block() {
 	echo "%(?..%{$fg[red]%}→%? %{$reset_color%})"
 }
 
+# Show the number of background jobs, if it isn't zero
 prompt_jobs_block() {
 	echo "%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)"
 }
 
-# Red # for root, $ otherwise
+# Prompt character: red # for root, $ otherwise
 prompt_char() {
 	echo '%(!.%{$fg[red]%}#%{$reset_color%}.$)'
 }
 
 # TODO: Tweak colours? Blue is often hard to see
-# TODO: Colorize root folder of current git repo
 
 PROMPT='$(prompt_user_block)$(prompt_working_dir_block)
 %_$(prompt_return_value_block)$(prompt_jobs_block)$(prompt_exec_time_block)$(prompt_char) '
