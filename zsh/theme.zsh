@@ -180,10 +180,11 @@ prompt_working_dir_block() {
 		output=`(cd $git_root_parent; prompt_working_dir_block)`
 
 		output+="$(prompt_working_dir_part /$git_root_name) $(prompt_git_block)"
-		output+=`prompt_working_dir_part ${$(pwd)#$git_root}`
+		wd=$(pwd -P)
+		output+=`prompt_working_dir_part ${wd##$git_root}`
 	else
 		# Not in a git repo
-		output=`prompt_working_dir_part $(shrink_path)` 
+		output=`prompt_working_dir_part "$(shrink_path)"` 
 	fi
 	echo $output
 }

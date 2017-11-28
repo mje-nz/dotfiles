@@ -45,27 +45,27 @@ shrink_path () {
         }
         for dir in $tree; {
             # Use the full name of the last directory
-            if (( $#tree == 1 )) {
-                result+="/$tree"
-                break
+            # Don't shrink folders with spaces in the name (it gets confusing)
+            if [[ (( $#tree == 1 )) || $dir == *' '* ]] {
+                result+="/$dir"
+            } else {
+                expn=(a b)
+                part=''
+                i=0
+                # Loop until part only expands to one directory or is the whole directory name
+                until [[ (( ${#expn} == 1 )) || $dir = $expn || $i -gt $#dir ]]  do
+                    (( i++ ))
+                    part+=$dir[$i]
+                    expn=($(echo ${part}*(-/)))
+                done
+
+                # If the abbreviation is almost the whole name, just use the whole name
+                if (( $#dir - $i <= 2 )) {
+                    part=$dir
+                }
+
+                result+="/$part"
             }
-
-            expn=(a b)
-            part=''
-            i=0
-            # Loop until part only expands to one directory or is the whole directory name
-            until [[ (( ${#expn} == 1 )) || $dir = $expn || $i -gt $#dir ]]  do
-                (( i++ ))
-                part+=$dir[$i]
-                expn=($(echo ${part}*(-/)))
-            done
-
-            # If the abbreviation is almost the whole name, just use the whole name
-            if (( $#dir - $i <= 2 )) {
-                part=$dir
-            }
-
-            result+="/$part"
             cd $dir
             shift tree
         }
