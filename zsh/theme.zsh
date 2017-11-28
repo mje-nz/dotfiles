@@ -171,20 +171,21 @@ prompt_working_dir_part() {
 # Print the working directory, with git information inserted where appropriate
 prompt_working_dir_block() {
 	# Uses shrink_path function from functions dir
+	local len=${1-$#PWD}
 	local git_root=`git rev-parse --show-toplevel 2>/dev/null`
 	local output=''
 	if [[ -n $git_root ]]; then
 		local git_root_parent=$git_root:h
 		local git_root_name=$git_root:t
 		# Recurse for each nested repo until we reach the top
-		output=`(cd $git_root_parent; prompt_working_dir_block)`
+		output=`(cd $git_root_parent; prompt_working_dir_block $len)`
 
 		output+="$(prompt_working_dir_part /$git_root_name) $(prompt_git_block)"
 		wd=$(pwd -P)
 		output+=`prompt_working_dir_part ${wd##$git_root}`
 	else
 		# Not in a git repo
-		output=`prompt_working_dir_part "$(shrink_path)"` 
+		output=`prompt_working_dir_part "$(shrink_path $PWD $len)"`
 	fi
 	echo $output
 }
