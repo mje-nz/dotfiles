@@ -8,7 +8,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'
 Plug 'lervag/vimtex'
 Plug 'tomasr/molokai'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug '$DOTFILES/thirdparty/fzf.noexec'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Enable vim-airline tabline
