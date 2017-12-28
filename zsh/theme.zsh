@@ -184,8 +184,13 @@ prompt_working_dir_block() {
 		wd=$(pwd -P)
 		output+=`prompt_working_dir_part ${wd##$git_root}`
 	else
-		# Not in a git repo
-		output=`prompt_working_dir_part "$(shrink_path $PWD $len)"`
+		if [[ -n $1 ]]; then
+			# Have recursed out of a git repo
+			output=`prompt_working_dir_part "$(shrink_path $PWD $len)"`
+		else	
+			# Not in a git repo at all
+			output=`prompt_working_dir_part "$(shrink_path)"`
+		fi
 	fi
 	echo $output
 }
