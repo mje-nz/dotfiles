@@ -21,11 +21,11 @@ yesno() {
 	return $doit
 }
 
-if yesno "Install zsh, git, tree, ack and cheat (will use sudo)?"; then
+if yesno "Install zsh, git, tree, ag and cheat (will use sudo)?"; then
 	echo "Installing packages"
 
 	# Install my usual packages
-	sudo apt-get install zsh zsh-common git tree ack-grep python-pip
+	sudo apt-get install zsh zsh-common git tree silversearcher-ag python-pip
 	sudo pip install cheat
 	
 	success "Installed packages"
