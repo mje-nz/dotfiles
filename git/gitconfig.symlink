@@ -14,6 +14,7 @@
         undo = !$DOTFILES/git/git-undo
         open = !$DOTFILES/git/git-open
         latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
+	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 
 [color]
         diff = auto
