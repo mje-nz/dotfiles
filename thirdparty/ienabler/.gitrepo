@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/nzjrs/ienabler.git
+	branch = master
+	commit = 6605f847fa3e6c1d6c4b35495f9ef0cbf9c4a67a
+	parent = 46de55c087d32d9c00ecdc23ec82b68cdc7c8f0f
+	cmdver = 0.3.0
