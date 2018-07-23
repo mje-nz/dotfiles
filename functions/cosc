@@ -1,0 +1,10 @@
+#!/bin/zsh
+# SSH to UC hosts through the CSSE gateway (requires cosc to be set up in ssh_config)
+
+if [[ -z $@ ]]; then
+	# Just ssh to the gateway
+	ssh cosc
+else
+	# Forward an ssh connection through the gateway to the given host
+	ssh -o ProxyCommand="ssh -W %h:%p cosc" $@
+fi

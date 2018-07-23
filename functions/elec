@@ -1,5 +1,5 @@
 #!/bin/zsh
-# SSH to UC hosts through the gateway (requires elec to be set up in ssh_config)
+# SSH to UC hosts through the ECE gateway (requires elec to be set up in ssh_config)
 
 if [[ -z $@ ]]; then
 	# Just ssh to the gateway
