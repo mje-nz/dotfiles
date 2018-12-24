@@ -18,3 +18,11 @@ brew 'vim'
 brew 'wakeonlan'
 brew 'wget'
 brew 'zsh'
+
+# For pyenv
+brew 'pyenv'
+brew 'openssl'
+brew 'readline'
+brew 'sqlite3'
+brew 'xz'
+brew 'zlib'
