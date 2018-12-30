@@ -53,7 +53,6 @@ cask 'mendeley'
 cask 'paintbrush'
 cask 'pdftotext'
 cask 'pycharm'
-cask 'qlstephen'
 cask 'scroll-reverser'
 cask 'skim'
 cask 'sublime-text'
@@ -65,6 +64,12 @@ cask 'the-unarchiver'
 cask 'transmission'
 cask 'webstorm'
 cask 'ynab'
+
+# QuickLook plugins
+cask 'qlcolorcode'
+cask 'qlmarkdown'
+cask 'qlstephen'
+cask 'quicklook-json'
 
 # Fonts
 tap 'caskroom/fonts'

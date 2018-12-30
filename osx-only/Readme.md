@@ -17,10 +17,18 @@ Applications I use all the time:
 * [Karabiner-Elements](https://pqrs.org/osx/karabiner/)b for remapping caps lock
 * [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) :raised_hand: for keeping an eye on network activity
 * [Magnet](http://magnet.crowdcafe.com) :apple: for window snapping
-* [QLStephen](https://github.com/whomwah/qlstephen) for QuickLooking plain text files
 * [Sound Control](https://staticz.com/soundcontrol/) for playing music over Airplay while system sounds use built-in speakers
 * [Spotify](https://www.spotify.com/) for music
 * [The Unarchiver](https://theunarchiver.com) for unzipping formats Archive Utility doesn't support
+
+QuickLook plugins:
+
+* [BetterZip](https://macitbetter.com/) for archives (BetterZip is not free, but the QuickLook plugin is)
+* [QLColorCode](https://github.com/anthonygelibert/QLColorCode) for syntax highlighting of source code
+* [QLMarkdown](https://github.com/toland/qlmarkdown) for Markdown files
+* [QLStephen](https://github.com/whomwah/qlstephen) for plain text files without or with unknown extension
+* [QuickLookJSON](http://www.sagtau.com/quicklookjson.html)
+
 
 Applications for specific tasks:
 
