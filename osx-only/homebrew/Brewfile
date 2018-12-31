@@ -20,6 +20,7 @@ brew 'ssh-copy-id'
 brew 'tmux'
 brew 'wakeonlan'
 brew 'wget'
+brew 'wifi-password'
 brew 'zsh'
 
 # For pyenv
