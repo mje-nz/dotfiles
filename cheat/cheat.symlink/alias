@@ -1,0 +1,9 @@
+# Show a list of your current shell aliases
+alias
+
+# Map `ll` to `ls -l` (Can be used per session or put inside a shell config file)
+alias ll='ls -l'
+
+# Figure out where an alias came from (in your zsh config)
+# https://superuser.com/a/1097586
+PS4='+%x:%I>' zsh -i -x -c '' |& grep "alias ls"
