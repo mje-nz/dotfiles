@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+
+# Source a file in sh compatibility mode
+# https://unix.stackexchange.com/a/3449
+
+source_sh () {
+  emulate -LR sh
+  . "$@"
+}

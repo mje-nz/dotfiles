@@ -25,6 +25,29 @@ then
 		brew bundle
 		popd
 
+		# Replace outdated bash
+		brew install bash
+		brew install bash-completion2
+		BREW_PREFIX=$(brew --prefix)
+		if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
+		  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells
+		fi
+
+		# Replace outdated core utils, GNU utilities etc
+		brew install coreutils
+		brew install file-formula
+		brew install findutils --with-default-names 
+		brew install gawk
+		brew install gnu-sed --with-default-names 
+		brew install gnu-tar --with-default-names
+		brew install gnu-which --with-default-names
+		brew install grep --with-default-names
+		brew install less
+		brew install make --with-default-names
+		brew install screen
+		brew install vim
+		# Note coreutils and file-formula need PATH changes
+
 		success "Installed Homebrew"
 	fi
 fi

@@ -1,0 +1,19 @@
+# Common setup for bash and zsh
+
+# Paths
+export PATH="$(brew --prefix coreutils)/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/file-formula/bin:$PATH"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
+# Fix scrolling with mouse in bat
+# https://github.com/sharkdp/bat#using-a-different-pager
+export BAT_PAGER="less -RF"
+
+# Aliases
+alias l="exa"
+alias la="l --all"
+alias ll="exa --long --header --git"
+alias lal="ll --all"
+alias tree="exa --tree"
+alias treel="ll --tree"
+treell () { treel --colour=always $@ | less ; }

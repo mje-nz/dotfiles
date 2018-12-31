@@ -2,7 +2,7 @@
 # (shebang is just for syntax highlighting)
 
 
-# shortcut to this dotfiles path is $DOTFILES
+# Refer to dotfiles path as $DOTFILES
 export DOTFILES=$HOME/.dotfiles
 
 # your project folder that we can `c [tab]` to
@@ -25,3 +25,6 @@ autoload -U $DOTFILES/functions/*(:t)
 for file in $(find_in_topics -name "*.zsh"); do
   source $file
 done
+
+# Source common profile
+source_sh ~/.commonrc
