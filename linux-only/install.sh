@@ -3,24 +3,6 @@
 source $DOTFILES/setup_common.sh
 set -e
 
-yesno() {
-	local message=$1
-	local doit=0 action=
-	user "$message [Y]/n"
-	
-	read -n 1 action
-	case "$action" in
-	  Y )
-		doit=0;;
-	  n )
-		doit=1;;
-	  * )
-		;;
-	esac
-	
-	return $doit
-}
-
 if yesno "Install zsh, git, tree, ag and cheat (will use sudo)?"; then
 	echo "Installing packages"
 

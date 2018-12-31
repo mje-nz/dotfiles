@@ -39,3 +39,4 @@ Before you run setup, you should probably check everything out and tweak stuff. 
 ## thanks
 
 Based on [holman/dotfiles](https://github.com/holman/dotfiles).
+I also took inspiration from [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles) and [nikitavoloboev/my-mac-os](https://github.com/nikitavoloboev/my-mac-os).

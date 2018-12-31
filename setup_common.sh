@@ -18,6 +18,24 @@ fail () {
   exit 1
 }
 
+yesno() {
+  local message=$1
+  local doit=0 action=
+  user "$message [Y]/n"
+  
+  read -n 1 action
+  case "$action" in
+    Y )
+    doit=0;;
+    n )
+    doit=1;;
+    * )
+    ;;
+  esac
+  
+  return $doit
+}
+
 link_file () {
   local src=$1 dst=$2
 
