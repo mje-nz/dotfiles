@@ -1,3 +1,4 @@
 zsh-autosuggestions/*
 sympytex/*.pyc
-.fzf.zsh
+fzf.zsh
+fzf.bash

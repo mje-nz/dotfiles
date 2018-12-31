@@ -5,5 +5,8 @@ if [ ! -d thirdparty/zsh-autosuggestions.noexec ]; then
 fi
 
 # Run fzf installer and move generated rc file
-thirdparty/fzf.noexec/install --key-bindings --completion --no-update-rc
-mv ~/.fzf.zsh thirdparty/
+if [ ! -f thirdparty/fzf.zsh ]; then
+	thirdparty/fzf.noexec/install --key-bindings --completion --no-update-rc
+	mv ~/.fzf.zsh thirdparty/fzf.zsh
+	mv ~/.fzf.bash thirdparty/fzf.bash
+fi
