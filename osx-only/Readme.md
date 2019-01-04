@@ -32,7 +32,7 @@ QuickLook plugins:
 
 Applications for specific tasks:
 
-* [Carbon Copy Cloner](https://bombich.com/) for bootable backup images (as well as Time Machine for regular file backups)
+* [Carbon Copy Cloner](https://bombich.com/) :raised_hand: for bootable backup images (as well as Time Machine for regular file backups)
 * [CLion](https://www.jetbrains.com/clion/) for C/C++ development
 * [DaisyDisk](https://daisydiskapp.com/) for freeing up space
 * [Docker for Mac](https://docs.docker.com/docker-for-mac/) for containers
