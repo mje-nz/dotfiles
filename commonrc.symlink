@@ -10,7 +10,7 @@ export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export BAT_PAGER="less -RF"
 
 # Install Homebrew casks into ~/Applications
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
 # Aliases
 alias l="exa"
