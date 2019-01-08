@@ -14,7 +14,7 @@ Applications I use all the time:
 * [f.lux](https://justgetflux.com/) for adjusting colour temperature at night
 * [Fantastical](https://flexibits.com/fantastical) for calendars
 * [iStat Menus](https://bjango.com/mac/istatmenus/) :raised_hand: for system monitoring in the menu bar
-* [Karabiner-Elements](https://pqrs.org/osx/karabiner/)b for remapping caps lock
+* [Karabiner-Elements](https://pqrs.org/osx/karabiner/) for remapping caps lock
 * [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) :raised_hand: for keeping an eye on network activity
 * [Magnet](http://magnet.crowdcafe.com) :apple: for window snapping
 * [Sound Control](https://staticz.com/soundcontrol/) for playing music over Airplay while system sounds use built-in speakers
@@ -51,6 +51,10 @@ Applications for specific tasks:
 * [VMware Fusion](https://www.vmware.com/products/fusion.html) :raised_hand: for virtual machines
 * [WebStorm](https://www.jetbrains.com/webstorm/) for JavaScript development
 * [YNAB 4](https://www.youneedabudget.com/) for budgeting
+* [Microsoft Office for Mac](https://products.office.com/en-ww/mac) :raised_hand: through Office 365 for general word processing
+* [Onenote](www.onenote.com) :raised_hand: for my work notes
+* [Evernote](https://evernote.com/) for my personal notes
+
 
 Academia-specific applications:
 
