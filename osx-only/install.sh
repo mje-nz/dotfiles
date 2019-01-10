@@ -193,28 +193,14 @@ if yesno "Install Homebrew and apps?"; then
 	brew bundle -v
 	popd > /dev/null
 
-	# Replace outdated bash
-	brew install bash
-	brew install bash-completion2
+	# Add homebrew bash and zsh to /etc/shells
 	BREW_PREFIX=$(brew --prefix)
 	if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
 	  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells
 	fi
-
-	# Replace outdated core utils, GNU utilities etc
-	brew install coreutils
-	brew install file-formula
-	brew install findutils
-	brew install gawk
-	brew install gnu-sed
-	brew install gnu-tar
-	brew install gnu-which
-	brew install grep
-	brew install less
-	brew install make --with-default-names
-	brew install screen
-	brew install vim
-	# Note coreutils and file-formula need PATH changes
+	if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
+	  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells
+	fi
 fi
 
 pin () {

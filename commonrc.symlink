@@ -8,12 +8,14 @@ export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
 export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
 export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
 export MANPATH="/usr/local/opt/gnu-which/libexec/gnuman:$MANPATH"
 export MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+export MANPATH="/usr/local/opt/make/libexec/gnuman:$MANPATH"
 
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager

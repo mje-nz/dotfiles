@@ -32,6 +32,23 @@ brew 'sqlite3'
 brew 'xz'
 brew 'zlib'
 
+# Replace outdated bash, core utils, GNU utilities etc
+brew 'bash'
+brew 'bash'-completion2
+brew 'coreutils'
+brew 'file'-formula
+brew 'findutils'
+brew 'gawk'
+brew 'gnu'-sed
+brew 'gnu'-tar
+brew 'gnu'-which
+brew 'grep'
+brew 'less'
+brew 'make'
+brew 'screen'
+brew 'vim'
+# Note many of these have PATH changes in commonrc
+
 # GUI apps
 tap 'homebrew/cask'
 cask '1password'
