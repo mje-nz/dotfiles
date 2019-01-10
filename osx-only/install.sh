@@ -203,6 +203,10 @@ if yesno "Install Homebrew and apps?"; then
 	fi
 fi
 
+if yesno "Change shell to zsh?"; then
+	chsh -s $(which zsh)
+fi
+
 pin () {
 	if [ -e "~/Applications/$1.app" ]; then
 		dockutil --no-restart --add "~/Applications/$1.app"
