@@ -168,7 +168,7 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	echo "Done. Note that some of these changes require a logout/restart to take effect."
 fi
 
-if yesno "Install Homebrew and apps?"; then
+if yesno "Install Homebrew and tools?"; then
 	# Ask for the administrator password upfront
 	sudo -v
 
@@ -201,29 +201,36 @@ if yesno "Install Homebrew and apps?"; then
 	if ! fgrep -q "${BREW_PREFIX}/bin/zsh" /etc/shells; then
 	  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells
 	fi
-fi
 
-if yesno "Change shell to zsh?"; then
-	chsh -s $(which zsh)
-fi
-
-pin () {
-	if [ -e "~/Applications/$1.app" ]; then
-		dockutil --no-restart --add "~/Applications/$1.app"
-	elif [ -e "/Applications/$1.app" ]; then
-		dockutil --no-restart --add "/Applications/$1.app"
-	else
-		echo "Could not pin $1"
+	if yesno "Change shell to zsh?"; then
+		chsh -s $(which zsh)
 	fi
-}
+	
+	if yesno "Install GUI apps with Homebrew Cask?"; then
+		echo "> brew bundle --file=Brewfile.casks"
+		pushd "$(dirname $0)" > /dev/null
+		brew bundle -v --file=Brewfile.casks
+		popd > /dev/null
 
-if yesno "Pin apps to dock?"; then
-	dockutil --no-restart --remove all
-	pin "Safari"
-	pin "Fantastical 2"
-	pin "iTerm"
-	pin "Messages"
-	pin "Mail"
-	dockutil --add '~/Downloads' --view grid --display stack --sort dateadded
-	killall "Dock" &> /dev/null
+		pin () {
+			if [ -e "~/Applications/$1.app" ]; then
+				dockutil --no-restart --add "~/Applications/$1.app"
+			elif [ -e "/Applications/$1.app" ]; then
+				dockutil --no-restart --add "/Applications/$1.app"
+			else
+				echo "Could not pin $1"
+			fi
+		}
+
+		if yesno "Pin apps to dock?"; then
+			dockutil --no-restart --remove all
+			pin "Safari"
+			pin "Fantastical 2"
+			pin "iTerm"
+			pin "Messages"
+			pin "Mail"
+			dockutil --add '~/Downloads' --view grid --display stack --sort dateadded
+			killall "Dock" &> /dev/null
+		fi
+	fi
 fi

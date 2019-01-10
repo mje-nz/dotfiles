@@ -20,7 +20,7 @@ git clone https://github.com/mje-nz/dotfiles.git ~/.dotfiles
 ~/.dotfiles/setup
 ```
 
-### linux install
+### linux
 
 From a fresh install of Ubuntu or Mint:
 
