@@ -3,6 +3,10 @@
 
 source $DOTFILES/setup_common.sh
 
+if test "$(uname)" != "Darwin"; then
+	fail "This install script is for macOS only."
+fi
+
 if yesno "Install macOS settings (will use sudo, and restart various applications)?"; then
 
 	# Close any open System Preferences panes, to prevent them from overriding
@@ -55,8 +59,10 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
 	###############################################################################
 
-	# Enable tap to click
-	defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+	# Enable tap to click for this user and for the login screen
+	defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1
+	defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+	defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 	# Enable key repeat
 	defaults write NSGlobalDomain KeyRepeat -int 2
@@ -160,4 +166,73 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 		killall "${app}" &> /dev/null
 	done
 	echo "Done. Note that some of these changes require a logout/restart to take effect."
+fi
+
+if yesno "Install Homebrew and apps?"; then
+	# Ask for the administrator password upfront
+	sudo -v
+
+	# Keep-alive: update existing sudo time stamp until the current process has finished
+	# Probably doesn't matter if we have two of these
+	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+	# Install Homebrew if necessary
+	if test ! $(which brew); then
+		echo "Installing Homebrew..."
+		ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		success "Installed Homebrew"
+	fi
+
+	# Update Homebrew
+	echo "> brew update"
+	brew update
+
+	# Run the Brewfile through Homebrew
+	echo "> brew bundle"
+	pushd "$(dirname $0)" > /dev/null
+	brew bundle -v
+	popd > /dev/null
+
+	# Replace outdated bash
+	brew install bash
+	brew install bash-completion2
+	BREW_PREFIX=$(brew --prefix)
+	if ! fgrep -q "${BREW_PREFIX}/bin/bash" /etc/shells; then
+	  echo "${BREW_PREFIX}/bin/bash" | sudo tee -a /etc/shells
+	fi
+
+	# Replace outdated core utils, GNU utilities etc
+	brew install coreutils
+	brew install file-formula
+	brew install findutils
+	brew install gawk
+	brew install gnu-sed
+	brew install gnu-tar
+	brew install gnu-which
+	brew install grep
+	brew install less
+	brew install make --with-default-names
+	brew install screen
+	brew install vim
+	# Note coreutils and file-formula need PATH changes
+fi
+
+pin () {
+	if [ -e "~/Applications/$1.app" ]; then
+		dockutil --no-restart --add "~/Applications/$1.app"
+	elif [ -e "/Applications/$1.app" ]; then
+		dockutil --no-restart --add "/Applications/$1.app"
+	else
+		echo "Could not pin $1"
+	fi
+}
+
+if yesno "Pin apps to dock?"; then
+	dockutil --no-restart --remove all
+	pin "Safari"
+	pin "Fantastical 2"
+	pin "iTerm"
+	pin "Messages"
+	pin "Mail"
+	killall "Dock" &> /dev/null
 fi

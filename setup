@@ -8,15 +8,7 @@ export DOTFILES=$(pwd -P)
 source $DOTFILES/functions/find_in_topics
 source $DOTFILES/setup_common.sh
 
-# Run all files named 'install.sh' in topic dirs.
-run_installers() {
-  info "Running installers..."
-
-  for installer in $(find_in_topics -name install.sh); do
-    sh -c "$installer"  || fail "$installer failed"
-  done
-}
-
+# Link dotfiles into home directory
 install_dotfiles () {
   info "Installing dotfiles"
 
@@ -28,9 +20,18 @@ install_dotfiles () {
   done
 }
 
+# Run all files named 'install.sh' in topic dirs.
+run_installers() {
+  info "Running installers..."
 
-run_installers
+  for installer in $(find_in_topics -name install.sh); do
+    sh -c "$installer"  || fail "$installer failed"
+  done
+}
+
+# Install dotfiles before running installers, so HOMEBREW_CASK_OPTS is set
 install_dotfiles
+run_installers
 
 echo ''
 echo '  All installed!'

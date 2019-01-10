@@ -2,6 +2,7 @@
 brew 'ag'
 brew 'bat'
 brew 'cheat'
+brew 'dockutil'
 brew 'exa'
 brew 'git'
 brew 'ipython'
