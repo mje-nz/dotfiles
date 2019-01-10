@@ -29,8 +29,9 @@ run_installers() {
   done
 }
 
-# Install dotfiles before running installers, so HOMEBREW_CASK_OPTS is set
+# Install dotfiles and re-source bashrc before running installers, so HOMEBREW_CASK_OPTS is set
 install_dotfiles
+source ~/.bashrc
 run_installers
 
 echo ''
