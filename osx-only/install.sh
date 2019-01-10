@@ -224,5 +224,6 @@ if yesno "Pin apps to dock?"; then
 	pin "iTerm"
 	pin "Messages"
 	pin "Mail"
+	dockutil --add '~/Downloads' --view grid --display stack --sort dateadded
 	killall "Dock" &> /dev/null
 fi
