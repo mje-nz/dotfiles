@@ -2,6 +2,34 @@
 
 My dotfiles.
 
+## install
+
+The installer will symlink the appropriate files from `.dotfiles` into your home directory, and optionally install a bunch of stuff.
+Everything is configured within `~/.dotfiles`.
+Before you run `setup` you should check everything out, or you'll end up with exactly my setup.
+
+You should probably restart afterwards to be safe.
+
+### macOS
+
+From a fresh install of macOS:
+
+```sh
+xcode-select --install
+git clone https://github.com/mje-nz/dotfiles.git ~/.dotfiles
+~/.dotfiles/setup
+```
+
+### linux install
+
+From a fresh install of Ubuntu or Mint:
+
+```sh
+sudo apt install git
+git clone https://github.com/mje-nz/dotfiles.git ~/.dotfiles
+~/.dotfiles/setup
+```
+
 ## topical
 
 Everything's built around topic areas. If you're adding a new area to your forked dotfiles — say, "Java" — you can simply add a `java` directory and put files in there. Anything with an extension of `.zsh` will get automatically included into your shell. Anything with an extension of `.symlink` will get symlinked without extension and with a dot prepended to their name into `$HOME` when you run `setup`.
@@ -21,20 +49,7 @@ There's a few special files in the hierarchy.
 - **&lt;topic&gt;/install.sh**: Any file name `install.sh` in executed when `setup` runs.
 - **&lt;topic&gt;/\*.symlink**: Any files ending in `*.symlink` get symlinked into your `$HOME`.  This is so you can keep all of those versioned in your dotfiles but still keep those autoloaded files in your home directory. These get symlinked in when you run `setup`.
 
-## install
 
-Run this:
-
-```sh
-git clone https://github.com/MatthewJEdwards/dotfiles.git ~/.dotfiles
-~/.dotfiles/setup
-```
-
-This will symlink the appropriate files from `.dotfiles` into your home directory. Everything is configured within `~/.dotfiles`.
-
-You'll probably need to log out and in again to get your new shell.
-
-Before you run setup, you should probably check everything out and tweak stuff.  On OSX, you may not want to install Homebrew and my list of packages.  The install script is `osx-only/homebrew/install.sh` and the list of packages is `osx-only/homebrew/Brewfile`.  On Linux, you may not want to install my list of packages and change your login shell to zsh.  This is done in `linux-only/install.sh`.
 
 ## thanks
 
