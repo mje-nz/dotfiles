@@ -34,14 +34,14 @@ brew 'zlib'
 
 # Replace outdated bash, core utils, GNU utilities etc
 brew 'bash'
-brew 'bash'-completion2
+brew 'bash-completion2'
 brew 'coreutils'
-brew 'file'-formula
+brew 'file-formula'
 brew 'findutils'
 brew 'gawk'
-brew 'gnu'-sed
-brew 'gnu'-tar
-brew 'gnu'-which
+brew 'gnu-sed'
+brew 'gnu-tar'
+brew 'gnu-which'
 brew 'grep'
 brew 'less'
 brew 'make'

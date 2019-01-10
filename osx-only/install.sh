@@ -84,6 +84,7 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 
 	# Enable snap-to-grid for icons on the desktop and in other icon views
 	/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+	# TODO Doesn't work on HS
 	/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 	/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 
@@ -175,6 +176,9 @@ if yesno "Install Homebrew and tools?"; then
 	# Keep-alive: update existing sudo time stamp until the current process has finished
 	# Probably doesn't matter if we have two of these
 	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
+	# Exit on first error
+	set -e
 
 	# Install Homebrew if necessary
 	if test ! $(which brew); then
