@@ -40,8 +40,8 @@ Applications for specific tasks:
 * [iTerm2](https://www.iterm2.com/) for terminal (although I'm not convinced it's better than Terminal.app)
 * [Kaleidoscope](https://www.kaleidoscopeapp.com/) for diffs
 * [KeepingYouAwake](https://github.com/newmarcel/KeepingYouAwakeb) to disable sleep mode
+* [Mos](https://mos.caldis.me/) to fix scroll wheel behaviour when using a mouse
 * [Paintbrush](https://paintbrush.sourceforge.io/) for occasional light image editing (TODO not very good)
-* [ScrollReverser](https://pilotmoon.com/scrollreverser/) to fix scroll wheel behaviour when using a mouse
 * [Serial](https://www.decisivetactics.com/products/serial/) :apple: for serial terminals
 * [SourceTree](https://www.sourcetreeapp.com/) when I need a git GUI
 * [Sublime Text](https://www.sublimetext.com/3) for general text editing
