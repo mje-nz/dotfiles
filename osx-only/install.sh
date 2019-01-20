@@ -58,9 +58,22 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	/usr/sbin/softwareupdate --reset-ignored
 	/usr/sbin/softwareupdate --ignore "macOSInstallerNotification_GM"
 
+	# Show Battery Percentage on the menu bar
+	defaults write com.apple.menuextra.battery ShowPercent -string "YES"
+
+	# TODO Show volume etc in the menu bar
+
 
 	###############################################################################
-	# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
+	# App Store                                                                   #
+	###############################################################################
+
+	# Disable downloading updates in the background
+	sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate AutomaticDownload -boolean FALSE
+
+
+	###############################################################################
+	# Trackpad, keyboard, sound, and input                                        #
 	###############################################################################
 
 	# Enable tap to click for this user and for the login screen
@@ -71,6 +84,12 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	# Enable key repeat
 	defaults write NSGlobalDomain KeyRepeat -int 2
 	defaults write NSGlobalDomain InitialKeyRepeat -int 35
+
+	# Play feedback when volume is changed
+	defaults write -g com.apple.sound.beep.feedback -int 1
+
+	# Enable App Exposé gesture
+	defaults write com.apple.dock showAppExposeGestureEnabled -bool true
 
 
 	###############################################################################
@@ -100,6 +119,9 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 
 	# Show the /Volumes folder
 	sudo chflags nohidden /Volumes
+
+	# Show icons for hard drives on the desktop
+	defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
 
 
 	###############################################################################
@@ -143,6 +165,14 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	# Enable "Do Not Track"
 	defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
+	# Show the full URL in the address bar (note: this still hides the scheme)
+	defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+
+	# Show status bar
+	defaults write com.apple.Safari ShowOverlayStatusBar -boolean true
+
+	# Safari opens with all windows from last session
+	defaults write com.apple.Safari AlwaysRestoreSessionAtLaunch -boolean true
 
 
 	###############################################################################
@@ -170,6 +200,7 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	defaults write org.m0k.transmission BlocklistNew -bool true
 	defaults write org.m0k.transmission BlocklistURL -string "http://john.bitsurge.net/public/biglist.p2p.gz"
 	defaults write org.m0k.transmission BlocklistAutoUpdate -bool true
+
 
 	###############################################################################
 	# Kill affected applications                                                  #
