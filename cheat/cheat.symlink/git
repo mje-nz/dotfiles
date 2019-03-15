@@ -10,7 +10,7 @@ git reset --hard
 
 # To split an older commit
 git rebase -i HEAD~3  # or however far back
-# then set the commit to split as "pick"
+# then set the commit to split as "edit"
 git reset HEAD~
 # then make commits as desired
 git rebase --continue
