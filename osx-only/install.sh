@@ -54,6 +54,10 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	# Disable auto-correct
 	defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
+	# Disable Mojave update notifications
+	/usr/sbin/softwareupdate --reset-ignored
+	/usr/sbin/softwareupdate --ignore "macOSInstallerNotification_GM"
+
 
 	###############################################################################
 	# Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
