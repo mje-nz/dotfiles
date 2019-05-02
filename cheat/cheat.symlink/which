@@ -1,0 +1,3 @@
+# If you want to find something but there's an alias with the same name
+type -p ls
+
