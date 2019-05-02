@@ -33,3 +33,13 @@ alias lal="ll --all"
 alias tree="exa --tree"
 alias treel="ll --tree"
 treell () { treel --colour=always $@ | less ; }
+
+# In case I want to use actual ls
+if ls --color > /dev/null 2>&1; then
+	# GNU `ls`
+	alias ls="command ls --color -Gh"
+else
+	# macOS `ls`
+	alias ls="command ls -Gh"
+fi
+
