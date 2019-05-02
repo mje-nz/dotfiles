@@ -55,8 +55,8 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
 	# Disable Mojave update notifications
-	/usr/sbin/softwareupdate --reset-ignored
-	/usr/sbin/softwareupdate --ignore "macOSInstallerNotification_GM"
+	/usr/sbin/softwareupdate --reset-ignored > /dev/null
+	/usr/sbin/softwareupdate --ignore "macOSInstallerNotification_GM" > /dev/null
 
 	# Show Battery Percentage on the menu bar
 	defaults write com.apple.menuextra.battery ShowPercent -string "YES"
@@ -241,7 +241,7 @@ if yesno "Install Homebrew and tools?"; then
 	# Run the Brewfile through Homebrew
 	echo "> brew bundle"
 	pushd "$(dirname $0)" > /dev/null
-	brew bundle -v
+	brew bundle -v || true
 	popd > /dev/null
 
 	# Add homebrew bash and zsh to /etc/shells
