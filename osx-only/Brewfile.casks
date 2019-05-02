@@ -42,6 +42,7 @@ cask 'qlstephen'
 cask 'quicklook-json'
 
 # Fonts
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 cask 'font-fira-sans'
 cask 'font-fira-code'
+cask 'font-inconsolata-g'

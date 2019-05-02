@@ -144,6 +144,18 @@ if yesno "Install macOS settings (will use sudo, and restart various application
 	defaults write com.apple.Safari SendDoNotTrackHTTPHeader -bool true
 
 
+
+	###############################################################################
+	# Terminal.app                                                                #
+	###############################################################################
+	pushd "$(dirname $0)" > /dev/null
+	profile="$(<terminal-profile.xml)"
+	popd > /dev/null
+	plutil -replace Window\ Settings.Molokai -xml "$profile" ~/Library/Preferences/com.apple.Terminal.plist
+	defaults write com.apple.Terminal "Default Window Settings" -string "Molokai"
+	defaults write com.apple.Terminal "Startup Window Settings" -string "Molokai"
+
+
 	###############################################################################
 	# Transmission.app                                                            #
 	###############################################################################
