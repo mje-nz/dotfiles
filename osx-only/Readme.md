@@ -13,8 +13,8 @@ Applications I use all the time:
 * [Dropbox](https://www.dropbox.com/) for syncing files between computers
 * [f.lux](https://justgetflux.com/) for adjusting colour temperature at night
 * [Fantastical](https://flexibits.com/fantastical) for calendars
+* [Hammerspoon](https://www.hammerspoon.org) for remapping caps lock
 * [iStat Menus](https://bjango.com/mac/istatmenus/) :raised_hand: for system monitoring in the menu bar
-* [Karabiner-Elements](https://pqrs.org/osx/karabiner/) for remapping caps lock
 * [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) :raised_hand: for keeping an eye on network activity
 * [Magnet](http://magnet.crowdcafe.com) :apple: for window snapping
 * [Sound Control](https://staticz.com/soundcontrol/) for playing music over Airplay while system sounds use built-in speakers
@@ -67,4 +67,4 @@ Academia-specific applications:
 
 ## Configuration
 
-TODO: System settings, Karabiner-Elements, Jetbrains IDEs, Sublime Text, iTerm2?
+TODO: System settings, Jetbrains IDEs, Sublime Text, iTerm2?

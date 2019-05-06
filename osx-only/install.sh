@@ -258,13 +258,26 @@ if yesno "Install Homebrew and tools?"; then
 	fi
 	
 	if yesno "Install GUI apps with Homebrew Cask?"; then
+		# Check if Hammerspoon is installed
+		open_hammerspoon=true
+		if [ -e "$HOME/Applications/Hammerspoon.app" -o -e "/Applications/Hammerspoon.app" ]; then
+			# Only open Hammerspoon if it wasn't already installed, so it prompts to
+			# enable accessibility
+			open_hammerspoon=false
+		fi
+
 		echo "> brew bundle --file=Brewfile.casks"
 		pushd "$(dirname $0)" > /dev/null
 		brew bundle -v --file=Brewfile.casks
 		popd > /dev/null
 
+		if $open_hammerspoon; then
+			echo "Launching Hammerspoon so you can enable accessibility"
+			open -a Hammerspoon
+		fi
+
 		pin () {
-			if [ -e "~/Applications/$1.app" ]; then
+			if [ -e "$HOME/Applications/$1.app" ]; then
 				dockutil --no-restart --add "~/Applications/$1.app"
 			elif [ -e "/Applications/$1.app" ]; then
 				dockutil --no-restart --add "/Applications/$1.app"
