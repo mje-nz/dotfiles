@@ -1,5 +1,5 @@
 -- Based on https://github.com/jasonrudolph/keyboard/blob/master/hammerspoon/init.lua
---
+
 local log = hs.logger.new('init.lua', 'debug')
 
 
@@ -11,6 +11,8 @@ end
 
 
 require('control-escape')
+require('mute-on-wake')
+require('mute-on-wifi')
 
 hs.notify.new({title='Hammerspoon', informativeText='Ready to rock 🤘'}):send()
 
