@@ -51,8 +51,8 @@ Applications for specific tasks:
 * [VMware Fusion](https://www.vmware.com/products/fusion.html) :raised_hand: for virtual machines
 * [WebStorm](https://www.jetbrains.com/webstorm/) for JavaScript development
 * [YNAB 4](https://www.youneedabudget.com/) for budgeting
-* [Microsoft Office for Mac](https://products.office.com/en-ww/mac) :raised_hand: through Office 365 for general word processing
-* [Onenote](www.onenote.com) :raised_hand: for my work notes
+* [Microsoft Office for Mac](https://products.office.com/en-ww/mac) (Office 365) for general word processing
+* [Onenote](www.onenote.com) for my work notes
 * [Evernote](https://evernote.com/) for my personal notes
 
 
