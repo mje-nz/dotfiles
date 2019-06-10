@@ -70,3 +70,16 @@ git reset HEAD <file>
 git reflog
 # then reset the current branch to it
 git reset --hard HEAD@{n}
+
+# To delete a local branch
+git branch -d <branch>
+# To delete a remote branch
+git push <remote> -d <branch>
+# or originally
+git push <remote> :<branch>
+
+# To delete a local tag
+git tag -d <tag>
+# To delete a remote tag
+git push <remote> -d refs/tags/<tag>
+
