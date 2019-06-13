@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Quick shortcut to make a directory and then change to it.
+
+
+mkdir -p $1
+cd $1
