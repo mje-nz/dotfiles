@@ -1,0 +1,76 @@
+
+#!/usr/bin/env sh
+# Shortcut for cloning GitHub repos, especially my own.
+# Based on https://github.com/johno/ghclone
+
+# The MIT License (MIT)
+
+# Copyright (c) 2019 Matthew Edwards
+# Copyright (c) 2015 John Otander
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+
+
+DEFAULT_USER="mje-nz"
+
+print_usage () {
+  echo "Usage: ghclone [-h] [<username>/]<repo> [<dir>]\n"
+  echo "    -h    Use HTTPS instead of SSH"
+  exit 1
+}
+
+# Process flags
+USE_HTTPS=false
+while getopts "h" flag; do
+  case "$flag" in
+    h) USE_HTTPS=true;;
+    *) print_usage ;;
+  esac
+done
+shift $((OPTIND-1))
+
+# Process username/repo argument
+if [[ -z $1 ]]; then
+  print_usage
+fi
+if [[ $1 == */* ]]; then
+  # Not sure if repo names with slashes are valid, but some people seem to think so
+  USER=${1%%/*}  # Keep up to first slash
+  REPO=${1#*/} # Keep from first slash
+else
+  USER=$DEFAULT_USER
+  REPO=$1
+fi
+
+# Process folder argument
+if [[ -n $2 ]]; then
+  FOLDER=$2
+else
+  FOLDER=$REPO
+fi
+
+# Clone and change directory
+if $USE_HTTPS; then
+  URL="https://github.com/$USER/$REPO.git"
+else
+  URL="git@github.com:$USER/$REPO.git"
+fi
+echo "git clone ${URL} ${FOLDER}"
+git clone ${URL} ${FOLDER}
+cd ${FOLDER}
