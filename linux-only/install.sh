@@ -7,7 +7,7 @@ if yesno "Install zsh, git, tree, ag and cheat (will use sudo)?"; then
 	echo "Installing packages"
 
 	# Install my usual packages
-	sudo apt-get install zsh zsh-common git tree silversearcher-ag python-pip
+	sudo apt-get install -y zsh zsh-common git tree silversearcher-ag python-pip
 	sudo pip install cheat
 	
 	success "Installed packages"
@@ -16,12 +16,13 @@ fi
 if [ "$SHELL" != $(which zsh) ]; then
 	if yesno "Change shell to zsh (will prompt for password)?"; then
 		chsh -s $(which zsh)
+		success "You will need to log out and in again"
 	fi
 fi
 
 if yesno "Install caps2esc (will use sudo)?"; then
 	echo "Installing dependencies"
-	sudo apt-get install build-essential cmake libevdev-dev libyaml-cpp-dev
+	sudo apt-get install -y build-essential cmake libevdev-dev libyaml-cpp-dev
 	echo "Building and installing interception tools"
 	pushd $(mktemp -d) > /dev/null
 	echo "(in temp directory $(pwd)"

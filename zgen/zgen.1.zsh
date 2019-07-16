@@ -78,9 +78,10 @@ alias manp=man-preview
 
 # Remove some aliases from oh-my-zsh
 unalias _
-unalias please
 unalias ls
 unalias lsa
+# This one's possibly gone now
+unalias please >/dev/null 2>&1
 
 # Remove some aliases from from oh-my-zsh git plugin
 unalias g

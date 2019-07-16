@@ -25,7 +25,7 @@ git clone https://github.com/mje-nz/dotfiles.git ~/.dotfiles
 From a fresh install of Ubuntu or Mint:
 
 ```sh
-sudo apt install git
+sudo apt install -y git
 git clone https://github.com/mje-nz/dotfiles.git ~/.dotfiles
 ~/.dotfiles/setup
 ```

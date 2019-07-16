@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 # (shebang is just for syntax highlighting)
 
-
 # Refer to dotfiles path as $DOTFILES
 export DOTFILES=$HOME/.dotfiles
 
@@ -28,3 +27,4 @@ done
 
 # Source common profile
 source_sh ~/.commonrc
+

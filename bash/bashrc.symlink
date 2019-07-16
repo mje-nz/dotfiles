@@ -1,8 +1,10 @@
 # Source common profile
 source ~/.commonrc
 
-if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
-    . $(brew --prefix)/share/bash-completion/bash_completion
+if command -v brew >/dev/null 2>&1; then
+	if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
+	    . $(brew --prefix)/share/bash-completion/bash_completion
+	fi
 fi
 
 if [ -f ~/.dotfiles/thirdparty/fzf.bash ]; then
