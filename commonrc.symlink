@@ -45,4 +45,5 @@ else
 fi
 
 # Other aliases
-alias i="ipython3 --pylab"
+alias i="ipython3"
+alias il="ipython3 --pylab"
