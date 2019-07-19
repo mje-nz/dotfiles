@@ -26,7 +26,7 @@ export BAT_PAGER="less -RF"
 # Install Homebrew casks into ~/Applications
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
-# Aliases
+# Aliases for ls
 alias l="exa"
 alias la="l --all"
 alias ll="exa --long --header --git"
@@ -44,3 +44,5 @@ else
 	alias ls="command ls -Gh"
 fi
 
+# Other aliases
+alias i="ipython3 --pylab"
