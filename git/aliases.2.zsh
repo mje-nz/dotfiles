@@ -14,3 +14,4 @@ alias gac='git add -A && git commit -m'
 # Mine
 alias gdt='git difftool'
 alias gpf='git push --force-with-lease'
+alias gacpf='gaa && gc --amend --no-edit && gpf'
