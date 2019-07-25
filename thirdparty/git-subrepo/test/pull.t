@@ -16,6 +16,7 @@ subrepo-clone-bar-into-foo
   git push
 ) &> /dev/null || die
 
+
 # Do the pull and check output:
 {
   is "$(
@@ -46,6 +47,28 @@ gitrepo=$OWNER/foo/bar/.gitrepo
   test-gitrepo-field "cmdver" "`git subrepo --version`"
 }
 
+# Check commit messages
+{
+  foo_new_commit_message="$(cd $OWNER/foo; git log --format=%B -n 1)"
+  like "$foo_new_commit_message" \
+      "git subrepo pull bar" \
+      "Subrepo pull commit message OK"
+  bar_commit_short="$(git rev-parse --short $bar_head_commit)"
+  like "$foo_new_commit_message" \
+      'merged:   \"'$bar_commit_short \
+      "Pull commit contains merged"
+}
+
+# Check that we detect that we don't need to pull
+{
+  is "$(
+    cd $OWNER/foo
+    git subrepo pull bar 
+  )" \
+    "Subrepo 'bar' is up to date." \
+    'subrepo detects that we dont need to pull'
+}
+
 # Test pull if we have rebased the original subrepo so that our clone
 # commit is no longer present in the history
 (
@@ -62,7 +85,7 @@ gitrepo=$OWNER/foo/bar/.gitrepo
 
 (
   cd $OWNER/foo
-  git subrepo pull bar --debug || touch pull_failed
+  git subrepo pull bar || touch pull_failed
 ) &> /dev/null || die
 
 # We check that the control file was created

@@ -36,15 +36,27 @@ clone-foo-and-bar
     "Subrepo '../../../tmp/upstream/bar' (master) cloned into 'bar'." \
     'subrepo clone command output is correct'
 
+  remote_output="$(
+    cd $OWNER/foo
+    git remote -v
+  )"
+
+  is "$(
+    cd $OWNER/foo
+    git remote -v | grep subrepo/bar
+  )" \
+    "" \
+    'No remotes created'
+
   clone_output_empty="$(
     cd $OWNER/empty
-    git subrepo clone ../../../$UPSTREAM/bar
+    catch git subrepo clone ../../../$UPSTREAM/bar
   )"
 
   # Check output is correct:
   is "$clone_output_empty" \
-    "Subrepo '../../../tmp/upstream/bar' (master) cloned into 'bar'." \
-    'subrepo clone command output is correct'
+    "git-subrepo: You can't clone into an empty repository" \
+    'subrepo empty clone command output is correct'
 }
 
 # Check that subrepo files look ok:
@@ -54,9 +66,7 @@ gitrepo=$OWNER/foo/bar/.gitrepo
     "$OWNER/foo/bar/" \
     "$OWNER/foo/bar/Bar" \
     "$gitrepo" \
-    "$OWNER/empty/bar/" \
-    "$OWNER/empty/bar/Bar" \
-    "$OWNER/empty/bar/.gitrepo"
+    "!$OWNER/empty/bar/"
 }
 
 # Test foo/bar/.gitrepo file contents:
@@ -70,33 +80,6 @@ gitrepo=$OWNER/foo/bar/.gitrepo
   test-gitrepo-field "parent" "$foo_clone_commit"
   test-gitrepo-field "cmdver" "`git subrepo --version`"
 }
-
-# # Check commit messages:
-# {
-#   # Check head commit msg contains head id:
-#   foo_merge_commit_msg="$(cd $OWNER/foo; git log --max-count=1)"
-#   foo_head_commit="$(cd $OWNER/foo; git rev-parse HEAD)"
-#   like "$foo_merge_commit_msg" \
-#     "$foo_head_commit" \
-#     'subrepo clone merge commit is head'
-# 
-#   # Check the subrepo clone commit message:
-#   foo_clone_commit_msg="$(cd $OWNER/foo; git log --skip=1 --max-count=1)"
-#   pass TODO
-#   # TODO: fix like to support regex meta chars
-#   # like "$foo_clone_commit_msg" \
-#   #   "subrepo clone: .+ bar/" \
-#   #   'Subrepo clone commit msg is ok'
-# 
-#   note $(git rev-parse --short $bar_head_commit)
-#   like "$foo_clone_commit_msg" \
-#     "commit: $(git rev-parse --short $bar_head_commit)" \
-#     'Subrepo clone commit contains bar head commit'
-# 
-#   like "$foo_merge_commit_msg" \
-#     "Merge subrepo commit" \
-#     'Subrepo clone commit msg is ok'
-# }
 
 # Make sure status is clean:
 {
@@ -119,6 +102,6 @@ gitrepo=$OWNER/foo/bar/.gitrepo
     'status is clean'
 }
 
-done_testing 22
+done_testing
 
 teardown

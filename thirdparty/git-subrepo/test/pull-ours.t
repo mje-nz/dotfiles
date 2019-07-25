@@ -38,17 +38,26 @@ note "Pull - Conflict - Use ours - Push"
   git push
 ) &> /dev/null || die
 
+before="$(date -r $OWNER/foo/Foo '+%s')"
+
 (
   cd $OWNER/foo
   git subrepo pull bar || {
-      git checkout --theirs Bar2
+      cd .git/tmp/subrepo/bar
+      git checkout --ours Bar2
       git add Bar2
-      git rebase --continue
-      git checkout master
+      git commit --file ../../../../.git/worktrees/bar/MERGE_MSG
+      cd ../../../..
       git subrepo commit bar
       git subrepo clean bar
   }
 ) &> /dev/null || die
+
+sleep 1
+after="$(date -r $OWNER/foo/Foo '+%s')"
+
+is "$before" "$after" \
+  "No modification on Foo"
 
 test-exists \
   "$OWNER/foo/bar/Bar2" \

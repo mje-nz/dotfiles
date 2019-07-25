@@ -6,6 +6,8 @@ source test/setup
 
 use Test::More
 
+unset GIT_{AUTHOR,COMMITTER}_{EMAIL,NAME}
+
 clone-foo-and-bar
 
 # Make various changes to the repos for testing subrepo push:
@@ -30,12 +32,12 @@ clone-foo-and-bar
   git push
 ) &> /dev/null || die
 
-save-original-state "$OWNER/foo" "bar"
-
 # Do the subrepo push and test the output:
 {
   message="$(
     cd $OWNER/foo
+    git config user.name 'PushUser'
+    git config user.email 'push@push'
     git subrepo pull --quiet bar
     git subrepo push bar
   )"
@@ -44,6 +46,48 @@ save-original-state "$OWNER/foo" "bar"
   is "$message" \
     "Subrepo 'bar' pushed to '../../../tmp/upstream/bar' (master)." \
     'push message is correct'
+}
+
+(
+  cd $OWNER/bar
+  git pull
+) &> /dev/null || die
+
+{
+  pullCommit="$(
+    cd $OWNER/bar
+    git log HEAD -1 --pretty='format:%an %ae %cn %ce'
+  )"
+
+  is "$pullCommit" \
+    "PushUser push@push PushUser push@push" \
+    "Pull commit has PushUser as both author and committer"
+}
+
+{
+  subrepoCommit="$(
+    cd $OWNER/bar
+    git log HEAD^ -1 --pretty='format:%an %ae %cn %ce'
+  )"
+
+  is "$subrepoCommit" \
+    "FooUser foo@foo PushUser push@push" \
+    "Subrepo commits has FooUser as author but PushUser as committer"
+}
+
+# Check that all commits arrived in subrepo
+test-commit-count "$OWNER/bar" HEAD 7
+
+# Test foo/bar/.gitrepo file contents:
+gitrepo=$OWNER/foo/bar/.gitrepo
+{
+  foo_pull_commit="$(cd $OWNER/foo; git rev-parse HEAD^)"
+  bar_head_commit="$(cd $OWNER/bar; git rev-parse HEAD)"
+  test-gitrepo-field "remote" "../../../$UPSTREAM/bar"
+  test-gitrepo-field "branch" "master"
+  test-gitrepo-field "commit" "$bar_head_commit"
+  test-gitrepo-field "parent" "$foo_pull_commit"
+  test-gitrepo-field "cmdver" "`git subrepo --version`"
 }
 
 (
@@ -77,8 +121,6 @@ test-exists \
   "$OWNER/bar/bard/" \
   "$OWNER/bar/bargy" \
   "!$OWNER/bar/.gitrepo" \
-
-# assert-original-state "$OWNER/foo" "bar"
 
 (
   # In the main repo:
@@ -125,7 +167,7 @@ test-exists \
 
   # Test the output:
   is "$message" \
-    "git-subrepo: Local branch is not updated, perform pull or use '--force' to always trust local branch in conflicts" \
+    "git-subrepo: There are new changes upstream, you need to pull first." \
     'Stopped by other push'
 }
 
