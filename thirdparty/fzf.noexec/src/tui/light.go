@@ -27,11 +27,17 @@ const (
 
 const consoleDevice string = "/dev/tty"
 
-var offsetRegexp *regexp.Regexp = regexp.MustCompile("\x1b\\[([0-9]+);([0-9]+)R")
+var offsetRegexp *regexp.Regexp = regexp.MustCompile("(.*)\x1b\\[([0-9]+);([0-9]+)R")
 
 func openTtyIn() *os.File {
 	in, err := os.OpenFile(consoleDevice, syscall.O_RDONLY, 0)
 	if err != nil {
+		tty := ttyname()
+		if len(tty) > 0 {
+			if in, err := os.OpenFile(tty, syscall.O_RDONLY, 0); err == nil {
+				return in
+			}
+		}
 		fmt.Fprintln(os.Stderr, "Failed to open "+consoleDevice)
 		os.Exit(2)
 	}
@@ -48,11 +54,13 @@ func (r *LightRenderer) stderrInternal(str string, allowNLCR bool) {
 	runes := []rune{}
 	for len(bytes) > 0 {
 		r, sz := utf8.DecodeRune(bytes)
-		if r == utf8.RuneError || r < 32 &&
-			r != '\x1b' && (!allowNLCR || r != '\n' && r != '\r') {
-			runes = append(runes, '?')
-		} else {
-			runes = append(runes, r)
+		nlcr := r == '\n' || r == '\r'
+		if r >= 32 || r == '\x1b' || nlcr {
+			if r == utf8.RuneError || nlcr && !allowNLCR {
+				runes = append(runes, ' ')
+			} else {
+				runes = append(runes, r)
+			}
 		}
 		bytes = bytes[sz:]
 	}
@@ -146,16 +154,18 @@ func (r *LightRenderer) findOffset() (row int, col int) {
 	for tries := 0; tries < offsetPollTries; tries++ {
 		bytes = r.getBytesInternal(bytes, tries > 0)
 		offsets := offsetRegexp.FindSubmatch(bytes)
-		if len(offsets) > 2 {
-			return atoi(string(offsets[1]), 0) - 1, atoi(string(offsets[2]), 0) - 1
+		if len(offsets) > 3 {
+			// add anything we skipped over to the input buffer
+			r.buffer = append(r.buffer, offsets[1]...)
+			return atoi(string(offsets[2]), 0) - 1, atoi(string(offsets[3]), 0) - 1
 		}
 	}
 	return -1, -1
 }
 
-func repeat(s string, times int) string {
+func repeat(r rune, times int) string {
 	if times > 0 {
-		return strings.Repeat(s, times)
+		return strings.Repeat(string(r), times)
 	}
 	return ""
 }
@@ -289,6 +299,7 @@ func (r *LightRenderer) getBytesInternal(buffer []byte, nonblock bool) []byte {
 	}
 	buffer = append(buffer, byte(c))
 
+	pc := c
 	for {
 		c, ok = r.getch(true)
 		if !ok {
@@ -298,9 +309,13 @@ func (r *LightRenderer) getBytesInternal(buffer []byte, nonblock bool) []byte {
 				continue
 			}
 			break
+		} else if c == ESC && pc != c {
+			retries = r.escDelay / escPollInterval
+		} else {
+			retries = 0
 		}
-		retries = 0
 		buffer = append(buffer, byte(c))
+		pc = c
 	}
 
 	return buffer
@@ -360,7 +375,14 @@ func (r *LightRenderer) escSequence(sz *int) Event {
 	if r.buffer[1] >= 1 && r.buffer[1] <= 'z'-'a'+1 {
 		return Event{int(CtrlAltA + r.buffer[1] - 1), 0, nil}
 	}
+	alt := false
+	if len(r.buffer) > 2 && r.buffer[1] == ESC {
+		r.buffer = r.buffer[1:]
+		alt = true
+	}
 	switch r.buffer[1] {
+	case ESC:
+		return Event{ESC, 0, nil}
 	case 32:
 		return Event{AltSpace, 0, nil}
 	case 47:
@@ -380,12 +402,25 @@ func (r *LightRenderer) escSequence(sz *int) Event {
 		*sz = 3
 		switch r.buffer[2] {
 		case 68:
+			if alt {
+				return Event{AltLeft, 0, nil}
+			}
 			return Event{Left, 0, nil}
 		case 67:
+			if alt {
+				// Ugh..
+				return Event{AltRight, 0, nil}
+			}
 			return Event{Right, 0, nil}
 		case 66:
+			if alt {
+				return Event{AltDown, 0, nil}
+			}
 			return Event{Down, 0, nil}
 		case 65:
+			if alt {
+				return Event{AltUp, 0, nil}
+			}
 			return Event{Up, 0, nil}
 		case 90:
 			return Event{BTab, 0, nil}
@@ -458,25 +493,22 @@ func (r *LightRenderer) escSequence(sz *int) Event {
 						}
 					}
 					return Event{Invalid, 0, nil}
-				case 59:
+				case ';':
 					if len(r.buffer) != 6 {
 						return Event{Invalid, 0, nil}
 					}
 					*sz = 6
 					switch r.buffer[4] {
-					case 50:
+					case '2', '5':
 						switch r.buffer[5] {
-						case 68:
-							return Event{Home, 0, nil}
-						case 67:
-							return Event{End, 0, nil}
-						}
-					case 53:
-						switch r.buffer[5] {
-						case 68:
-							return Event{SLeft, 0, nil}
-						case 67:
+						case 'A':
+							return Event{SUp, 0, nil}
+						case 'B':
+							return Event{SDown, 0, nil}
+						case 'C':
 							return Event{SRight, 0, nil}
+						case 'D':
+							return Event{SLeft, 0, nil}
 						}
 					} // r.buffer[4]
 				} // r.buffer[3]
@@ -644,7 +676,7 @@ func (r *LightRenderer) NewWindow(top int, left int, width int, height int, bord
 }
 
 func (w *LightWindow) drawBorder() {
-	switch w.border {
+	switch w.border.shape {
 	case BorderAround:
 		w.drawBorderAround()
 	case BorderHorizontal:
@@ -654,22 +686,24 @@ func (w *LightWindow) drawBorder() {
 
 func (w *LightWindow) drawBorderHorizontal() {
 	w.Move(0, 0)
-	w.CPrint(ColBorder, AttrRegular, repeat("─", w.width))
+	w.CPrint(ColBorder, AttrRegular, repeat(w.border.horizontal, w.width))
 	w.Move(w.height-1, 0)
-	w.CPrint(ColBorder, AttrRegular, repeat("─", w.width))
+	w.CPrint(ColBorder, AttrRegular, repeat(w.border.horizontal, w.width))
 }
 
 func (w *LightWindow) drawBorderAround() {
 	w.Move(0, 0)
-	w.CPrint(ColBorder, AttrRegular, "┌"+repeat("─", w.width-2)+"┐")
+	w.CPrint(ColBorder, AttrRegular,
+		string(w.border.topLeft)+repeat(w.border.horizontal, w.width-2)+string(w.border.topRight))
 	for y := 1; y < w.height-1; y++ {
 		w.Move(y, 0)
-		w.CPrint(ColBorder, AttrRegular, "│")
-		w.cprint2(colDefault, w.bg, AttrRegular, repeat(" ", w.width-2))
-		w.CPrint(ColBorder, AttrRegular, "│")
+		w.CPrint(ColBorder, AttrRegular, string(w.border.vertical))
+		w.cprint2(colDefault, w.bg, AttrRegular, repeat(' ', w.width-2))
+		w.CPrint(ColBorder, AttrRegular, string(w.border.vertical))
 	}
 	w.Move(w.height-1, 0)
-	w.CPrint(ColBorder, AttrRegular, "└"+repeat("─", w.width-2)+"┘")
+	w.CPrint(ColBorder, AttrRegular,
+		string(w.border.bottomLeft)+repeat(w.border.horizontal, w.width-2)+string(w.border.bottomRight))
 }
 
 func (w *LightWindow) csi(code string) {
@@ -730,7 +764,7 @@ func (w *LightWindow) MoveAndClear(y int, x int) {
 	w.Move(y, x)
 	// We should not delete preview window on the right
 	// csi("K")
-	w.Print(repeat(" ", w.width-x))
+	w.Print(repeat(' ', w.width-x))
 	w.Move(y, x)
 }
 
@@ -792,7 +826,7 @@ func (w *LightWindow) Print(text string) {
 }
 
 func cleanse(str string) string {
-	return strings.Replace(str, "\x1b", "?", -1)
+	return strings.Replace(str, "\x1b", "", -1)
 }
 
 func (w *LightWindow) CPrint(pair ColorPair, attr Attr, text string) {
@@ -826,7 +860,7 @@ func wrapLine(input string, prefixLength int, max int, tabstop int) []wrappedLin
 		width += w
 		str := string(r)
 		if r == '\t' {
-			str = repeat(" ", w)
+			str = repeat(' ', w)
 		}
 		if prefixLength+width <= max {
 			line += str

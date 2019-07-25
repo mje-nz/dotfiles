@@ -61,12 +61,8 @@ func (w *TcellWindow) Refresh() {
 	}
 	w.lastX = 0
 	w.lastY = 0
-	switch w.borderStyle {
-	case BorderAround:
-		w.drawBorder(true)
-	case BorderHorizontal:
-		w.drawBorder(false)
-	}
+
+	w.drawBorder()
 }
 
 func (w *TcellWindow) FinishFill() {
@@ -295,12 +291,24 @@ func (r *FullscreenRenderer) GetChar() Event {
 			return Event{BSpace, 0, nil}
 
 		case tcell.KeyUp:
+			if alt {
+				return Event{AltUp, 0, nil}
+			}
 			return Event{Up, 0, nil}
 		case tcell.KeyDown:
+			if alt {
+				return Event{AltDown, 0, nil}
+			}
 			return Event{Down, 0, nil}
 		case tcell.KeyLeft:
+			if alt {
+				return Event{AltLeft, 0, nil}
+			}
 			return Event{Left, 0, nil}
 		case tcell.KeyRight:
+			if alt {
+				return Event{AltRight, 0, nil}
+			}
 			return Event{Right, 0, nil}
 
 		case tcell.KeyHome:
@@ -370,12 +378,16 @@ func (r *FullscreenRenderer) GetChar() Event {
 	return Event{Invalid, 0, nil}
 }
 
-func (r *FullscreenRenderer) Pause(bool) {
-	_screen.Fini()
+func (r *FullscreenRenderer) Pause(clear bool) {
+	if clear {
+		_screen.Fini()
+	}
 }
 
-func (r *FullscreenRenderer) Resume(bool) {
-	r.initScreen()
+func (r *FullscreenRenderer) Resume(clear bool) {
+	if clear {
+		r.initScreen()
+	}
 }
 
 func (r *FullscreenRenderer) Close() {
@@ -554,7 +566,11 @@ func (w *TcellWindow) CFill(fg Color, bg Color, a Attr, str string) FillReturn {
 	return w.fillString(str, NewColorPair(fg, bg), a)
 }
 
-func (w *TcellWindow) drawBorder(around bool) {
+func (w *TcellWindow) drawBorder() {
+	if w.borderStyle.shape == BorderNone {
+		return
+	}
+
 	left := w.left
 	right := left + w.width
 	top := w.top
@@ -568,19 +584,19 @@ func (w *TcellWindow) drawBorder(around bool) {
 	}
 
 	for x := left; x < right; x++ {
-		_screen.SetContent(x, top, tcell.RuneHLine, nil, style)
-		_screen.SetContent(x, bot-1, tcell.RuneHLine, nil, style)
+		_screen.SetContent(x, top, w.borderStyle.horizontal, nil, style)
+		_screen.SetContent(x, bot-1, w.borderStyle.horizontal, nil, style)
 	}
 
-	if around {
+	if w.borderStyle.shape == BorderAround {
 		for y := top; y < bot; y++ {
-			_screen.SetContent(left, y, tcell.RuneVLine, nil, style)
-			_screen.SetContent(right-1, y, tcell.RuneVLine, nil, style)
+			_screen.SetContent(left, y, w.borderStyle.vertical, nil, style)
+			_screen.SetContent(right-1, y, w.borderStyle.vertical, nil, style)
 		}
 
-		_screen.SetContent(left, top, tcell.RuneULCorner, nil, style)
-		_screen.SetContent(right-1, top, tcell.RuneURCorner, nil, style)
-		_screen.SetContent(left, bot-1, tcell.RuneLLCorner, nil, style)
-		_screen.SetContent(right-1, bot-1, tcell.RuneLRCorner, nil, style)
+		_screen.SetContent(left, top, w.borderStyle.topLeft, nil, style)
+		_screen.SetContent(right-1, top, w.borderStyle.topRight, nil, style)
+		_screen.SetContent(left, bot-1, w.borderStyle.bottomLeft, nil, style)
+		_screen.SetContent(right-1, bot-1, w.borderStyle.bottomRight, nil, style)
 	}
 }

@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/junegunn/i/master/fzf.png" height="170" alt="fzf - a command-line fuzzy finder"> [![travis-ci](https://travis-ci.org/junegunn/fzf.svg?branch=master)](https://travis-ci.org/junegunn/fzf) [![Donate via PayPal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EKYAW9PGKPD2N)
+<img src="https://raw.githubusercontent.com/junegunn/i/master/fzf.png" height="170" alt="fzf - a command-line fuzzy finder"> [![travis-ci](https://travis-ci.org/junegunn/fzf.svg?branch=master)](https://travis-ci.org/junegunn/fzf)
 ===
 
 fzf is a general-purpose command-line fuzzy finder.
@@ -26,6 +26,7 @@ Table of Contents
       * [Using Homebrew or Linuxbrew](#using-homebrew-or-linuxbrew)
       * [Using git](#using-git)
       * [As Vim plugin](#as-vim-plugin)
+      * [Arch Linux](#arch-linux)
       * [Fedora](#fedora)
       * [Windows](#windows)
    * [Upgrading fzf](#upgrading-fzf)
@@ -55,6 +56,7 @@ Table of Contents
       * [Respecting .gitignore](#respecting-gitignore)
       * [git ls-tree for fast traversal](#git-ls-tree-for-fast-traversal)
       * [Fish shell](#fish-shell)
+   * [Related projects](#related-projects)
    * [<a href="LICENSE">License</a>](#license)
 
 Installation
@@ -86,6 +88,10 @@ brew install fzf
 $(brew --prefix)/opt/fzf/install
 ```
 
+fzf is also available [via MacPorts][portfile]: `sudo port install fzf`
+
+[portfile]: https://github.com/macports/macports-ports/blob/master/sysutils/fzf/Portfile
+
 ### Using git
 
 Alternatively, you can "git clone" this repository to any directory and run
@@ -99,7 +105,7 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ### As Vim plugin
 
 Once you have fzf installed, you can enable it inside Vim simply by adding the
-directory to `&runtimepath` as follows:
+directory to `&runtimepath` in your Vim configuration file as follows:
 
 ```vim
 " If installed using Homebrew
@@ -125,10 +131,16 @@ But instead of separately installing fzf on your system (using Homebrew or
 vim-plug to do both.
 
 ```vim
-" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run install script
+" PlugInstall and PlugUpdate will clone fzf in ~/.fzf and run the install script
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   " Both options are optional. You don't have to install fzf in ~/.fzf
-  " and you don't have to run install script if you use fzf only in Vim.
+  " and you don't have to run the install script if you use fzf only in Vim.
+```
+
+### Arch Linux
+
+```sh
+sudo pacman -S fzf
 ```
 
 ### Fedora
@@ -142,8 +154,7 @@ sudo dnf install fzf
 
 Shell completion and plugins for vim or neovim are enabled by default. Shell
 key bindings are installed but not enabled by default. See Fedora's package
-documentation for more information.
-
+documentation (/usr/share/doc/fzf/README.Fedora) for more information.
 
 ### Windows
 
@@ -217,8 +228,8 @@ cursor with `--height` option.
 vim $(fzf --height 40%)
 ```
 
-Also check out `--reverse` option if you prefer "top-down" layout instead of
-the default "bottom-up" layout.
+Also check out `--reverse` and `--layout` options if you prefer
+"top-down" layout instead of the default "bottom-up" layout.
 
 ```sh
 vim $(fzf --height 40% --reverse)
@@ -228,7 +239,7 @@ You can add these options to `$FZF_DEFAULT_OPTS` so that they're applied by
 default. For example,
 
 ```sh
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 ```
 
 #### Search syntax
@@ -237,14 +248,15 @@ Unless otherwise specified, fzf starts in "extended-search mode" where you can
 type in multiple search terms delimited by spaces. e.g. `^music .mp3$ sbtrkt
 !fire`
 
-| Token    | Match type                 | Description                       |
-| -------- | -------------------------- | --------------------------------- |
-| `sbtrkt` | fuzzy-match                | Items that match `sbtrkt`         |
-| `^music` | prefix-exact-match         | Items that start with `music`     |
-| `.mp3$`  | suffix-exact-match         | Items that end with `.mp3`        |
-| `'wild`  | exact-match (quoted)       | Items that include `wild`         |
-| `!fire`  | inverse-exact-match        | Items that do not include `fire`  |
-| `!.mp3$` | inverse-suffix-exact-match | Items that do not end with `.mp3` |
+| Token     | Match type                 | Description                          |
+| --------- | -------------------------- | ------------------------------------ |
+| `sbtrkt`  | fuzzy-match                | Items that match `sbtrkt`            |
+| `'wild`   | exact-match (quoted)       | Items that include `wild`            |
+| `^music`  | prefix-exact-match         | Items that start with `music`        |
+| `.mp3$`   | suffix-exact-match         | Items that end with `.mp3`           |
+| `!fire`   | inverse-exact-match        | Items that do not include `fire`     |
+| `!^music` | inverse-prefix-exact-match | Items that do not start with `music` |
+| `!.mp3$`  | inverse-suffix-exact-match | Items that do not end with `.mp3`    |
 
 If you don't prefer fuzzy matching and do not wish to "quote" every word,
 start fzf with `-e` or `--exact` option. Note that when  `--exact` is set,
@@ -265,7 +277,7 @@ or `py`.
     - e.g. `export FZF_DEFAULT_COMMAND='fd --type f'`
 - `FZF_DEFAULT_OPTS`
     - Default options
-    - e.g. `export FZF_DEFAULT_OPTS="--reverse --inline-info"`
+    - e.g. `export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"`
 
 #### Options
 
@@ -304,16 +316,16 @@ fullscreen mode.
 fzf --height 40%
 ```
 
-Key bindings for command line
+Key bindings for command-line
 -----------------------------
 
 The install script will setup the following key bindings for bash, zsh, and
 fish.
 
-- `CTRL-T` - Paste the selected files and directories onto the command line
+- `CTRL-T` - Paste the selected files and directories onto the command-line
     - Set `FZF_CTRL_T_COMMAND` to override the default command
     - Set `FZF_CTRL_T_OPTS` to pass additional options
-- `CTRL-R` - Paste the selected command from history onto the command line
+- `CTRL-R` - Paste the selected command from history onto the command-line
     - If you want to see the commands in chronological order, press `CTRL-R`
       again which toggles sorting by relevance
     - Set `FZF_CTRL_R_OPTS` to pass additional options
@@ -365,7 +377,7 @@ cd ~/github/fzf**<TAB>
 
 #### Process IDs
 
-Fuzzy completion for PIDs is provided for kill command. In this case
+Fuzzy completion for PIDs is provided for kill command. In this case,
 there is no trigger sequence, just press tab key after kill command.
 
 ```sh
@@ -418,7 +430,7 @@ _fzf_compgen_dir() {
 
 On bash, fuzzy completion is enabled only for a predefined set of commands
 (`complete | grep _fzf` to see the list). But you can enable it for other
-commands as well like follows.
+commands as well as follows.
 
 ```sh
 complete -F _fzf_path_completion -o default -o bashdefault ag
@@ -435,7 +447,7 @@ Advanced topics
 
 ### Performance
 
-fzf is fast, and is [getting even faster][perf]. Performance should not be
+fzf is fast and is [getting even faster][perf]. Performance should not be
 a problem in most use cases. However, you might want to be aware of the
 options that affect the performance.
 
@@ -446,7 +458,7 @@ options that affect the performance.
 - `--with-nth` makes fzf slower as fzf has to tokenize and reassemble each
   line.
 - If you absolutely need better performance, you can consider using
-  `--algo=v1` (the default being `v2`) to make fzf use faster greedy
+  `--algo=v1` (the default being `v2`) to make fzf use a faster greedy
   algorithm. However, this algorithm is not guaranteed to find the optimal
   ordering of the matches and is not recommended.
 
@@ -467,7 +479,7 @@ See *KEY BINDINGS* section of the man page for details.
 
 ### Preview window
 
-When `--preview` option is set, fzf automatically starts external process with
+When `--preview` option is set, fzf automatically starts an external process with
 the current line as the argument and shows the result in the split window.
 
 ```bash
@@ -475,7 +487,7 @@ the current line as the argument and shows the result in the split window.
 fzf --preview 'cat {}'
 ```
 
-Since preview window is updated only after the process is complete, it's
+Since the preview window is updated only after the process is complete, it's
 important that the command finishes quickly.
 
 ```bash
@@ -486,15 +498,17 @@ fzf --preview 'head -100 {}'
 Preview window supports ANSI colors, so you can use programs that
 syntax-highlights the content of a file.
 
+- Bat: https://github.com/sharkdp/bat
 - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
 - CodeRay: http://coderay.rubychan.de/
 - Rouge: https://github.com/jneen/rouge
 
 ```bash
-# Try highlight, coderay, rougify in turn, then fall back to cat
+# Try bat, highlight, coderay, rougify in turn, then fall back to cat
 fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                  echo {} is a binary file ||
-                 (highlight -O ansi -l {} ||
+                 (bat --style=numbers --color=always {} ||
+                  highlight -O ansi -l {} ||
                   coderay {} ||
                   rougify {} ||
                   cat {}) 2> /dev/null | head -500'
@@ -507,7 +521,8 @@ You can customize the size and position of the preview window using
 fzf --height 40% --reverse --preview 'file {}' --preview-window down:1
 ```
 
-For more advanced examples, see [Key bindings for git with fzf][fzf-git].
+For more advanced examples, see [Key bindings for git with fzf][fzf-git]
+([code](https://gist.github.com/junegunn/8b572b8d4b5eddd8b85e5f4d40f17236)).
 
 [fzf-git]: https://junegunn.kr/2016/07/fzf-git/
 
@@ -573,9 +588,9 @@ fzf -m | while read -l r; set result $result $r; end; and vim $result
 ```
 
 The globbing system is different in fish and thus `**` completion will not work.
-However, the `CTRL-T` command will use the last token on the commandline as the
+However, the `CTRL-T` command will use the last token on the command-line as the
 root folder for the recursive search. For instance, hitting `CTRL-T` at the end
-of the following commandline
+of the following command-line
 
 ```sh
 ls /var/
@@ -590,6 +605,11 @@ valid directory. Example:
 ```sh
 set -g FZF_CTRL_T_COMMAND "command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
 ```
+
+Related projects
+----------------
+
+https://github.com/junegunn/fzf/wiki/Related-projects
 
 [License](LICENSE)
 ------------------

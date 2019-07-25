@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"unicode"
 	"unicode/utf8"
 	"unsafe"
@@ -94,6 +95,11 @@ func (chars *Chars) Length() int {
 	return len(chars.slice)
 }
 
+// String returns the string representation of a Chars object.
+func (chars *Chars) String() string {
+	return fmt.Sprintf("Chars{slice: []byte(%q), inBytes: %v, trimLengthKnown: %v, trimLength: %d, Index: %d}", chars.slice, chars.inBytes, chars.trimLengthKnown, chars.trimLength, chars.Index)
+}
+
 // TrimLength returns the length after trimming leading and trailing whitespaces
 func (chars *Chars) TrimLength() uint16 {
 	if chars.trimLengthKnown {
@@ -164,4 +170,13 @@ func (chars *Chars) CopyRunes(dest []rune) {
 		dest[idx] = rune(b)
 	}
 	return
+}
+
+func (chars *Chars) Prepend(prefix string) {
+	if runes := chars.optionalRunes(); runes != nil {
+		runes = append([]rune(prefix), runes...)
+		chars.slice = *(*[]byte)(unsafe.Pointer(&runes))
+	} else {
+		chars.slice = append([]byte(prefix), chars.slice...)
+	}
 }

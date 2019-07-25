@@ -1,6 +1,49 @@
 CHANGELOG
 =========
 
+0.18.0
+------
+
+- Added placeholder expression for zero-based item index: `{n}` and `{+n}`
+    - `fzf --preview 'echo {n}: {}'`
+- Added color option for the gutter: `--color gutter:-1`
+- Added `--no-unicode` option for drawing borders in non-Unicode, ASCII
+  characters
+- `FZF_PREVIEW_LINES` and `FZF_PREVIEW_COLUMNS` are exported to preview process
+    - fzf still overrides `LINES` and `COLUMNS` as before, but they may be
+      reset by the default shell.
+- Bug fixes and improvements
+    - See https://github.com/junegunn/fzf/milestone/14?closed=1
+- Built with Go 1.12.1
+
+0.17.5
+------
+
+- Bug fixes and improvements
+    - See https://github.com/junegunn/fzf/milestone/13?closed=1
+- Search query longer than the screen width is allowed (up to 300 chars)
+- Built with Go 1.11.1
+
+0.17.4
+------
+
+- Added `--layout` option with a new layout called `reverse-list`.
+    - `--layout=reverse` is a synonym for `--reverse`
+    - `--layout=default` is a synonym for `--no-reverse`
+- Preview window will be updated even when there is no match for the query
+  if any of the placeholder expressions (e.g. `{q}`, `{+}`) evaluates to
+  a non-empty string.
+- More keys for binding: `shift-{up,down}`, `alt-{up,down,left,right}`
+- fzf can now start even when `/dev/tty` is not available by making an
+  educated guess.
+- Updated the default command for Windows.
+- Fixes and improvements on bash/zsh completion
+- install and uninstall scripts now supports generating files under
+  `XDG_CONFIG_HOME` on `--xdg` flag.
+
+See https://github.com/junegunn/fzf/milestone/12?closed=1 for the full list of
+changes.
+
 0.17.3
 ------
 - `$LINES` and `$COLUMNS` are exported to preview command so that the command
