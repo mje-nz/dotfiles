@@ -10,9 +10,10 @@ keyUpDown = function(modifiers, key)
 end
 
 
+require('autoconnect-usb-audio')
 require('control-escape')
 require('mute-on-wake')
 require('mute-on-wifi')
 
-hs.notify.new({title='Hammerspoon', informativeText='Ready to rock 🤘'}):send()
 
+hs.notify.new({title='Hammerspoon', informativeText='Ready to rock 🤘'}):send()
