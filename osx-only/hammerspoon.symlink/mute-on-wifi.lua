@@ -1,4 +1,4 @@
--- Mute speakers when leaving home WiFi, turn them back on quietly wen arriving
+-- Mute speakers when leaving home WiFi, turn them back on quietly when arriving
 -- From https://www.hammerspoon.org/go/#wifievents
 
 wifiWatcher = nil
