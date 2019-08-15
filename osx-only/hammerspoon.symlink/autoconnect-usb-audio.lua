@@ -9,20 +9,20 @@ function usbDeviceCallback(data)
 				function()
 					-- Wait until the USB audio output is ready
 					local output = hs.audiodevice.findOutputByName('USB audio CODEC')
-					print('Output:', output)
 					return output ~= nil
 				end,
 				function ()
 					-- Switch to the USB audio output
-				  local success = hs.audiodevice.findOutputByName('USB audio CODEC'):setDefaultOutputDevice()
-				  if success then
-						hs.notify.new({title='Hammerspoon', informativeText="Switching to USB audio output"}):send()
+					local success = hs.audiodevice.findOutputByName('USB audio CODEC'):setDefaultOutputDevice()
+					if success then
+						print('Switching to USB audio output')
+						hs.notify.new({title='Hammerspoon', informativeText='Switching to USB audio output'}):send()
 					else
-				    print('Could not switch audio output device')
-				  end
-			  end,
-			  -- Run check every 200ms
-			  0.2
+						print('Could not switch audio output device')
+					end
+				end,
+				-- Run check every 200ms
+				0.2
 			)
 		end
 	end

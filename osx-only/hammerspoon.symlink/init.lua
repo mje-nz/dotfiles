@@ -10,6 +10,7 @@ keyUpDown = function(modifiers, key)
 end
 
 
+require('autoconnect-thunderbolt-ethernet')
 require('autoconnect-usb-audio')
 require('control-escape')
 require('mute-on-wake')
