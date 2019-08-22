@@ -1,0 +1,10 @@
+# To create a symlink:
+ln -s path/to/the/target/directory name-of-symlink
+
+# The target is any string (non-empty, no null characters), and  will be
+# interpreted as a path relative to the symlink name (or an absolute path).
+# If the symlink name is a directory and it exists, the symlink will be placed
+# inside it.
+
+# Symlink, while overwriting existing destination files
+ln -sf /some/dir/exec /usr/bin/exec
