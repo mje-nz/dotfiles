@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# Print a warning message about git branch
+# 
+# Author: Matthew Edwards
+
+# https://stackoverflow.com/a/39357426
+git () {
+   if [[ "$1" == "branch" && "$#" == 2 && "$2" != "-"* ]]; then
+    echo "'git branch' does not change branch! Did you mean 'git checkout -b $2'?"
+    shift 1
+    command git branch "$@"
+  else
+    command git "$@"
+  fi
+}
