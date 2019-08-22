@@ -18,3 +18,7 @@ if [ "`id -u`" -eq 0 ]; then
 else
     PS1="\[\033[m\]|\[\033[1;35m\]\t\[\033[m\]|\[\e[1m\]\u\[\e[1;36m\]\[\033[m\]@\[\e[1;36m\]\h\[\033[m\]:\[\e[0m\]\[\e[1;32m\][\W]> \[\e[0m\]"
 fi
+
+# Change Control-W to backspace to the next whitespace or slash
+bind 'set bind-tty-special-chars off'
+bind '"\C-w":unix-filename-rubout'
