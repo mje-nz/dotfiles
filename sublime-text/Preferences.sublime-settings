@@ -2,5 +2,6 @@
 	"ignored_packages":
 	[
 		"Vintage"
-	]
+	],
+	"drag_text": false
 }

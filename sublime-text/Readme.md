@@ -8,3 +8,5 @@ ln -s $(pwd) ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
 ```
 
 Once you [install Package Control](https://packagecontrol.io/installation), it will automatically install the packages specified here.
+
+Based on [Chris Arcand's post](https://chrisarcand.com/sublime-text-settings-and-dotfiles/).
