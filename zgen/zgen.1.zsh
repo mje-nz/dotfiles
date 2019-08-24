@@ -25,6 +25,7 @@ load-plugin-list() {
   zgen oh-my-zsh plugins/brew
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/docker
+  zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/osx
   zgen oh-my-zsh plugins/pip

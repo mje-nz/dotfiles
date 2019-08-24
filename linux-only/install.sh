@@ -18,7 +18,7 @@ if yesno "Install zsh, git, tree, ag and cheat (will use sudo)?"; then
 	success "Installed packages"
 fi
 
-if [ "$SHELL" != $(which zsh) ]; then
+if [ "$SHELL" != "$(which zsh)" ]; then
 	if yesno "Change shell to zsh (will prompt for password)?"; then
 		chsh -s $(which zsh)
 		success "You will need to log out and in again"
@@ -72,3 +72,18 @@ EOF
 	sudo systemctl enable udevmon
 	success "Installed caps2esc"
 fi
+
+if yesno "Install Homebrew and tools?"; then
+	# The install script doesn't work as root, so do a manual install
+	info "Installing Homebrew..."
+	sudo apt-get install build-essential curl file git
+	git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew
+	mkdir /home/linuxbrew/.linuxbrew/bin
+	ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin
+	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+	echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>~/.profile
+
+	info "Installing exa and fzf..."
+	brew install exa fzf
+fi
+

@@ -35,4 +35,4 @@ source ~/.bashrc
 run_installers
 
 echo ''
-echo '  All installed!'
+info 'All installed!'

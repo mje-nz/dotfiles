@@ -25,10 +25,6 @@ if command -v brew >/dev/null 2>&1; then
     fi
 fi
 
-if [ -f ~/.dotfiles/thirdparty/fzf.bash ]; then
-    source ~/.dotfiles/thirdparty/fzf.bash
-fi
-
 # Throw in a quick prompt in case I ever use bash
 # from https://www.reddit.com/r/linux/comments/2uf5uu/this_is_my_bash_prompt_which_is_your_favorite/
 if [ "`id -u`" -eq 0 ]; then
