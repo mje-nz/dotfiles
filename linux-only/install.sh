@@ -74,14 +74,16 @@ EOF
 fi
 
 if yesno "Install Homebrew and tools?"; then
-	# The install script doesn't work as root, so do a manual install
-	info "Installing Homebrew..."
-	sudo apt-get install build-essential curl file git
-	git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew
-	mkdir /home/linuxbrew/.linuxbrew/bin
-	ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin
-	eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-	echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>~/.profile
+	if ! command -v brew >/dev/null 2>&1; then
+		# The install script doesn't work as root, so do a manual install
+		info "Installing Homebrew..."
+		sudo apt-get install build-essential curl file git
+		git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew
+		mkdir /home/linuxbrew/.linuxbrew/bin
+		ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin
+		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+		echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>~/.profile
+	fi
 
 	info "Installing exa and fzf..."
 	brew install exa fzf
