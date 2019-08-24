@@ -1,47 +1,51 @@
 # Common setup for bash and zsh
 
-# Paths
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/file-formula/bin:$PATH"
-export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
-export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
-export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
-export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
-export MANPATH="/usr/local/opt/gnu-which/libexec/gnuman:$MANPATH"
-export MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
-export MANPATH="/usr/local/opt/make/libexec/gnuman:$MANPATH"
+if [ "$(uname -s)" == "Darwin" ]; then
+    # Set up paths for Homebrew packages
+    export PATH="/usr/local/opt/sqlite/bin:$PATH"
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/file-formula/bin:$PATH"
+    export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+    export PATH="/usr/local/opt/ruby/bin:$PATH"
+    export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    export MANPATH="/usr/local/opt/findutils/libexec/gnuman:$MANPATH"
+    export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"
+    export MANPATH="/usr/local/opt/gnu-tar/libexec/gnuman:$MANPATH"
+    export MANPATH="/usr/local/opt/gnu-which/libexec/gnuman:$MANPATH"
+    export MANPATH="/usr/local/opt/grep/libexec/gnuman:$MANPATH"
+    export MANPATH="/usr/local/opt/make/libexec/gnuman:$MANPATH"
+
+    # Install Homebrew casks into ~/Applications
+    export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+fi
 
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager
 export BAT_PAGER="less -RF"
 
-# Install Homebrew casks into ~/Applications
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
-
-# Aliases for ls
-alias l="exa"
-alias la="l --all"
-alias ll="exa --long --header --git"
-alias lal="ll --all"
-alias tree="exa --tree"
-alias treel="ll --tree"
-treell () { treel --colour=always $@ | less ; }
+if command -v exa >/dev/null; then
+    # Aliases for ls
+    alias l="exa"
+    alias la="l --all"
+    alias ll="exa --long --header --git"
+    alias lal="ll --all"
+    alias tree="exa --tree"
+    alias treel="ll --tree"
+    treell () { treel --colour=always $@ | less ; }
+fi
 
 # In case I want to use actual ls
 if ls --color > /dev/null 2>&1; then
-	# GNU `ls`
-	alias ls="command ls --color -Gh"
+    # GNU `ls`
+    alias ls="command ls --color -Gh"
 else
-	# macOS `ls`
-	alias ls="command ls -Gh"
+    # macOS `ls`
+    alias ls="command ls -Gh"
 fi
 
 # Other aliases
