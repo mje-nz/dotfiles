@@ -205,6 +205,18 @@ prompt_jobs_block() {
 	echo "%(1j.%{$fg[yellow]%}[%j+] %{$reset_color%}.)"
 }
 
+# Determine if we're running in a Docker container
+# https://tuhrig.de/how-to-know-you-are-inside-a-docker-container/
+running_in_docker() {
+  awk -F/ '$2 == "docker"' /proc/self/cgroup 2>/dev/null | read
+}
+
+prompt_docker_block() {
+	if running_in_docker; then
+		echo "(docker) "
+	fi
+}
+
 # Prompt character: red # for root, $ otherwise
 prompt_char() {
 	echo "%(!.%{$fg[red]%}#%{$reset_color%}.$)"
@@ -213,7 +225,7 @@ prompt_char() {
 # TODO: Tweak colours? Blue is often hard to see
 
 PROMPT='$(prompt_user_block)$(prompt_working_dir_block)
-%_$(prompt_return_value_block)$(prompt_jobs_block)$(prompt_exec_time_block)$(prompt_char) '
+%_$(prompt_return_value_block)$(prompt_jobs_block)$(prompt_exec_time_block)$(prompt_docker_block)$(prompt_char) '
 
 
 
