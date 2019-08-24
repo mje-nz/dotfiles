@@ -21,13 +21,14 @@ gsettings_array_add() {
 }
 
 
-# Add bindings
-gsettings_array_add org.cinnamon.desktop.keybindings.wm close "<Super>Q"
-gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-windows "<Super>Tab"
-gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-windows-backward "<Shift><Super>Tab"
-gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-group "<Super>grave"
-gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-group-backward "<Shift><Super>asciitilde"
-gsettings_array_add org.cinnamon.desktop.keybindings.wm panel-run-dialog "<Super>space"
-gsettings set org.cinnamon.desktop.keybindings looking-glass-keybinding "[]"
-gsettings_array_add org.cinnamon.desktop.keybindings.media-keys screensaver "<Super>l"
-
+if gsettings get org.cinnamon.desktop.keybindings.wm close >/dev/null 2>&1; then
+	# Add bindings
+	gsettings_array_add org.cinnamon.desktop.keybindings.wm close "<Super>Q"
+	gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-windows "<Super>Tab"
+	gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-windows-backward "<Shift><Super>Tab"
+	gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-group "<Super>grave"
+	gsettings_array_add org.cinnamon.desktop.keybindings.wm switch-group-backward "<Shift><Super>asciitilde"
+	gsettings_array_add org.cinnamon.desktop.keybindings.wm panel-run-dialog "<Super>space"
+	gsettings set org.cinnamon.desktop.keybindings looking-glass-keybinding "[]"
+	gsettings_array_add org.cinnamon.desktop.keybindings.media-keys screensaver "<Super>l"
+fi
