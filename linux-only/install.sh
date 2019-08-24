@@ -82,7 +82,7 @@ if yesno "Install Homebrew and tools?"; then
 		mkdir /home/linuxbrew/.linuxbrew/bin
 		ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin
 		eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-		echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >>~/.profile
+		# Path setup is in linuxbrew.zsh (haven't bothered for bash)
 	fi
 
 	info "Installing exa and fzf..."
