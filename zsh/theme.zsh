@@ -207,7 +207,7 @@ prompt_jobs_block() {
 
 # Prompt character: red # for root, $ otherwise
 prompt_char() {
-	echo '%(!.%{$fg[red]%}#%{$reset_color%}.$)'
+	echo "%(!.%{$fg[red]%}#%{$reset_color%}.$)"
 }
 
 # TODO: Tweak colours? Blue is often hard to see
