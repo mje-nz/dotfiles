@@ -22,9 +22,10 @@ load-plugin-list() {
   zgen load paulirish/git-open
 
   # Load some oh-my-zsh plugins
-  zgen oh-my-zsh plugins/brew
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/docker
+  zgen oh-my-zsh plugins/fancy-ctrl-z
+  zgen oh-my-zsh plugins/fd
   zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
   zgen oh-my-zsh plugins/osx
