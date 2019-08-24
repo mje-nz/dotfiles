@@ -3,6 +3,11 @@
 source $DOTFILES/setup_common.sh
 set -e
 
+if [ $(whoami) == "root" ]; then
+	# Handle being root
+	function sudo() { $@; }
+fi
+
 if yesno "Install zsh, git, tree, ag and cheat (will use sudo)?"; then
 	echo "Installing packages"
 
