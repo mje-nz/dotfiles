@@ -1,14 +1,32 @@
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
 # Source common profile
 source ~/.commonrc
 
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
 if command -v brew >/dev/null 2>&1; then
-	if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
-	    . $(brew --prefix)/share/bash-completion/bash_completion
-	fi
+    if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
+        . $(brew --prefix)/share/bash-completion/bash_completion
+    fi
 fi
 
 if [ -f ~/.dotfiles/thirdparty/fzf.bash ]; then
-	source ~/.dotfiles/thirdparty/fzf.bash
+    source ~/.dotfiles/thirdparty/fzf.bash
 fi
 
 # Throw in a quick prompt in case I ever use bash
@@ -20,5 +38,6 @@ else
 fi
 
 # Change Control-W to backspace to the next whitespace or slash
-bind 'set bind-tty-special-chars off'
-bind '"\C-w":unix-filename-rubout'
+# Silence errors so it doesn't complain in non-interact shells
+bind 'set bind-tty-special-chars off' 2>/dev/null
+bind '"\C-w":unix-filename-rubout' 2>/dev/null
