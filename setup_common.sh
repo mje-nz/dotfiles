@@ -4,10 +4,6 @@ info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
 }
 
-user () {
-  printf "\r  [ \033[0;33m??\033[0m ] $1\n"
-}
-
 success () {
   printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
 }
@@ -18,48 +14,65 @@ fail () {
   exit 1
 }
 
-yesno() {
-  local message=$1
-  local doit=0 action=
-  user "$message [Y]/n"
-  
-  read -n 1 action
-  case "$action" in
-    Y )
-    doit=0;;
-    n )
-    doit=1;;
-    * )
-    ;;
-  esac
-  
-  return $doit
+prompt_prefix=$'\r  [ \033[0;33m??\033[0m ]'
+
+# Prompt user for input
+prompt_result=
+prompt () {
+  local message=$1 default=$2 output=${3:-prompt_result} result=
+  if [[ "$default" ]]; then
+    message="$message [$default]"
+  fi
+
+  echo "$prompt_prefix $message: "
+  read result || true
+  if [[ "$result" ]]; then
+    eval "$output=\"$result\""
+  else
+    eval "$output=\"$default\""
+  fi
 }
 
+# Prompt user for yes/no (default yes)
+# https://stackoverflow.com/a/1885534
+yesno() {
+  local message=$1 result=
+  read -p "$prompt_prefix $1 [Y/n]: " -n 1 -r action
+  [[ $action ]] && echo
+  [[ ! $action || $action =~ ^[Yy]$ ]]
+  return $?
+}
+
+# Prompt user for yes/no (default no)
+noyes() {
+  local message=$1 result=
+  read -p "$prompt_prefix $1 [y/N]: " -n 1 -r action
+  [[ $action ]] && echo
+  [[ $action =~ ^[Yy]$ ]]
+  return $?
+}
+
+# Soft-link a file into home directory
 link_file () {
   local src=$1 dst=$2
 
   local overwrite= backup= skip=
   local action=
 
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
-  then
+  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
+    # Dest exists
 
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
-    then
+    if [ "$overwrite_all" == false ] && [ "$backup_all" == false ] && [ "$skip_all" == false ]; then
+      # No default behaviour
 
-      local currentSrc="$(readlink $dst)"
-
-      if [ "$currentSrc" == "$src" ]
-      then
-
+      if [ "$(readlink $dst)" == "$src" ]; then
+        # Already linked
         skip=true;
-
       else
-
-        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
+        echo "$prompt_prefix File already exists: $dst ($(basename "$src")), what do you want to do?"
+        printf "         [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
         read -n 1 action
+        [[ $action ]] && echo
 
         case "$action" in
           o )
@@ -75,9 +88,8 @@ link_file () {
           S )
             skip_all=true;;
           * )
-            ;;
+            skip=true;;
         esac
-
       fi
 
     fi
@@ -86,26 +98,22 @@ link_file () {
     backup=${backup:-$backup_all}
     skip=${skip:-$skip_all}
 
-    if [ "$overwrite" == "true" ]
-    then
+    if [ "$overwrite" == true ]; then
       rm -rf "$dst"
       success "removed $dst"
     fi
 
-    if [ "$backup" == "true" ]
-    then
+    if [ "$backup" == true ]; then
       mv "$dst" "${dst}.backup"
       success "moved $dst to ${dst}.backup"
     fi
 
-    if [ "$skip" == "true" ]
-    then
+    if [ "$skip" == true ]; then
       success "skipped $src"
     fi
   fi
 
-  if [ "$skip" != "true" ]  # "false" or empty
-  then
+  if [ "$skip" != true ]; then
     ln -s "$1" "$2" || fail "Could not link $1 to $2"
     success "linked $1 to $2"
   fi

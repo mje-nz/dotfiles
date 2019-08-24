@@ -25,7 +25,7 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 	fi
 fi
 
-if yesno "Install caps2esc (will use sudo)?"; then
+if noyes "Install caps2esc (will use sudo)?"; then
 	echo "Installing dependencies"
 	sudo apt-get install -y build-essential cmake libevdev-dev libyaml-cpp-dev
 	echo "Building and installing interception tools"

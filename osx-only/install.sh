@@ -7,7 +7,7 @@ if test "$(uname)" != "Darwin"; then
 	fail "This install script is for macOS only."
 fi
 
-if yesno "Install macOS settings (will use sudo, and restart various applications)?"; then
+if noyes "Install macOS settings (will use sudo, and restart various applications)?"; then
 
 	# Close any open System Preferences panes, to prevent them from overriding
 	# settings we're about to change
@@ -257,7 +257,7 @@ if yesno "Install Homebrew and tools?"; then
 		chsh -s $(which zsh)
 	fi
 	
-	if yesno "Install GUI apps with Homebrew Cask?"; then
+	if noyes "Install GUI apps with Homebrew Cask?"; then
 		# Check if Hammerspoon is installed
 		open_hammerspoon=true
 		if [ -e "$HOME/Applications/Hammerspoon.app" -o -e "/Applications/Hammerspoon.app" ]; then
