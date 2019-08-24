@@ -10,10 +10,10 @@ load-plugin-list() {
 
   zgen oh-my-zsh
 
-  # If zsh-syntax-highlighting is bundled after zsh-history-substring-search,
-  # they break, so get the order right.
+  # Fish-style syntax highlighting, history substring search, and autosuggestions.
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load zsh-users/zsh-history-substring-search
+  zgen load zsh-users/zsh-autosuggestions
 
   # Warn you when you run a command that you've got an alias for
   zgen load djui/alias-tips
