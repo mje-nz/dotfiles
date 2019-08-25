@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"CMake",
 		"Dockerfile Syntax Highlighting",
 		"Package Control"
 	]

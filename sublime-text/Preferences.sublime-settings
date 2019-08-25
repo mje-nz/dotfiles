@@ -1,7 +1,14 @@
 {
+	"copy_with_empty_selection": false,
+	"drag_text": false,
+	"ensure_newline_at_eof_on_save": true,
 	"ignored_packages":
 	[
 		"Vintage"
 	],
-	"drag_text": false
+	"scroll_past_end": true,
+	"show_encoding": true,
+	"show_full_path": true,
+	"show_line_endings": true,
+	"trim_trailing_white_space_on_save": true
 }
