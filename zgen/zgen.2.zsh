@@ -1,7 +1,7 @@
 # zgen setup
-# 
+#
 # Note that this must run before theme.zsh, or it will steamroll its changes
-# 
+#
 # Based on https://github.com/unixorn/zsh-quickstart-kit/blob/master/zsh/.zgen-setup
 
 
@@ -75,6 +75,7 @@ if [ $(get_file_modification_time $0) -gt $(get_file_modification_time ~/.zgen/i
   load-plugin-list
 fi
 
+
 # Alias for man-preview in osx plugin
 alias manp=man-preview
 
@@ -89,10 +90,3 @@ unalias please >/dev/null 2>&1
 unalias g
 unalias gca
 unalias gca!
-
-# Tweak to prevent slow pasting of long strings 
-# See https://github.com/zsh-users/zsh-syntax-highlighting/issues/295
-zstyle ':bracketed-paste-magic' active-widgets '.self-*'
-
-# Autoload some built-in functions
-autoload -Uz zcalc zmv
