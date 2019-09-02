@@ -6,6 +6,22 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt HIST_IGNORE_SPACE
 
+# Up/down arrows ignore SHARE_HISTORY
+bindkey '^[OA' up-line-or-local-history
+bindkey '^[OB' down-line-or-local-history
+up-line-or-local-history() {
+    zle set-local-history 1
+    zle up-line-or-history
+    zle set-local-history 0
+}
+zle -N up-line-or-local-history
+down-line-or-local-history() {
+    zle set-local-history 1
+    zle down-line-or-history
+    zle set-local-history 0
+}
+zle -N down-line-or-local-history
+
 
 # Autoload some built-in functions
 autoload -Uz zcalc zmv
