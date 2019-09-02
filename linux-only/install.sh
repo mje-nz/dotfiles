@@ -8,13 +8,13 @@ if [ $(whoami) == "root" ]; then
 	function sudo() { $@; }
 fi
 
-if yesno "Install zsh, git, tree, ag and cheat (will use sudo)?"; then
+if yesno "Install zsh, git, ipython, tree, ag and cheat (will use sudo)?"; then
 	echo "Installing packages"
 
 	# Install my usual packages
-	sudo apt-get install -y zsh zsh-common git tree silversearcher-ag python-pip
+	sudo apt-get install -y zsh zsh-common git ipython ipython3 tree silversearcher-ag python-pip
 	sudo pip install cheat
-	
+
 	success "Installed packages"
 fi
 
@@ -85,7 +85,7 @@ if yesno "Install Homebrew and tools?"; then
 		# Path setup is in linuxbrew.zsh (haven't bothered for bash)
 	fi
 
-	info "Installing exa and fzf..."
-	brew install exa fzf
+	info "Installing exa, fzf and tmux..."
+	brew install exa fzf tmux
 fi
 

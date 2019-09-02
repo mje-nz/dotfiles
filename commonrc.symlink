@@ -57,5 +57,5 @@ alias rcp='rsync -aHAXxv --numeric-ids --no-i-r --info=progress2 -e "ssh -T -c c
 alias dud="du -d 1 -h"
 
 # Other aliases
-alias i="ipython3"
-alias il="ipython3 --pylab"
+alias i="ipython"
+alias il="ipython --pylab"
