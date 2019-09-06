@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # SSH to UC hosts through the ECE gateway (requires elec to be set up in ssh_config)
 
 if [[ -z $@ ]]; then

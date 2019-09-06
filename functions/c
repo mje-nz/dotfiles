@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 #
 # This lets you quickly jump into a project directory.
 #
@@ -6,7 +6,7 @@
 #
 #   c <tab>
 #
-# ...to autocomplete on all of your projects in the directories specified by 
+# ...to autocomplete on all of your projects in the directories specified by
 # $PROJECTS.  Typically I use it like:
 #
 #    c libr<tab>

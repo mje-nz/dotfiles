@@ -18,3 +18,5 @@ jobs:
         # Use bash as /usr/bin/env bash
         [[ $(grep -E -rIl '^#!(/usr)?/bin/bash' --exclude-dir=thirdparty . | wc -l) -eq 0 ]]
         for f in $(grep -rIl '^#!/usr/bin/env bash' --exclude-dir=".git" --exclude-dir="thirdparty" .); do ./shellcheck "$f"; done
+        # Use bash as /usr/bin/env zsh
+        [[ $(grep -E -rIl '^#!(/usr)?/bin/zsh' --exclude-dir=thirdparty . | wc -l) -eq 0 ]]

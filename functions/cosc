@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # SSH to UC hosts through the CSSE gateway (requires cosc to be set up in ssh_config)
 
 if [[ -z $@ ]]; then
