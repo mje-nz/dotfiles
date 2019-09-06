@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
 # Set OSX-like keybindings for Mint (and probably Gnome in general)
 
+set -e
 
 gsettings_array_add() {
-	local path=$1 key=$2 new_value=$3
-	local orig_value="$(gsettings get $path $key)"
-	
-	# Test if new_value is already in orig_value
-	if [[ "$orig_value" == *"$new_value"* ]]; then
+	local path="$1" key="$2" new_value="$3"
+	value="$(gsettings get "$path" "$key")"
+	local value
+
+	# Test if new_value is already in value
+	if [[ "$value" == *"$new_value"* ]]; then
 		return
 	fi
-	
+
 	echo "Adding keyboard shortcut for $key"
 	# Create array or append new_value
-	if [[ "$orig_value" == "@as []" ]]; then
+	if [[ "$value" == "@as []" ]]; then
 		gsettings set "$path" "$key" "['$new_value']"
 	else
-		gsettings set "$path" "$key" "$(echo $orig_value | sed -e "s/]$/, '$new_value']/")"
+
+		gsettings set "$path" "$key" "${value/%]/, \'$new_value\']}"
 	fi
 }
 

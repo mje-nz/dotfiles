@@ -15,3 +15,6 @@ jobs:
       run: |
         ./shellcheck setup setup_common.sh commonrc.symlink bash/bashrc.symlink
         for f in $(grep -rIl '^#!/bin/sh' --exclude-dir=".git" --exclude-dir="thirdparty" .); do ./shellcheck "$f"; done
+        # Use bash as /usr/bin/env bash
+        [[ $(grep -E -rIl '^#!(/usr)?/bin/bash' --exclude-dir=thirdparty . | wc -l) -eq 0 ]]
+        for f in $(grep -rIl '^#!/usr/bin/env bash' --exclude-dir=".git" --exclude-dir="thirdparty" .); do ./shellcheck "$f"; done
