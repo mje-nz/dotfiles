@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # (shebang is just for syntax highlighting)
+# shellcheck disable=1090
 
 # Refer to dotfiles path as $DOTFILES
 export DOTFILES=$HOME/.dotfiles
@@ -17,12 +18,14 @@ then
 fi
 
 # Add functions/ to fpath and autoload all files in it
+# shellcheck disable=SC2206
 fpath=($DOTFILES/functions $fpath)
+# shellcheck disable=SC2086
 autoload -U $DOTFILES/functions/*(:t)
 
 # Source all the zsh files in the topic directories for the current OS
 for file in $(find_in_topics -name "*.zsh"); do
-  source $file
+  source "$file"
 done
 
 # Source common profile

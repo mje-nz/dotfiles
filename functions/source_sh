@@ -5,5 +5,6 @@
 
 source_sh () {
   emulate -LR sh
+  # shellcheck disable=SC1090
   . "$@"
 }

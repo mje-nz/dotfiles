@@ -16,5 +16,6 @@
 # I organised my projects folder into subdirectories (e.g. Personal, Uni etc)
 # which are also completed automatically.
 
-cd "$PROJECTS/$1"
+set -e
 
+cd "$PROJECTS/$1"

@@ -1,10 +1,10 @@
 #!/usr/bin/env zsh
 # SSH to UC hosts through the ECE gateway (requires elec to be set up in ssh_config)
 
-if [[ -z $@ ]]; then
+if [[ -z "$*" ]]; then
 	# Just ssh to the gateway
 	ssh elec
 else
 	# Forward an ssh connection through the gateway to the given host
-	ssh -o ProxyCommand="ssh -W %h:%p elec" $@
+	ssh -o ProxyCommand="ssh -W %h:%p elec" "$@"
 fi
