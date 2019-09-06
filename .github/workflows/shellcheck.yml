@@ -14,3 +14,4 @@ jobs:
     - name: Run shellcheck
       run: |
         ./shellcheck setup setup_common.sh commonrc.symlink bash/bashrc.symlink
+        for f in $(grep -rIl '^#!/bin/sh' --exclude-dir=".git" --exclude-dir="thirdparty" .); do ./shellcheck "$f"; done
