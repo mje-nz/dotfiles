@@ -1,15 +1,17 @@
+#!/usr/bin/env bash
+# (sheband is only for shellcheck)
 # Common functions for setup script and install.sh scripts
 
 info () {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
+  printf "\r  [ \033[00;34m..\033[0m ] %s\n" "$1"
 }
 
 success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
+  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] %s\n" "$1"
 }
 
 fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
+  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] %s\n" "$1"
   echo ''
   exit 1
 }
@@ -17,6 +19,7 @@ fail () {
 prompt_prefix=$'\r  [ \033[0;33m??\033[0m ]'
 
 # Prompt user for input
+# shellcheck disable=2034
 prompt_result=
 prompt () {
   local message=$1 default=$2 output=${3:-prompt_result} result=
@@ -25,7 +28,7 @@ prompt () {
   fi
 
   echo "$prompt_prefix $message: "
-  read result || true
+  read -r result || true
   if [[ "$result" ]]; then
     eval "$output=\"$result\""
   else
@@ -56,22 +59,24 @@ noyes() {
 link_file () {
   local src=$1 dst=$2
 
-  local overwrite= backup= skip=
+  local overwrite=
+  local backup=
+  local skip=
   local action=
 
-  if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]; then
+  if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]; then
     # Dest exists
 
     if [ "$overwrite_all" == false ] && [ "$backup_all" == false ] && [ "$skip_all" == false ]; then
       # No default behaviour
 
-      if [ "$(readlink $dst)" == "$src" ]; then
+      if [ "$(readlink "$dst")" == "$src" ]; then
         # Already linked
         skip=true;
       else
         echo "$prompt_prefix File already exists: $dst ($(basename "$src")), what do you want to do?"
         printf "         [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
+        read -r -n 1 action
         [[ $action ]] && echo
 
         case "$action" in

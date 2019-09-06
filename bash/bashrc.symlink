@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+# (shebang is only for shellcheck)
+# shellcheck disable=1090
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -20,14 +24,14 @@ HISTFILESIZE=2000
 shopt -s checkwinsize
 
 if command -v brew >/dev/null 2>&1; then
-    if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
-        . $(brew --prefix)/share/bash-completion/bash_completion
+    if [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
+        source "$(brew --prefix)/share/bash-completion/bash_completion"
     fi
 fi
 
 # Throw in a quick prompt in case I ever use bash
 # from https://www.reddit.com/r/linux/comments/2uf5uu/this_is_my_bash_prompt_which_is_your_favorite/
-if [ "`id -u`" -eq 0 ]; then
+if [ "$(id -u)" -eq 0 ]; then
     PS1="\[\033[m\]|\[\033[1;35m\]\t\[\033[m\]|\[\e[1;31m\]\u\[\e[1;36m\]\[\033[m\]@\[\e[1;36m\]\h\[\033[m\]:\[\e[0m\]\[\e[1;32m\][\W]> \[\e[0m\]"
 else
     PS1="\[\033[m\]|\[\033[1;35m\]\t\[\033[m\]|\[\e[1m\]\u\[\e[1;36m\]\[\033[m\]@\[\e[1;36m\]\h\[\033[m\]:\[\e[0m\]\[\e[1;32m\][\W]> \[\e[0m\]"

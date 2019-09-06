@@ -1,17 +1,22 @@
 #!/usr/bin/env bash
 #
 # Perform initial setup
+# shellcheck disable=SC1090
+
+set -e
 
 cd "$(dirname "$0")"
-export DOTFILES=$(pwd -P)
+DOTFILES=$(pwd -P)
+export
 
-source $DOTFILES/functions/find_in_topics
-source $DOTFILES/setup_common.sh
+source "$DOTFILES/functions/find_in_topics"
+source "$DOTFILES/setup_common.sh"
 
 # Link dotfiles into home directory
 install_dotfiles () {
   info "Installing dotfiles"
 
+  # shellcheck disable=SC2034
   local overwrite_all=false backup_all=false skip_all=false
 
   for src in $(find_in_topics -name "*.symlink"); do
@@ -25,7 +30,7 @@ run_installers() {
   info "Running installers..."
 
   for installer in $(find_in_topics -name install.sh); do
-    sh -c "$installer"  || fail "$installer failed"
+    bash -c "$installer"  || fail "$installer failed"
   done
 }
 

@@ -1,0 +1,16 @@
+name: Run shellcheck
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install shellcheck
+      run: |
+        # System shellcheck is outdated
+        wget https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+        tar xvf shellcheck-stable.linux.x86_64.tar.xz --strip=1
+        ./shellcheck --version
+    - name: Run shellcheck
+      run: |
+        ./shellcheck setup setup_common.sh commonrc.symlink bash/bashrc.symlink
