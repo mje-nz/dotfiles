@@ -2,7 +2,6 @@
 #
 # Quick shortcut to make a directory and then change to it.
 
-set -e
-
 mkdir -p "$1"
-cd "$1"
+
+cd "$1" || exit
