@@ -62,3 +62,4 @@ alias dud="du -d 1 -h"
 alias i="ipython"
 alias il="ipython --pylab"
 alias shellcheck="shellcheck --color=always"
+alias ag='ag --pager="less -FR"'
