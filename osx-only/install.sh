@@ -26,7 +26,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# General UI/UX                                                               #
+	echo "General UI/UX"
 	###############################################################################
 
 	# Expand save panel by default
@@ -70,7 +70,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# App Store                                                                   #
+	echo "App Store"
 	###############################################################################
 
 	# Disable downloading updates in the background
@@ -78,7 +78,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# Trackpad, keyboard, sound, and input                                        #
+	echo "Trackpad, keyboard, sound, and input"
 	###############################################################################
 
 	# Enable tap to click for this user and for the login screen
@@ -98,7 +98,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# Finder                                                                      #
+	echo "Finder"
 	###############################################################################
 
 	# Display full POSIX path as Finder window title
@@ -130,7 +130,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# Dock, Dashboard, and hot corners                                            #
+	echo "Dock, Dashboard, and hot corners"
 	###############################################################################
 
 	# Set Dock position to left
@@ -156,7 +156,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# Safari & WebKit                                                             #
+	echo "Safari & WebKit"
 	###############################################################################
 
 	# Enable the Develop menu and the Web Inspector in Safari
@@ -181,8 +181,9 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# Terminal.app                                                                #
+	echo "Terminal.app"
 	###############################################################################
+	# Install Molokai colour scheme and set as default
 	pushd "$(dirname "$0")" > /dev/null
 	profile="$(<terminal-profile.xml)"
 	popd > /dev/null
@@ -190,9 +191,18 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 	defaults write com.apple.Terminal "Default Window Settings" -string "Molokai"
 	defaults write com.apple.Terminal "Startup Window Settings" -string "Molokai"
 
+	# Fix terminfo so dim works
+	# https://unix.stackexchange.com/a/295765
+	terminfo_file=$(mktemp)
+	infocmp -1x xterm-256color > "$terminfo_file"
+	echo "	dim=\E[2m," >> "$terminfo_file"
+	echo "	sgr=%?%p9%t\E(0%e\E(B%;\E[0%?%p6%t;1%;%?%p5%t;2%;%?%p2%t;4%;%?%p1%p3%|%t;7%;%?%p4%t;5%;%?%p7%t;8%;m," >> "$terminfo_file"
+	tic -x "$terminfo_file"
+	rm "$terminfo_file"
+
 
 	###############################################################################
-	# Transmission.app                                                            #
+	echo "Transmission.app"
 	###############################################################################
 
 	# Hide the donate message
@@ -208,7 +218,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
-	# Kill affected applications                                                  #
+	echo "Kill affected applications"
 	###############################################################################
 
 	for app in "cfprefsd" \
@@ -216,7 +226,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 		"Finder" \
 		"Safari" \
 		"Transmission"; do
-		killall "${app}" &> /dev/null
+		killall "${app}" &> /dev/null || true
 	done
 	echo "Done. Note that some of these changes require a logout/restart to take effect."
 fi
