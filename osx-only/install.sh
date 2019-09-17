@@ -202,6 +202,16 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
+	echo "Sourcetree.app"
+	###############################################################################
+	defaults write com.torusknot.SourceTreeNotMAS agreedToUpdateConfig -bool false
+	defaults write com.torusknot.SourceTreeNotMAS allowForcePush -bool true
+	defaults write com.torusknot.SourceTreeNotMAS alwaysDisplayFullOutput -bool true
+	defaults write com.torusknot.SourceTreeNotMAS analyticsHasAgreed -bool false
+	defaults write com.torusknot.SourceTreeNotMAS bookmarksClosedOnStartup -bool true
+	defaults write com.torusknot.SourceTreeNotMAS disableDesktopNotifications -bool true
+
+	###############################################################################
 	echo "Transmission.app"
 	###############################################################################
 
