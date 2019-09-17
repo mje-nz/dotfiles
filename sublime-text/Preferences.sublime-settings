@@ -1,4 +1,8 @@
 {
+	"added_words":
+	[
+		"serverless"
+	],
 	"copy_with_empty_selection": false,
 	"drag_text": false,
 	"ensure_newline_at_eof_on_save": true,
