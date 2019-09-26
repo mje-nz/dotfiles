@@ -26,9 +26,13 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 fi
 
+# Make less quit if the output is less than a page
+# (R is default, passes through ANSI colour codes)
+export LESS="RF"
+
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager
-export BAT_PAGER="less -RF"
+export BAT_PAGER="less -$LESS"
 
 if command -v exa >/dev/null; then
     # Aliases for ls
@@ -62,4 +66,4 @@ alias dud="du -d 1 -h"
 alias i="ipython"
 alias il="ipython --pylab"
 alias shellcheck="shellcheck --color=always"
-alias ag='ag --pager="less -FR"'
+alias ag='ag --pager="less"'
