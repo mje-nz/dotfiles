@@ -1,7 +1,13 @@
 #!/usr/bin/env zsh
-# Print a warning message about git branch
-# 
+# Print a warning message about git branch, turn on --recurse-submodules for clone
+# and checkout.
+#
 # Author: Matthew Edwards
+
+_print_and_run () {
+  echo "$(tput dim)Correcting to $*$(tput sgr0)"
+  command "$@"
+}
 
 # https://stackoverflow.com/a/39357426
 git () {
@@ -9,7 +15,21 @@ git () {
     echo "'git branch' does not change branch! Did you mean 'git checkout -b $2'?"
     shift 1
     command git branch "$@"
+  elif [[ "$1" == "clone" ]]; then
+    shift 1
+    # After the clone is created, initialize and clone submodules.  This is
+    # equivalent to running `git submodule update --init --recursive` immediately
+    # after the clone is finished.
+    _print_and_run git clone --recurse-submodules "$@"
+  elif [[ "$1" == "checkout" ]]; then
+    shift 1
+    # Update the content of all initialized submodules according to the commit
+    # recorded in the superproject.  If local modifications in a submodule would
+    # be overwritten the checkout will fail unless -f is used.
+    _print_and_run git checkout --recurse-submodules "$@"
   else
     command git "$@"
   fi
 }
+
+git "$@"
