@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/scopatz/nanorc.git
+	branch = master
+	commit = 37c5b360680f1ac66b9293122b3c488930202324
+	parent = af4f66931629e4d6e4fadc24eedfa99aab938c4e
+	method = merge
+	cmdver = 0.4.0
