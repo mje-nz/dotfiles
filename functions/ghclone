@@ -1,5 +1,5 @@
+#!/usr/bin/env bash
 
-#!/usr/bin/env sh
 # Shortcut for cloning GitHub repos, especially my own.
 # Based on https://github.com/johno/ghclone
 
@@ -30,9 +30,8 @@
 DEFAULT_USER="mje-nz"
 
 print_usage () {
-  echo "Usage: ghclone [-h] [<username>/]<repo> [<dir>]\n"
+  echo "Usage: ghclone [-h] [<username>/]<repo> [<dir>]"
   echo "    -h    Use HTTPS instead of SSH"
-  exit 1
 }
 
 # Process flags
@@ -46,23 +45,24 @@ done
 shift $((OPTIND-1))
 
 # Process username/repo argument
-if [[ -z $1 ]]; then
+if [[ -z "$1" ]]; then
   print_usage
+  return 1
 fi
-if [[ $1 == */* ]]; then
+if [[ "$1" == */* ]]; then
   # Not sure if repo names with slashes are valid, but some people seem to think so
-  USER=${1%%/*}  # Keep up to first slash
-  REPO=${1#*/} # Keep from first slash
+  USER="${1%%/*}"  # Keep up to first slash
+  REPO="${1#*/}" # Keep from first slash
 else
-  USER=$DEFAULT_USER
-  REPO=$1
+  USER="$DEFAULT_USER"
+  REPO="$1"
 fi
 
 # Process folder argument
-if [[ -n $2 ]]; then
-  FOLDER=$2
+if [[ -n "$2" ]]; then
+  FOLDER="$2"
 else
-  FOLDER=$REPO
+  FOLDER="$REPO"
 fi
 
 # Clone and change directory
@@ -71,6 +71,6 @@ if $USE_HTTPS; then
 else
   URL="git@github.com:$USER/$REPO.git"
 fi
-echo "git clone ${URL} ${FOLDER}"
-git clone ${URL} ${FOLDER}
-cd ${FOLDER}
+echo "> git clone ${URL} ${FOLDER}"
+git clone "${URL}" "${FOLDER}" || return 1
+cd "${FOLDER}" || return 1
