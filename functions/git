@@ -9,10 +9,23 @@ _print_and_run () {
   command "$@"
 }
 
+_check_for_stashes () {
+  local branch
+  if branch="$(git symbolic-ref -q --short HEAD 2> /dev/null)" && [[ -n "$branch" ]]; then
+    local stashes
+    stashes="$(git stash list | grep "[Oo]n $branch")"
+    if [[ -n "$stashes" ]]; then
+      echo
+      echo "You have stashed changes on this branch:"
+      echo "$stashes"
+    fi
+  fi
+}
+
 # https://stackoverflow.com/a/39357426
 git () {
-   if [[ "$1" == "branch" && "$#" == 2 && "$2" != "-"* ]]; then
-    echo "'git branch' does not change branch! Did you mean 'git checkout -b $2'?"
+  if [[ "$1" == "branch" && "$#" == 2 && "$2" != "-"* ]]; then
+    echo "'git branch' does not change branch! Did you mean 'git switch $2'?"
     shift 1
     command git branch "$@"
   elif [[ "$1" == "clone" ]]; then
@@ -26,7 +39,16 @@ git () {
     # Update the content of all initialized submodules according to the commit
     # recorded in the superproject.  If local modifications in a submodule would
     # be overwritten the checkout will fail unless -f is used.
-    _print_and_run git checkout --recurse-submodules "$@"
+    _print_and_run git checkout --recurse-submodules "$@" || return $?
+    _check_for_stashes
+  elif [[ "$1" == "stash" && "$2" == "list" ]]; then
+    shift 2
+    # Show date in stash list.
+    # https://stackoverflow.com/a/31687960
+    command git stash list --format="%gd (%cr): %gs"
+  elif [[ "$1" == "switch" ]]; then
+    command git "$@" || return $?
+    _check_for_stashes
   else
     command git "$@"
   fi
