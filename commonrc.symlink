@@ -36,13 +36,13 @@ export BAT_PAGER="less -$LESS"
 
 if command -v exa >/dev/null; then
     # Aliases for ls
-    alias l="exa"
+    alias l="exa --classify"
     alias la="l --all"
-    alias ll="exa --long --header --git"
+    alias ll="l --long --header --git"
     alias lal="ll --all"
-    alias tree="exa --tree"
-    alias treel="ll --tree"
-    treell () { treel --colour=always "$@" | less ; }
+    # TODO: why don't the aliases work in here?
+    tree () { exa --classify --tree --colour=always "$@" | less; }
+    treel () { exa --classify --long --header --git --tree --colour=always "$@" | less; }
 fi
 
 # In case I want to use actual ls
