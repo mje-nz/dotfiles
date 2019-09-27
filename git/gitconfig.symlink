@@ -41,13 +41,23 @@
 [push]
     # Setting to git 2.0 default to suppress warning message.
     default = simple
+    # Verify that all submodule commits that changed in the revisions to be pushed
+    # are available on at least one remote of the submodule.
+    recurseSubmodules = check
 
 [diff]
-	submodule = log
+    # Show full diffs for changes inside submodules.
+    submodule = diff
+
 [fetch]
     # fetch and pull will recurse into a populated submodule when its superproject
     # retrieves a commit that updates the submodule's reference.
     recurseSubmodules = on-demand
+
+[submodule]
+    # Note that `recurse` overrides fetch.recurseSubmodules and push.recurseSubmodules
+    # to on or off!  I've manually set up recursion for clone and checkout in
+    # functions/git.
 
 [branch]
     # When a new branch is created with git branch, git switch or git checkout that
