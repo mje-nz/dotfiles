@@ -16,7 +16,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'
 Plug 'lervag/vimtex'
 Plug 'tomasr/molokai'
-Plug '$DOTFILES/thirdparty/fzf.noexec'
+Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
@@ -46,7 +46,7 @@ colorscheme molokai
 :set number                       " Show line numbers
 :set hidden                       " Allow modified buffers to be hidden
 :set cursorline                   " Highlight line containing cursor
-:set wildmode=longest:full,full   " When completing commands, first complete longest common string and start wildmenu, then complete first match on next tab 
+:set wildmode=longest:full,full   " When completing commands, first complete longest common string and start wildmenu, then complete first match on next tab
 :set splitbelow                   " Open new vertical splits below current window
 :set splitright                   " Open new horizontal splits to the right of current window
 :set list
