@@ -1,40 +1,44 @@
 # Local/private config and platform-specific configs go in separate files
 [include]
-        path = ~/.gitconfig.local
-        path = ~/.gitconfig.platform
+    path = ~/.gitconfig.local
+    path = ~/.gitconfig.platform
 
 [core]
-        excludesfile = ~/.gitignore
-        editor = nano
+    excludesfile = ~/.gitignore
+    editor = nano
 
 [alias]
-        co = checkout
-        st = status
-        fullstatus = !$DOTFILES/git/git-fullstatus
-        undo = !$DOTFILES/git/git-undo
-        open = !$DOTFILES/git/git-open
-        latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
-	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
+    co = checkout
+    st = status
+    fullstatus = !$DOTFILES/git/git-fullstatus
+    undo = !$DOTFILES/git/git-undo
+    open = !$DOTFILES/git/git-open
+    latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
+    stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 
 [color]
-        diff = auto
-        status = auto
-        branch = auto
-        ui = true
+    diff = auto
+    status = auto
+    branch = auto
+    ui = true
 
 [help]
-        autocorrect = 1
-
-[push]
-        # See `git help config` (search for push.default)
-        # for more information on different options of the below setting.
-        #
-        # Setting to git 2.0 default to suppress warning message
-        default = simple
+    # Automatically correct and execute mistyped commands after waiting for the
+    # given number of deciseconds.  If more than one command can be deduced from
+    # the entered text, nothing will be executed.
+    autoCorrect = 1
 
 [status]
-        submoduleSummary = true
+    # Show a summary of commits for modified submodules.
+    submoduleSummary = true
+
+[push]
+    # Setting to git 2.0 default to suppress warning message.
+    default = simple
+
 [diff]
 	submodule = log
 [fetch]
-	recurseSubmodules = on-demand
+    # fetch and pull will recurse into a populated submodule when its superproject
+    # retrieves a commit that updates the submodule's reference.
+    recurseSubmodules = on-demand
