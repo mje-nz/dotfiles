@@ -39,12 +39,12 @@ GIT_PROMPT_STAGED="%{$fg[green]%}●%{$reset_color%}"
 # Show Git branch/tag, or name/rev with a warning if on detached head
 prompt_git_branch() {
   local branch
-  if branch="$(git symbolic-ref -q --short HEAD ||
-      git name-rev --name-only --no-undefined HEAD 2> /dev/null)"; then
-    # HEAD points somewhere within a branch
+  if branch="$(git symbolic-ref -q --short HEAD 2> /dev/null)"; then
+    # HEAD points to a branch
     echo "%{$fg[yellow]%}$branch%{$reset_color%}"
-  elif branch="$(git name-rev --name-only --no-undefined --always HEAD 2> /dev/null)"; then
-    # HEAD is a commit outside a branch, which will disappear if we change branch
+  else
+    # Detached head, either print whatever name we can get or a commit hash
+    branch="$(git name-rev --name-only --no-undefined --always HEAD 2> /dev/null)"
     echo "%{$fg[red]%}detached %{$fg[yellow]%}$branch%{$reset_color%}"
   fi
 }
