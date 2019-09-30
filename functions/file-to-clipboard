@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+# Copy a file (not just its contents) to the clipboard on macOS
+# https://apple.stackexchange.com/a/15542
+
+if [[ $# -gt 1 ]]; then
+	echo "Can only copy one file"
+	false
+else
+	osascript \
+	    -e 'on run args' \
+	    -e 'set the clipboard to POSIX file (first item of args)' \
+	    -e end \
+	    "$(realpath "$1")"
+fi
