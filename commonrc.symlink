@@ -26,6 +26,10 @@ if [ "$(uname -s)" = "Darwin" ]; then
     export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 fi
 
+# Set up Golang paths
+export GOPATH="$HOME/Code/go"
+export PATH="$GOPATH/bin:$PATH"
+
 # Make less quit if the output is less than a page
 # (R is default, passes through ANSI colour codes)
 export LESS="RF"
