@@ -8,7 +8,7 @@
 extract () {
     if [ ! -f "$1" ]; then
         echo "'$1' is not a valid file"
-        exit 1
+        return 1
     fi
     case "$1" in
     *.tar.bz2)
@@ -55,6 +55,7 @@ extract () {
         ;;
     *)
         echo "'$1' cannot be extracted/mounted via extract()"
+        return 1
         ;;
     esac
 }
