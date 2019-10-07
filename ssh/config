@@ -1,0 +1,13 @@
+# Include ~/.ssh/config.local for machine-specific config
+Include config.local
+
+Host *
+  # Always use SSH2.
+  Protocol 2
+
+  # Store passphrases in keychain
+  # https://developer.apple.com/library/archive/technotes/tn2449/_index.html
+  IgnoreUnknown AddKeysToAgent,UseKeychain
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_rsa
