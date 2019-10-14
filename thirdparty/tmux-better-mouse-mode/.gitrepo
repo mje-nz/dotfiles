@@ -6,6 +6,7 @@
 [subrepo]
 	remote = https://github.com/nhdaly/tmux-better-mouse-mode
 	branch = master
-	commit = 4c686e5a1f381e072b102df63f3f8a17426fb107
-	parent = 17cde7212c1bc76284c0888287cae1774995219a
-	cmdver = 0.3.0
+	commit = aa59077c635ab21b251bd8cb4dc24c415e64a58e
+	parent = d40a21407383be852f972eb42037119cc1137f69
+	cmdver = 0.4.0
+	method = merge
