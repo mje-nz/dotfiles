@@ -66,6 +66,9 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 	# Show Battery Percentage on the menu bar
 	defaults write com.apple.menuextra.battery ShowPercent -string "YES"
 
+	# Disable Spotlight suggestions in Look up (for speed)
+	defaults write com.apple.lookup.shared LookupSuggestionsDisabled -bool true
+
 	# TODO Show volume etc in the menu bar
 
 
