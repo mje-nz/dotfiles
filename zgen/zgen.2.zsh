@@ -35,6 +35,8 @@ load-plugin-list() {
   # Load more completion files for zsh from the zsh-lovers github repo
   zgen load zsh-users/zsh-completions src
 
+  zgen load mje-nz/zsh-themes simple
+
   # Save it all to init script
   zgen save
 }
