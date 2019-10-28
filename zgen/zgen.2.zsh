@@ -4,6 +4,7 @@
 #
 # Based on https://github.com/unixorn/zsh-quickstart-kit/blob/master/zsh/.zgen-setup
 
+# shellcheck disable=SC2181,SC2034
 
 load-plugin-list() {
   echo "Initialising zgen"
@@ -64,6 +65,7 @@ export DISABLE_AUTO_UPDATE=true
 export ZGEN_PLUGIN_UPDATE_DAYS=28
 export ZGEN_SYSTEM_UPDATE_DAYS=28
 
+# shellcheck disable=SC1090
 source ~/.zgen/zgen.zsh
 
 # Check if there's an init.zsh file for zgen and generate one if not.
@@ -72,11 +74,22 @@ if ! zgen saved; then
 fi
 
 # If this file is newer than init.zsh, regenerate init.zsh
-if [ $(get_file_modification_time $0) -gt $(get_file_modification_time ~/.zgen/init.zsh) ]; then
+if [ "$(get_file_modification_time "$0")" -gt "$(get_file_modification_time ~/.zgen/init.zsh)" ]; then
   echo "Zgen config updated"
   load-plugin-list
 fi
 
+# Configure oh-my-zsh auto title
+if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]]; then
+  # Let Terminal.app do its own titles when idle (see also Terminal.app configuration
+  # in osx-only/terminal-profile.xml)
+  ZSH_THEME_TERM_TITLE_IDLE=
+  ZSH_THEME_TERM_TAB_TITLE_IDLE=
+else
+  # For terminals that don't do weird stuff to titles
+  ZSH_THEME_TERM_TAB_TITLE_IDLE="%25<…<%~%<<"  # 25 char left-truncated PWD
+  ZSH_THEME_TERM_TITLE_IDLE="%n@%m: %~"
+fi
 
 # Alias for man-preview in osx plugin
 alias manp=man-preview

@@ -66,5 +66,7 @@ Academia-specific applications:
 
 
 ## Configuration
+In iTerm, check Profiles -> Terminal -> "Terminal may report window title".
+There's supposed to be a "Terminal may report window/tab title" setting but it's not showing up for me.
 
 TODO: System settings, Jetbrains IDEs, Sublime Text, iTerm2?
