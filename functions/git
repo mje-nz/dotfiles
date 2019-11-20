@@ -28,20 +28,19 @@ git () {
   # "git branch <branch name>" with no other arguments
   if [[ "$1" == "branch" && "$#" == 2 && "$2" != "-"* ]]; then
     echo "'git branch' does not change branch! Did you mean 'git switch $2'?"
-    shift 1
-    command git branch "$@"
+    command git "$@"
   # git clone
   elif [[ "$1" == "clone" ]]; then
-    shift 1
     # shellcheck disable=SC2199
     if [[ ${@[(ie)--no-recurse-submodules]} -gt ${#@} ]]; then
       # Unless --no-recurse-submodules is provided, use --recurse-submodules:
       # After the clone is created, initialize and clone submodules.  This is
       # equivalent to running `git submodule update --init --recursive` immediately
       # after the clone is finished.
+      shift 1
       _print_and_run git clone --recurse-submodules "$@"
     else
-      command git clone "$@"
+      command git "$@"
     fi
   # git checkout
   elif [[ "$1" == "checkout" || "$1" == "co" ]]; then
@@ -60,9 +59,10 @@ git () {
   # git stash list
   elif [[ "$1" == "stash" && "$2" == "list" ]]; then
     shift 2
+    # TODO: check for --format in args first
     # Show date in stash list.
     # https://stackoverflow.com/a/31687960
-    command git stash list --format="%gd (%cr): %gs"
+    command git stash list --format="%gd (%cr): %gs" "$@"
   # git switch
   elif [[ "$1" == "switch" ]]; then
     # shellcheck disable=SC2199
