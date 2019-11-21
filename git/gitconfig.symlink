@@ -3,10 +3,6 @@
     path = ~/.gitconfig.local
     path = ~/.gitconfig.platform
 
-[core]
-    excludesfile = ~/.gitignore
-    editor = nano
-
 [alias]
     fullstatus = !$DOTFILES/git/git-fullstatus
     undo = !$DOTFILES/git/git-undo
@@ -14,18 +10,10 @@
     latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
     stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 
-[help]
-    # Automatically correct and execute mistyped commands after waiting for the
-    # given number of deciseconds.  If more than one command can be deduced from
-    # the entered text, nothing will be executed.
-    autoCorrect = 1
-
-[status]
-    # Show a summary of commits for modified submodules.
-    submoduleSummary = true
-    # Show also individual files in untracked directories (might be slower in large
-    # repos).
-    showUntrackedFiles = all
+[branch]
+    # When a new branch is created with git branch, git switch or git checkout that
+    # tracks another branch, set up pull to rebase instead of merge.
+    autoSetupRebase = always
 
 [commit]
     # Show unified diff between the HEAD commit and what would be committed at the
@@ -33,12 +21,9 @@
     # by reminding what changes the commit has.
     verbose = true
 
-[push]
-    # Set to git 2.0 default to suppress warning message.
-    default = simple
-    # Verify that all submodule commits that changed in the revisions to be pushed
-    # are available on at least one remote of the submodule.
-    recurseSubmodules = check
+[core]
+    excludesfile = ~/.gitignore
+    editor = nano
 
 [diff]
     # Uses a prefix pair that is different from the standard "a/" and "b/" depending
@@ -48,25 +33,16 @@
     # Show full diffs for changes inside submodules.
     submodule = diff
 
-[merge]
-    # In addition to the <<<<<<<, =======, and >>>>>>> markers, add a ||||||| marker
-    # that is followed by the text from the common ancestor.
-    conflictStyle = diff3
-
 [fetch]
     # Fetch and pull will only recurse into a populated submodule when its superproject
     # retrieves a commit that updates the submodule's reference (default).
     recurseSubmodules = on-demand
 
-[submodule]
-    # Note that `recurse` overrides fetch.recurseSubmodules and push.recurseSubmodules
-    # to on or off!  I've manually set up recursion for clone and checkout in
-    # functions/git.
-
-[branch]
-    # When a new branch is created with git branch, git switch or git checkout that
-    # tracks another branch, set up pull to rebase instead of merge.
-    autoSetupRebase = always
+[help]
+    # Automatically correct and execute mistyped commands after waiting for the
+    # given number of deciseconds.  If more than one command can be deduced from
+    # the entered text, nothing will be executed.
+    autoCorrect = 1
 
 [log]
     # Instead of showing the full 40-byte hexadecimal commit object name, show only
@@ -74,6 +50,30 @@
     abbrevCommit = true
     # When a single <path> is given, continue listing itshistory beyond renames.
     follow = true
+
+[merge]
+    # In addition to the <<<<<<<, =======, and >>>>>>> markers, add a ||||||| marker
+    # that is followed by the text from the common ancestor.
+    conflictStyle = diff3
+
+[push]
+    # Set to git 2.0 default to suppress warning message.
+    default = simple
+    # Verify that all submodule commits that changed in the revisions to be pushed
+    # are available on at least one remote of the submodule.
+    recurseSubmodules = check
+
+[status]
+    # Show a summary of commits for modified submodules.
+    submoduleSummary = true
+    # Show also individual files in untracked directories (might be slower in large
+    # repos).
+    showUntrackedFiles = all
+
+[submodule]
+    # Note that `recurse` overrides fetch.recurseSubmodules and push.recurseSubmodules
+    # to on or off!  I've manually set up recursion for clone and checkout in
+    # functions/git.
 
 [tag]
     # Sort tags in order of version where possible (e.g., 1.1, 1.2, ..., 1.9, 1.10).
