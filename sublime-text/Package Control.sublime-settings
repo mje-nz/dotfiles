@@ -9,6 +9,7 @@
 		"Dockerfile Syntax Highlighting",
 		"Package Control",
 		"SublimeLinter",
-		"SublimeLinter-shellcheck"
+		"SublimeLinter-shellcheck",
+		"Sync View Scroll"
 	]
 }

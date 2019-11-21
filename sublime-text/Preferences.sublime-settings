@@ -1,9 +1,17 @@
 {
 	"added_words":
 	[
-		"serverless"
+		"serverless",
+		"Manul",
+		"submodule",
+		"submodules",
+		"repo",
+		"repos",
+		"recurse",
+		"submodule's"
 	],
 	"copy_with_empty_selection": false,
+	"dictionary": "Packages/Language - English/en_GB.dic",
 	"drag_text": false,
 	"ensure_newline_at_eof_on_save": true,
 	"ignored_packages":
