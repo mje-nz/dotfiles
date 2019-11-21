@@ -8,19 +8,11 @@
     editor = nano
 
 [alias]
-    co = checkout
-    st = status
     fullstatus = !$DOTFILES/git/git-fullstatus
     undo = !$DOTFILES/git/git-undo
     open = !$DOTFILES/git/git-open
     latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
     stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
-
-[color]
-    diff = auto
-    status = auto
-    branch = auto
-    ui = true
 
 [help]
     # Automatically correct and execute mistyped commands after waiting for the
@@ -31,6 +23,9 @@
 [status]
     # Show a summary of commits for modified submodules.
     submoduleSummary = true
+    # Show also individual files in untracked directories (might be slower in large
+    # repos).
+    showUntrackedFiles = all
 
 [commit]
     # Show unified diff between the HEAD commit and what would be committed at the
@@ -39,19 +34,28 @@
     verbose = true
 
 [push]
-    # Setting to git 2.0 default to suppress warning message.
+    # Set to git 2.0 default to suppress warning message.
     default = simple
     # Verify that all submodule commits that changed in the revisions to be pushed
     # are available on at least one remote of the submodule.
     recurseSubmodules = check
 
 [diff]
+    # Uses a prefix pair that is different from the standard "a/" and "b/" depending
+    # on what is being compared (e.g., git diff compares the (i)ndex and the (w)ork
+    # tree).
+    mnemonicPrefix = true
     # Show full diffs for changes inside submodules.
     submodule = diff
 
+[merge]
+    # In addition to the <<<<<<<, =======, and >>>>>>> markers, add a ||||||| marker
+    # that is followed by the text from the common ancestor.
+    conflictStyle = diff3
+
 [fetch]
-    # fetch and pull will recurse into a populated submodule when its superproject
-    # retrieves a commit that updates the submodule's reference.
+    # Fetch and pull will only recurse into a populated submodule when its superproject
+    # retrieves a commit that updates the submodule's reference (default).
     recurseSubmodules = on-demand
 
 [submodule]
@@ -63,3 +67,29 @@
     # When a new branch is created with git branch, git switch or git checkout that
     # tracks another branch, set up pull to rebase instead of merge.
     autoSetupRebase = always
+
+[log]
+    # Instead of showing the full 40-byte hexadecimal commit object name, show only
+    # a partial prefix.
+    abbrevCommit = true
+    # When a single <path> is given, continue listing itshistory beyond renames.
+    follow = true
+
+[tag]
+    # Sort tags in order of version where possible (e.g., 1.1, 1.2, ..., 1.9, 1.10).
+    sort = version:refname
+
+[versionsort]
+    # Sort tags with these suffixes first, in this order
+    suffix = -pre
+    suffix = .pre
+    suffix = pre
+    suffix = -a
+    suffix = .a
+    suffix = a
+    suffix = -b
+    suffix = .b
+    suffix = b
+    suffix = -rc
+    suffix = .rc
+    suffix = rc
