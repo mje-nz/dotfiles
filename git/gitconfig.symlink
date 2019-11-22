@@ -62,6 +62,14 @@
     # are available on at least one remote of the submodule.
     recurseSubmodules = check
 
+[rerere]
+    # Activate recording of resolved conflicts, so that identical conflict hunks
+    # can be resolved automatically, should they be encountered again.
+    enabled = true
+    # Make git-rerere update the index with the resulting contents after it cleanly
+    # resolves conflicts using previously recorded resolution.
+    autoUpdate = true
+
 [status]
     # Show a summary of commits for modified submodules.
     submoduleSummary = true
