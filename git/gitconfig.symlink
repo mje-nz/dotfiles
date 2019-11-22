@@ -55,6 +55,10 @@
     # that is followed by the text from the common ancestor.
     conflictStyle = diff3
 
+[pull]
+    # Allow only fast-forward merges when pulling (never create a merge commit).
+    # https://blog.sffc.xyz/post/185195398930/why-you-should-use-git-pull-ff-only-git-is-a
+    ff = only
 [push]
     # Set to git 2.0 default to suppress warning message.
     default = simple
