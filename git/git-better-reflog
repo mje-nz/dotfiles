@@ -2,7 +2,7 @@
 # Massage the output from git reflog into a more helpful format:
 # * Display both index-format (master@{0}) and timestamp-format
 #   (master@{1 minute ago}) reflog designators.
-# * TODO
+# * Use descriptive commit names in reflog statuses.
 #
 # Author: Matthew Edwards
 
@@ -10,12 +10,23 @@ emulate -L zsh
 setopt RE_MATCH_PCRE
 
 # Pretty reflog command prefixed with bare commit hash
-main_reflog=(git reflog --color "--format=%h %Cred%gd%C(auto): %h %gs %C(dim)[%s]%C(auto)%d" "@{0}")
+main_reflog=(git reflog --color "--format=%h %Cred%gd%C(auto): %h %gs %C(dim)[%s]%C(reset)" "@{0}")
 # Second reflog command to get timestamp-format designator
 extra_reflog=(git reflog "--format=%h %gd" "@{now}")
 # Regexes for parsing output
-main_regex='(\w+) (.*?master@{\d+}.*?): (.+)'
-extra_regex='(\w+) master@{(.*)}'
+main_regex='(\w+) (.*?@{\d+}.*?): (.+)'
+extra_regex='(\w+) .*?@{(.*)}'
+moving_regex='(.*? moving from) (.*?) to (.*?) (.*)'
+
+# Look up descriptive name for revision
+declare -A rev_names
+get_name() {
+	local rev=$1 output=$2
+	if (( ${+rev_names[$rev]} == 0 )); then
+		rev_names[$rev]="$(git name-rev --name-only --no-undefined --always "$rev" 2> /dev/null)"
+	fi
+	eval "$output=\"$rev_names[$rev]\""
+}
 
 # Read from both reflog commands line-by-line and combine them
 while read -r main <&3 && read -r extra <&4; do
@@ -25,5 +36,12 @@ while read -r main <&3 && read -r extra <&4; do
 	extra_commit="${match[1]}"; extra_time="${match[2]}"
 	[[ "$commit" == "$extra_commit" ]] || return 253
 
-    echo "$ref $extra_time: $body"
+	if [[ "$body" =~ $moving_regex ]]; then
+		# Abbreviate commits in "moving from x to y" messages
+		start="${match[1]}"; ref1="${match[2]}"; ref2="${match[3]}"; end="${match[4]}"
+		get_name "$ref1" new_ref1 || return 252
+		get_name "$ref2" new_ref2 || return 251
+		body="$start $new_ref1 to $new_ref2 $end"
+	fi
+   	echo "$ref ($extra_time): $body"
 done 3< <("${main_reflog[@]}") 4< <("${extra_reflog[@]}")
