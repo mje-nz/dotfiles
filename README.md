@@ -7,6 +7,11 @@ My dotfiles.
 The installer will symlink the appropriate files from `.dotfiles` into your home directory, and optionally install a bunch of stuff.
 Everything is configured within `~/.dotfiles`.
 Before you run `setup` you should check everything out, or you'll end up with exactly my setup.
+There are a few things you'll definitely want to change or remove:
+
+* `ssh/config` includes my SSH host configurations.
+* The prompt will hide your username if it is Matthew (set `PROMPT_DEFAULT_USER` to customize this).
+* Hammerspoon tries to run UC Internet Enabler with my UC username when a Thunderbolt Ethernet adaptor is connected.
 
 You should probably restart afterwards to be safe.
 
