@@ -5,6 +5,9 @@
 # Refer to dotfiles path as $DOTFILES
 export DOTFILES=$HOME/.dotfiles
 
+# Repeat dotfiles path in this alias so alias-tips catches it
+alias c.="cd ~/.dotfiles"
+
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
 
@@ -79,8 +82,6 @@ alias dud="du -d 1 -h"
 
 # Other aliases
 alias ag='ag --pager="less"'
-# shellcheck disable=SC2139
-alias c.="cd $DOTFILES"
 alias i="ipython"
 alias il="ipython --pylab"
 alias shellcheck="shellcheck --color=always"
