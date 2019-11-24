@@ -33,9 +33,11 @@ export PATH="$GOPATH/bin:$PATH"
 # Add bin folder to path
 export PATH="$DOTFILES/bin:$PATH"
 
-# Make less quit if the output is less than a page
-# (R is default, passes through ANSI colour codes)
-export LESS="RF"
+# Default less options
+# -R passes through ANSI colour codes (default)
+# -F makes less quit if the output is less than a page
+# -i makes searches case-insensitive
+export LESS="RFi"
 
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager
