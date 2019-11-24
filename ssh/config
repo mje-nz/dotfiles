@@ -11,3 +11,37 @@ Host *
   UseKeychain yes
   AddKeysToAgent yes
   IdentityFile ~/.ssh/id_rsa
+
+# Home
+Host tv
+	HostName tv.lan
+	User osmc
+	AddressFamily inet
+Host vm-infra
+	HostName vm-infra.lan
+	User matthew
+
+# UC ECE
+Host elec
+	HostName ssh.elec.canterbury.ac.nz
+	ForwardAgent yes
+	User mje109
+Host elecpg029
+	HostName ELECPG029-Mint
+	User matthew
+Host oldesparky
+	HostName oldesparky.elec.canterbury.ac.nz
+	User mje109
+
+# UC CSSE
+Host cosc
+	HostName linux.cosc.canterbury.ac.nz
+	User mje109
+	ForwardAgent yes
+Host csseuav2
+	HostName 192.168.0.102
+	User uav
+Host csseuav4
+	HostName 192.168.0.107
+	User uav
+
