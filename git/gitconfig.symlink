@@ -22,6 +22,20 @@
     # by reminding what changes the commit has.
     verbose = true
 
+# Recommended colours from diff-so-fancy
+[color "diff"]
+    meta = yellow
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+[color "diff-highlight"]
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
+
 [core]
     excludesfile = ~/.gitignore
     editor = nano
