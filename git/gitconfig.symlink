@@ -47,6 +47,8 @@
     # Instead of showing the full 40-byte hexadecimal commit object name, show only
     # a partial prefix.
     abbrevCommit = true
+    # Set the default date-time mode.
+    date = relative
     # When a single <path> is given, continue listing itshistory beyond renames.
     follow = true
 
