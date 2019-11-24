@@ -72,7 +72,8 @@ alias rcp='rsync -aHAXxv --numeric-ids --no-i-r --info=progress2 -e "ssh -T -c c
 alias dud="du -d 1 -h"
 
 # Other aliases
+alias ag='ag --pager="less"'
+alias c.="cd $DOTFILES"
 alias i="ipython"
 alias il="ipython --pylab"
 alias shellcheck="shellcheck --color=always"
-alias ag='ag --pager="less"'
