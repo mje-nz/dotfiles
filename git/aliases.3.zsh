@@ -12,6 +12,7 @@ alias gac='git add -A && git commit -m'
 
 # Mine
 alias glog="git log --graph --format='%C(auto)%h %s%d %C(dim yellow)(%C(blue)%an%C(yellow), %C(green)%cr%C(yellow))%Creset'"
+alias gref="git better-reflog"
 alias gdt='git difftool'
 alias gpf='git push --force-with-lease'
 alias gacpf='gaa && gc --amend --no-edit && gpf'

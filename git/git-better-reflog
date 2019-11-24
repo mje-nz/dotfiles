@@ -3,45 +3,82 @@
 # * Display both index-format (master@{0}) and timestamp-format
 #   (master@{1 minute ago}) reflog designators.
 # * Use descriptive commit names in reflog statuses.
+# * Include commit status, author and date if they aren't in the reflog status.
 #
 # Author: Matthew Edwards
 
+# Enable PCRE for .*?
 emulate -L zsh
 setopt RE_MATCH_PCRE
 
+# Use colour if stdout is a tty
+if [[ -t 1 ]]; then
+	color="--color"
+	dim="$(tput dim)"
+	reset="$(tput sgr0)"
+fi
+
 # Pretty reflog command prefixed with bare commit hash
-main_reflog=(git reflog --color "--format=%h %Cred%gd%C(auto): %h %gs %C(dim)[%s]%C(reset)" "@{0}")
-# Second reflog command to get timestamp-format designator
-extra_reflog=(git reflog "--format=%h %gd" "@{now}")
+main_reflog=(git reflog "$color" "--format=%h %Cred%gd%C(auto): %h %gs" "@{0}")
+# Second reflog command to get timestamp-format designator and commit info
+extra_reflog=(git reflog "$color" "--format=%h %gd %s (%C(blue)%an%C(yellow), %C(green)%cr%C(white))" "@{now}")
 # Regexes for parsing output
 main_regex='(\w+) (.*?@{\d+}.*?): (.+)'
-extra_regex='(\w+) .*?@{(.*)}'
-moving_regex='(.*? moving from) (.*?) to (.*?) (.*)'
+extra_regex='(\w+) .*?@{(.*?)} (.*) (\(.*\))'
+moving_regex='(.*? moving from) (.*?) to (.*)'
 
 # Look up descriptive name for revision
 declare -A rev_names
 get_name() {
 	local rev=$1 output=$2
 	if (( ${+rev_names[$rev]} == 0 )); then
-		rev_names[$rev]="$(git name-rev --name-only --no-undefined --always "$rev" 2> /dev/null)"
+		rev_names[$rev]="$(git name-rev --exclude="remotes/*" --name-only --no-undefined --always "$rev" 2> /dev/null)"
+		rev_names[$rev]="${rev_names[$rev]#tags/}"
 	fi
-	eval "$output=\"$rev_names[$rev]\""
+	eval "$output=\"${rev_names[$rev]}\""
+}
+
+# Basically the git pager
+pager() {
+	if [[ -t 1 ]]; then
+		eval "$(git var GIT_PAGER)"
+	else
+		cat
+	fi
 }
 
 # Read from both reflog commands line-by-line and combine them
-while read -r main <&3 && read -r extra <&4; do
-	[[ "$main" =~ $main_regex ]] || return 255
-	commit="${match[1]}"; ref="${match[2]}"; body="${match[3]}"
-	[[ "$extra" =~ $extra_regex ]] || return 254
-	extra_commit="${match[1]}"; extra_time="${match[2]}"
-	[[ "$commit" == "$extra_commit" ]] || return 253
+main() {
+	local ref_length
+	while read -r main <&3 && read -r extra <&4; do
+		[[ "$main" =~ $main_regex ]] || return 255
+		# shellcheck disable=SC2154
+		commit="${match[1]}"; ref="${match[2]}"; body="${match[3]}"
+		[[ "$extra" =~ $extra_regex ]] || return 254
+		extra_commit="${match[1]}"; extra_time="${match[2]}"
+		extra_status="${match[3]}"; extra_info="${match[4]}"
+		[[ "$commit" == "$extra_commit" ]] || return 253
 
-	if [[ "$body" =~ $moving_regex ]]; then
-		# Abbreviate commits in "moving from x to y" messages
-		start="${match[1]}"; ref1="${match[2]}"; ref2="${match[3]}"; end="${match[4]}"
-		get_name "$ref1" new_ref1 || return 252
-		get_name "$ref2" new_ref2 || return 251
-		body="$start $new_ref1 to $new_ref2 $end"
-	fi
-   	echo "$ref ($extra_time): $body"
-done 3< <("${main_reflog[@]}") 4< <("${extra_reflog[@]}")
+		if [[ "$body" =~ $moving_regex ]]; then
+			# Abbreviate commits in "moving from x to y" messages
+			start="${match[1]}"; ref1="${match[2]}"; ref2="${match[3]}"; end="${match[4]}"
+			get_name "$ref1" new_ref1 || return 252
+			get_name "$ref2" new_ref2 || return 251
+			# shellcheck disable=SC2154
+			body="$start $new_ref1 to $new_ref2 $end"
+		fi
+
+		if [[ "$body" != *"$extra_status" ]]; then
+			# Print commit status when it isn't in the reflog status
+			body="$body ${dim}[$extra_status $extra_info]$reset"
+		fi
+
+		# Pad reference field to one longer than the first one we see, so HEAD@{0}
+		# lines up with HEAD@{10}
+		[[ -z "$ref_length" ]] && (( ref_length = ${#ref} + 1 ))
+
+		printf "%-*s %-15s %s\n" "$ref_length" "$ref" "($extra_time):" "$body"
+	done 3< <("${main_reflog[@]}") 4< <("${extra_reflog[@]}")
+}
+
+main | pager
