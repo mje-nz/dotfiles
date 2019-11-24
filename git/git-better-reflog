@@ -1,15 +1,17 @@
 #!/usr/bin/env zsh
 # Massage the output from git reflog into a more helpful format:
-# * Display both index-format (master@{0}) and timestamp-format
-#   (master@{1 minute ago}) reflog designators.
+# * Display the index-format reflog designator (master@{0}) but also the
+#   timestamp from the timestamp-format reflog designator (master@{1 minute ago}).
 # * Use descriptive commit names in reflog statuses.
 # * Include commit status, author and date if they aren't in the reflog status.
 #
 # Author: Matthew Edwards
 
-# Enable PCRE for .*?
+# Enable PCRE for ".*?"
 emulate -L zsh
 setopt RE_MATCH_PCRE
+# Make "local" work in loops
+setopt TYPESET_SILENT
 
 # Use colour if stdout is a tty
 if [[ -t 1 ]]; then
@@ -53,15 +55,16 @@ main() {
 	while read -r main <&3 && read -r extra <&4; do
 		[[ "$main" =~ $main_regex ]] || return 255
 		# shellcheck disable=SC2154
-		commit="${match[1]}"; ref="${match[2]}"; body="${match[3]}"
+		local commit="${match[1]}" ref="${match[2]}" body="${match[3]}"
 		[[ "$extra" =~ $extra_regex ]] || return 254
-		extra_commit="${match[1]}"; extra_time="${match[2]}"
-		extra_status="${match[3]}"; extra_info="${match[4]}"
+		local extra_commit="${match[1]}" extra_time="${match[2]}"
+		local extra_status="${match[3]}" extra_info="${match[4]}"
 		[[ "$commit" == "$extra_commit" ]] || return 253
 
 		if [[ "$body" =~ $moving_regex ]]; then
 			# Abbreviate commits in "moving from x to y" messages
-			start="${match[1]}"; ref1="${match[2]}"; ref2="${match[3]}"; end="${match[4]}"
+			local start="${match[1]}" ref1="${match[2]}" ref2="${match[3]}"
+			local end="${match[4]}"
 			get_name "$ref1" new_ref1 || return 252
 			get_name "$ref2" new_ref2 || return 251
 			# shellcheck disable=SC2154
