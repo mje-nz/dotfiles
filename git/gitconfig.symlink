@@ -4,10 +4,11 @@
     path = ~/.gitconfig.platform
 
 [alias]
+    better-reflog = !$DOTFILES/git/git-better-reflog
     fullstatus = !$DOTFILES/git/git-fullstatus
-    undo = !$DOTFILES/git/git-undo
     latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
     stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
+    undo = !$DOTFILES/git/git-undo
 
 [branch]
     # When a new branch is created with git branch, git switch or git checkout that
