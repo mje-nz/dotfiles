@@ -30,6 +30,9 @@ fi
 export GOPATH="$HOME/Code/go"
 export PATH="$GOPATH/bin:$PATH"
 
+# Add bin folder to path
+export PATH="$DOTFILES/bin:$PATH"
+
 # Make less quit if the output is less than a page
 # (R is default, passes through ANSI colour codes)
 export LESS="RF"
