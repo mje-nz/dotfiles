@@ -2,6 +2,12 @@
 # (shebang is only for shellcheck)
 # Common setup for bash and zsh
 
+# Refer to dotfiles path as $DOTFILES
+export DOTFILES=$HOME/.dotfiles
+
+# your project folder that we can `c [tab]` to
+export PROJECTS=~/Code
+
 if [ "$(uname -s)" = "Darwin" ]; then
     # Set up paths for Homebrew packages
     export PATH="/usr/local/opt/sqlite/bin:$PATH"
@@ -73,6 +79,7 @@ alias dud="du -d 1 -h"
 
 # Other aliases
 alias ag='ag --pager="less"'
+# shellcheck disable=SC2139
 alias c.="cd $DOTFILES"
 alias i="ipython"
 alias il="ipython --pylab"

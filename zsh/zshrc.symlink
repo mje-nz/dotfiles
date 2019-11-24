@@ -2,12 +2,15 @@
 # (shebang is just for syntax highlighting)
 # shellcheck disable=1090
 
-# Refer to dotfiles path as $DOTFILES
-export DOTFILES=$HOME/.dotfiles
+# Source a file in sh compatibility mode
+# https://unix.stackexchange.com/a/3449
+source_sh () {
+  emulate -LR sh
+  . "$@"
+}
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
-
+# Source common profile
+source_sh ~/.commonrc
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
@@ -28,6 +31,4 @@ for file in $(find_in_topics -name "*.zsh"); do
   source "$file"
 done
 
-# Source common profile
-source_sh ~/.commonrc
 
