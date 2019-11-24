@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/so-fancy/diff-so-fancy
+	branch = master
+	commit = 05e2a1aca01746ed5de24e27f1ca7832393dc216
+	parent = cc9a0664c23acdc743f978b7684927b1e17a0f86
+	method = merge
+	cmdver = 0.4.0
