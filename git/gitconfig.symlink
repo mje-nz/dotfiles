@@ -5,6 +5,8 @@
 
 [alias]
     better-reflog = !$DOTFILES/git/git-better-reflog
+    # This is basically zdharma/zsh-diff-so-fancy, except I don't want less -X
+    # as it breaks scrolling on macOS
     dsf = !git diff --color "$@" | diff-so-fancy | less
     fullstatus = !$DOTFILES/git/git-fullstatus
     latexdiff = !$DOTFILES/thirdparty/git-latexdiff/git-latexdiff
