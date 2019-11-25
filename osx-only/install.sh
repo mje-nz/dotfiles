@@ -213,6 +213,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 	defaults write com.torusknot.SourceTreeNotMAS analyticsHasAgreed -bool false
 	defaults write com.torusknot.SourceTreeNotMAS bookmarksClosedOnStartup -bool true
 	defaults write com.torusknot.SourceTreeNotMAS disableDesktopNotifications -bool true
+	defaults write com.torusknot.SourceTreeNotMAS checkRemoteStatus -bool false
 
 	###############################################################################
 	echo "Transmission.app"
