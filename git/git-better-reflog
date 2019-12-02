@@ -21,9 +21,13 @@ if [[ -t 1 ]]; then
 fi
 
 # Pretty reflog command prefixed with bare commit hash
-main_reflog=(git reflog "$color" "--format=%h %Cred%gd%C(auto): %h %gs" "@{0}")
+main_reflog() {
+	git reflog "$color" "--format=%h %Cred%gd%C(auto): %h %gs" "$1@{0}"
+}
 # Second reflog command to get timestamp-format designator and commit info
-extra_reflog=(git reflog "$color" "--format=%h %gd %s (%C(blue)%an%C(yellow), %C(green)%cr%C(white))" "@{now}")
+extra_reflog() {
+	git reflog "$color" "--format=%h %gd %s (%C(blue)%an%C(yellow), %C(green)%cr%C(white))" "$1@{now}"
+}
 # Regexes for parsing output
 main_regex='(\w+) (.*?@{\d+}.*?): (.+)'
 extra_regex='(\w+) .*?@{(.*?)} (.*) (\(.*\))'
@@ -89,7 +93,12 @@ main() {
 		fi
 
 		printf "%-*s %-15s %s\n" "$ref_length" "$ref" "($extra_time):" "$body"
-	done 3< <("${main_reflog[@]}") 4< <("${extra_reflog[@]}")
+	done 3< <(main_reflog "$1") 4< <(extra_reflog "$1")
 }
 
-main | pager
+if [[ $# -gt 1 || "$1" == *@* ]]; then
+	echo "usage: git better-reflog [branch]" >&2
+	exit 1
+fi
+
+main "$1" | pager
