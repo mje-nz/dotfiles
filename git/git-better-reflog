@@ -32,6 +32,7 @@ extra_reflog() {
 main_regex='(\w+) (.*?@{\d+}.*?): (.+)'
 extra_regex='(\w+) .*?@{(.*?)} (.*) (\(.*\))'
 moving_regex='(.*? moving from) (.*?) to (.*)'
+rebase_regex='(rebase -i \(finish\):) (.*?) onto (.*)'
 
 # Look up descriptive name for revision
 declare -A rev_names
@@ -73,6 +74,15 @@ main() {
 			get_name "$ref2" new_ref2 || return 251
 			# shellcheck disable=SC2154
 			body="$start $new_ref1 to $new_ref2 $end"
+		fi
+
+		if [[ "$body" =~ $rebase_regex ]]; then
+			# Abbreviate commits in "rebase -i (finish): x onto y" messages
+			local start="${match[1]}" ref1="${match[2]}" ref2="${match[3]}"
+			get_name "$ref1" new_ref1 || return 252
+			get_name "$ref2" new_ref2 || return 251
+			# shellcheck disable=SC2154
+			body="$start $new_ref1 onto $new_ref2"
 		fi
 
 		if [[ "$body" != *"$extra_status" ]]; then
