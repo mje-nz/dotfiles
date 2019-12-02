@@ -7,7 +7,7 @@
 
 # Source common profile
 source ~/.commonrc
-source $DOTFILES/aliases.sh
+source "$DOTFILES/aliases.sh"
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace

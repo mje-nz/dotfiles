@@ -32,4 +32,4 @@ for file in $(find_in_topics -name "*.zsh"); do
 done
 
 # Load aliases
-source $DOTFILES/aliases.sh
+source "$DOTFILES/aliases.sh"
