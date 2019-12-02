@@ -17,6 +17,7 @@ setopt TYPESET_SILENT
 if [[ -t 1 ]]; then
 	color="--color"
 	dim="$(tput dim)"
+	hash_color="$(tput setaf 3)"
 	reset="$(tput sgr0)"
 fi
 
@@ -31,8 +32,10 @@ extra_reflog() {
 # Regexes for parsing output
 main_regex='(\w+) (.*?@{\d+}.*?): (.+)'
 extra_regex='(\w+) .*?@{(.*?)} (.*) (\(.*\))'
-moving_regex='(.*? moving from) (.*?) to (.*)'
-rebase_regex='(rebase -i \(finish\):) (.*?) onto (.*)'
+moving_regex='(.*? moving from) (\S+?) to (\S+)'
+rebase_onto_regex='^(\S+ rebase .*?finish.+?:) (\S+?) onto (\S+)'
+rebase_returning_regex='^(\S+ rebase finished: returning to) (\S+)'
+reset_regex='^(\S+ reset: moving to) (\S+)'
 
 # Look up descriptive name for revision
 declare -A rev_names
@@ -56,16 +59,17 @@ pager() {
 
 # Read from both reflog commands line-by-line and combine them
 main() {
-	local ref_length
+	local designator_length
 	while read -r main <&3 && read -r extra <&4; do
 		[[ "$main" =~ $main_regex ]] || return 255
 		# shellcheck disable=SC2154
-		local commit="${match[1]}" ref="${match[2]}" body="${match[3]}"
+		local commit="${match[1]}" designator="${match[2]}" body="${match[3]}"
 		[[ "$extra" =~ $extra_regex ]] || return 254
 		local extra_commit="${match[1]}" extra_time="${match[2]}"
 		local extra_status="${match[3]}" extra_info="${match[4]}"
 		[[ "$commit" == "$extra_commit" ]] || return 253
 
+		# Handle specific messages
 		if [[ "$body" =~ $moving_regex ]]; then
 			# Abbreviate commits in "moving from x to y" messages
 			local start="${match[1]}" ref1="${match[2]}" ref2="${match[3]}"
@@ -73,16 +77,19 @@ main() {
 			get_name "$ref1" new_ref1 || return 252
 			get_name "$ref2" new_ref2 || return 251
 			# shellcheck disable=SC2154
-			body="$start $new_ref1 to $new_ref2 $end"
-		fi
-
-		if [[ "$body" =~ $rebase_regex ]]; then
-			# Abbreviate commits in "rebase -i (finish): x onto y" messages
+			body="$start $hash_color$new_ref1$reset to $hash_color$new_ref2$reset $end"
+		elif [[ "$body" =~ $rebase_onto_regex ]]; then
+			# Abbreviate commit in "rebase finished: x onto y" messages
 			local start="${match[1]}" ref1="${match[2]}" ref2="${match[3]}"
-			get_name "$ref1" new_ref1 || return 252
-			get_name "$ref2" new_ref2 || return 251
+			get_name "$ref2" ref2 || return 250
 			# shellcheck disable=SC2154
-			body="$start $new_ref1 onto $new_ref2"
+			body="$start $hash_color$ref1$reset onto $hash_color$ref2$reset"
+		elif [[ "$body" =~ $rebase_returning_regex || "$body" =~ $reset_regex ]]; then
+			# Highlight commit in "rebase finished: returning to x" and
+			# "reset: moving to x" messages
+			local start="${match[1]}" ref="${match[2]}"
+			# shellcheck disable=SC2154
+			body="$start $hash_color$ref$reset"
 		fi
 
 		if [[ "$body" != *"$extra_status" ]]; then
@@ -91,18 +98,18 @@ main() {
 		fi
 
 
-		if [[ -z "$ref_length" ]]; then
+		if [[ -z "$designator_length" ]]; then
 			if [[ $(git rev-list --count --walk-reflogs HEAD) -ge 10 ]]; then
 				# If there are ten or more reflog entries, pad designator field
 				# to one longer than the first one we see so HEAD@{0} lines up
 				# with HEAD@{10}
-		 		(( ref_length = ${#ref} + 1 ))
+		 		(( designator_length = ${#designator} + 1 ))
 		 	else
-		 		ref_length=${#ref}
+		 		designator_length=${#designator}
 		 	fi
 		fi
 
-		printf "%-*s %-15s %s\n" "$ref_length" "$ref" "($extra_time):" "$body"
+		printf "%-*s %-15s %s\n" "$designator_length" "$designator" "($extra_time):" "$body"
 	done 3< <(main_reflog "$1") 4< <(extra_reflog "$1")
 }
 
