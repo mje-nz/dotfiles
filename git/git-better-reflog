@@ -41,6 +41,10 @@ reset_regex='^(\S+ reset: moving to) (\S+)'
 declare -A rev_names
 get_name() {
 	local rev=$1 output=$2
+
+	# Skip if already short
+	[[ ${#rev} -lt 15 ]] && return
+
 	if (( ${+rev_names[$rev]} == 0 )); then
 		rev_names[$rev]="$(git name-rev --exclude="remotes/*" --name-only --no-undefined --always "$rev" 2> /dev/null)"
 		rev_names[$rev]="${rev_names[$rev]#tags/}"
@@ -74,10 +78,10 @@ main() {
 			# Abbreviate commits in "moving from x to y" messages
 			local start="${match[1]}" ref1="${match[2]}" ref2="${match[3]}"
 			local end="${match[4]}"
-			get_name "$ref1" new_ref1 || return 252
-			get_name "$ref2" new_ref2 || return 251
+			get_name "$ref1" ref1 || return 252
+			get_name "$ref2" ref2 || return 251
 			# shellcheck disable=SC2154
-			body="$start $hash_color$new_ref1$reset to $hash_color$new_ref2$reset $end"
+			body="$start $hash_color$ref1$reset to $hash_color$ref2$reset $end"
 		elif [[ "$body" =~ $rebase_onto_regex ]]; then
 			# Abbreviate commit in "rebase finished: x onto y" messages
 			local start="${match[1]}" ref1="${match[2]}" ref2="${match[3]}"
