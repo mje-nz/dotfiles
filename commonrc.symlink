@@ -51,37 +51,3 @@ export LESS="RFi"
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager
 export BAT_PAGER="less -$LESS"
-
-if command -v exa >/dev/null; then
-    # Aliases for ls
-    alias l="exa --classify"
-    alias la="l --all"
-    alias ll="l --long --header --git"
-    alias lal="ll --all"
-    # TODO: why don't the aliases work in here?
-    tree () { exa --classify --tree --colour=always "$@" | less; }
-    treel () { exa --classify --long --header --git --tree --colour=always "$@" | less; }
-fi
-
-# In case I want to use actual ls
-if ls --color > /dev/null 2>&1; then
-    # GNU `ls`
-    alias ls="command ls --color -Gh"
-else
-    # macOS `ls`
-    alias ls="command ls -Gh"
-fi
-
-# Fast file copies
-# Based on https://gist.github.com/KartikTalwar/4393116
-# Cipher list from https://hihn.org/post/openssh-ciphers-performance-benchmark/
-alias rcp='rsync -aHAXxv --numeric-ids --no-i-r --info=progress2 -e "ssh -T -c chacha20-poly1305@openssh.com,aes192-cbc -o Compression=no -x"'
-
-# From oh-my-zsh/common-aliases
-alias dud="du -d 1 -h"
-
-# Other aliases
-alias ag='ag --pager="less"'
-alias i="ipython"
-alias il="ipython --pylab"
-alias shellcheck="shellcheck --color=always"
