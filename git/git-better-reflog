@@ -76,9 +76,17 @@ main() {
 			body="$body ${dim}[$extra_status $extra_info]$reset"
 		fi
 
-		# Pad reference field to one longer than the first one we see, so HEAD@{0}
-		# lines up with HEAD@{10}
-		[[ -z "$ref_length" ]] && (( ref_length = ${#ref} + 1 ))
+
+		if [[ -z "$ref_length" ]]; then
+			if [[ $(git rev-list --count --walk-reflogs HEAD) -ge 10 ]]; then
+				# If there are ten or more reflog entries, pad designator field
+				# to one longer than the first one we see so HEAD@{0} lines up
+				# with HEAD@{10}
+		 		(( ref_length = ${#ref} + 1 ))
+		 	else
+		 		ref_length=${#ref}
+		 	fi
+		fi
 
 		printf "%-*s %-15s %s\n" "$ref_length" "$ref" "($extra_time):" "$body"
 	done 3< <("${main_reflog[@]}") 4< <("${extra_reflog[@]}")
