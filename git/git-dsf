@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# This is basically zdharma/zsh-diff-so-fancy, except I don't want less -X
+# as it breaks scrolling on macOS
+
+# https://stackoverflow.com/a/31722425
+cd "${GIT_PREFIX:-.}" && \
+	git diff --color "$@" | diff-so-fancy | less
