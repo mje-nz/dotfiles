@@ -1,5 +1,5 @@
 # sh/bash/zsh aliases
-# 
+#
 # This is a separate file so that under zsh it can be sourced after loading
 # oh-my-zsh to override omz aliases.
 
@@ -55,3 +55,4 @@ alias ag='ag --pager="less"'
 alias i="ipython"
 alias il="ipython --pylab"
 alias shellcheck="shellcheck --color=always"
+alias dd="dd status=progress"
