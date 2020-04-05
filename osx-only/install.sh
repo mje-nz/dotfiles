@@ -99,6 +99,9 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 	# Enable App Exposé gesture
 	defaults write com.apple.dock showAppExposeGestureEnabled -bool true
 
+	# Disable acceleration for external mouse (use Mos to fix scrolling)
+	defaults write -g com.apple.mouse.scaling -1
+
 
 	###############################################################################
 	echo "Finder"
