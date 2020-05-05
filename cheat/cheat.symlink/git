@@ -1,4 +1,4 @@
-# To Revert a single file
+# To revert a single file
 git checkout <filename>
 # To un-commit the last commit (without changing the working directory)
 git reset HEAD~  # i.e. --mixed
@@ -83,3 +83,5 @@ git tag -d <tag>
 # To delete a remote tag
 git push <remote> -d refs/tags/<tag>
 
+# To rebase a child branch back onto master (master-parent-child to master-child)
+git rebase --onto master parent
