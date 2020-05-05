@@ -1,0 +1,4 @@
+# Replace gdbinit's custom prompt
+set $COLOREDPROMPT = 0
+set prompt \033[31m(gdb) \033[0m
+
