@@ -51,6 +51,7 @@ set -g @scroll-in-moused-over-pane "on"
 set -g @scroll-speed-num-lines-per-scroll "1"
 set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"  # Fix scrolling in `less` etc
 
+set -g @plugin 'tmux-plugins/tmux-yank'
 
 ######################
 ###    Plugins     ###
