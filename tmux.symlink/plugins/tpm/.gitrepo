@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/tmux-plugins/tpm
+	branch = master
+	commit = 06d41226af02ca4f5bcf58169dd4f0a2aa42218c
+	parent = 15fcd640032e356888521a3e69bf715a948c26df
+	method = merge
+	cmdver = 0.4.0
