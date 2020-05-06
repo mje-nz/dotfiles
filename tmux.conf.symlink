@@ -1,7 +1,3 @@
-## Key bindings
-unbind r  # unbind default binding to force redraw of attached client
-bind r source-file ~/.tmux.conf \; display "Finished sourcing ~/.tmux.conf ."
-
 ## Pane management
 set -g pane-base-index 1  # start pane indices at 1
 
@@ -11,11 +7,10 @@ set -g base-index 1  # start window indices at 1
 # http://unix.stackexchange.com/questions/21742/renumbering-windows-in-tmux
 set -g renumber-windows on
 
+
 ######################
 ###     Theme      ###
 ######################
-
-set -g default-terminal "screen-256color"
 
 ## Panes
 set -g pane-border-style fg=colour238
@@ -48,10 +43,20 @@ set -g message-style fg=colour232,bg=colour166
 ###     Mouse      ###
 ######################
 # https://github.com/NHDaly/tmux-better-mouse-mode
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'
 set -g mouse on
 set -g @scroll-down-exit-copy-mode "on"
 set -g @scroll-without-changing-pane "on"
 set -g @scroll-in-moused-over-pane "on"
 set -g @scroll-speed-num-lines-per-scroll "1"
 set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"  # Fix scrolling in `less` etc
-run-shell ~/.dotfiles/thirdparty/tmux-better-mouse-mode/scroll_copy_mode.tmux
+
+
+######################
+###    Plugins     ###
+######################
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run -b '~/.tmux/plugins/tpm/tpm'
