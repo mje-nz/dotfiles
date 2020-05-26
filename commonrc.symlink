@@ -51,3 +51,8 @@ export LESS="RFi"
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager
 export BAT_PAGER="less -$LESS"
+
+# Set up pyenv for managing Python versions
+# if command -v pyenv 1>/dev/null 2>&1; then
+#   eval "$(pyenv init -)"
+# fi

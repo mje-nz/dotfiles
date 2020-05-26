@@ -5,13 +5,13 @@
 sendEscape = false
 lastFlags = {}
 
-ctrlKeyHandler = function()
+
+ctrlKeyTimer = hs.timer.delayed.new(0.15, function()
   sendEscape = false
-end
+end)
 
-ctrlKeyTimer = hs.timer.delayed.new(0.15, ctrlKeyHandler)
 
-flagsChangedHandler = function(evt)
+flagsTap = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, function(evt)
   if evt:getKeyCode() ~= 62 then
     -- Only modify caps lock events
     return false
@@ -35,16 +35,12 @@ flagsChangedHandler = function(evt)
     ctrlKeyTimer:stop()
   end
   return false
-end
-
-flagsTap = hs.eventtap.new({hs.eventtap.event.types.flagsChanged}, flagsChangedHandler)
+end)
 flagsTap:start()
 
-keyDownHandler = function(evt)
+
+keyDownTap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, function(evt)
   sendEscape = false
   return false
-end
-
-keyDownTap = hs.eventtap.new({hs.eventtap.event.types.keyDown}, keyDownHandler)
+end)
 keyDownTap:start()
-

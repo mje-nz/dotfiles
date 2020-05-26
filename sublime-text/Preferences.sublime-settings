@@ -8,7 +8,36 @@
 		"repo",
 		"repos",
 		"recurse",
-		"submodule's"
+		"submodule's",
+		"Ingenic",
+		"bootloader",
+		"openfang",
+		"Xiaomi",
+		"Mijia",
+		"Xiaofang",
+		"Wyze",
+		"Dafang",
+		"config",
+		"center",
+		"yaml",
+		"printf",
+		"strftime",
+		"backlight",
+		"datasheet",
+		"Adafruit",
+		"globals",
+		"Tasmota",
+		"Sonoff",
+		"infrared",
+		"int",
+		"Arduino",
+		"setup",
+		"Bluetooth",
+		"app",
+		"backticks",
+		"codebase",
+		"Arduinos",
+		"apps"
 	],
 	"copy_with_empty_selection": false,
 	"dictionary": "Packages/Language - English/en_GB.dic",
@@ -17,6 +46,10 @@
 	"ignored_packages":
 	[
 		"Vintage"
+	],
+	"ignored_words":
+	[
+		"apiclass"
 	],
 	"scroll_past_end": true,
 	"show_encoding": true,

@@ -92,6 +92,14 @@
     # resolves conflicts using previously recorded resolution.
     autoUpdate = true
 
+# safer-git alias suggestions
+[safer-git "suggestions"]
+    diff = gd
+    log = glog
+    reflog = gref
+[safer-git "push --force"]
+    suggestion = gpf
+
 [status]
     # Show a summary of commits for modified submodules.
     submoduleSummary = true

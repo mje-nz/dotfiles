@@ -40,6 +40,9 @@ load-plugin-list() {
   zgen load mafredri/zsh-async
   zgen load mje-nz/zsh-themes async
 
+  # Git wrapper
+  zgen load ~/Code/Personal/safer-git
+
   # Save it all to init script
   zgen save
 }

@@ -45,20 +45,20 @@ get_name() {
 	# Skip if already short
 	[[ ${#rev} -lt 15 ]] && return
 
+	# Optimisation: fill cache if empty
+	if [[ ${#rev_names} -eq 0 ]]; then
+		git for-each-ref --format='%(objectname) %(refname:short)' |
+		while read commit name; do
+		    rev_names[$commit]=$name
+		done
+	fi
+
+	# Shorten name
 	if (( ${+rev_names[$rev]} == 0 )); then
 		rev_names[$rev]="$(git name-rev --exclude="remotes/*" --name-only --no-undefined --always "$rev" 2> /dev/null)"
 		rev_names[$rev]="${rev_names[$rev]#tags/}"
 	fi
 	eval "$output=\"${rev_names[$rev]}\""
-}
-
-# Basically the git pager
-pager() {
-	if [[ -t 1 ]]; then
-		eval "$(git var GIT_PAGER)"
-	else
-		cat
-	fi
 }
 
 # Read from both reflog commands line-by-line and combine them
@@ -122,4 +122,13 @@ if [[ $# -gt 1 || "$1" == *@* ]]; then
 	exit 1
 fi
 
-main "$1" | pager
+if [[ -t 1 ]]; then
+	# Basically the git pager
+	main "$1" | "$(git var GIT_PAGER)"
+else
+	set -x
+	main "$1"
+fi
+
+# TODO: handle gref | cat
+# TODO: put into own repo like https://github.com/unixorn/git-extra-commands
