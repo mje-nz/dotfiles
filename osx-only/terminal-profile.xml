@@ -200,7 +200,7 @@
 	<key>ShowRepresentedURLInTitle</key>
 	<true/>
 	<key>ShowRepresentedURLPathInTabTitle</key>
-	<true/>
+	<false/>
 	<key>ShowRepresentedURLPathInTitle</key>
 	<true/>
 	<key>ShowShellCommandInTitle</key>
@@ -242,5 +242,7 @@
 	<integer>50</integer>
 	<key>type</key>
 	<string>Window Settings</string>
+	<key>useOptionAsMetaKey</key>
+	<true/>
 </dict>
 </plist>
