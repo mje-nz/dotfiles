@@ -1,5 +1,5 @@
 alias db='docker build'
 alias dr='docker run'
-alias dri='docker run --rm --interactive --tty --init'
+alias dri='docker run --rm --interactive --tty --init --env TZ=Pacific/Auckland'
 alias dris='dri --volume "$(pwd):/src" --workdir /src'
 alias drx='dri --volume "/tmp/.X11-unix:/tmp/.X11-unix" --env DISPLAY=$DISPLAY'
