@@ -42,11 +42,17 @@ export PATH="$GOPATH/bin:$PATH"
 # Add bin folder to path
 export PATH="$DOTFILES/bin:$PATH"
 
-# Default less options
-# -R passes through ANSI colour codes (default)
-# -F makes less quit if the output is less than a page
-# -i makes searches case-insensitive
-export LESS="RFi"
+if [ "$(less --version | egrep "less [[:digit:]]+ " | awk '{print $2}')" -ge 530 ]; then
+    # Default less options
+    # -R passes through ANSI colour codes (default)
+    # -F makes less quit if the output is less than a page
+    # -i makes searches case-insensitive
+    export LESS="RFi"
+else
+    # Old versions of less suck at -F
+    # https://unix.stackexchange.com/q/107315
+    export LESS="Ri"
+fi
 
 # Fix scrolling with mouse in bat
 # https://github.com/sharkdp/bat#using-a-different-pager
