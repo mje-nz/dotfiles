@@ -5,8 +5,8 @@ set -e
 
 gsettings_array_add() {
 	local path="$1" key="$2" new_value="$3"
-	value="$(gsettings get "$path" "$key")"
 	local value
+	value="$(gsettings get "$path" "$key")"
 
 	# Test if new_value is already in value
 	if [[ "$value" == *"$new_value"* ]]; then
@@ -18,7 +18,6 @@ gsettings_array_add() {
 	if [[ "$value" == "@as []" ]]; then
 		gsettings set "$path" "$key" "['$new_value']"
 	else
-
 		gsettings set "$path" "$key" "${value/%]/, \'$new_value\']}"
 	fi
 }

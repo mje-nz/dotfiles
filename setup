@@ -7,7 +7,6 @@ set -e
 
 cd "$(dirname "$0")"
 DOTFILES=$(pwd -P)
-export
 
 source "$DOTFILES/functions/find_in_topics"
 source "$DOTFILES/setup_common.sh"
