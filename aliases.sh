@@ -52,6 +52,7 @@ alias dud="du -d 1 -h"
 
 # Other aliases
 alias ag='ag --pager="less"'
+alias bh='bat --line-range :10'
 alias i="ipython3"
 alias shellcheck="shellcheck --color=always"
 alias dd="dd status=progress"
