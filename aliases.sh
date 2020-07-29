@@ -56,3 +56,5 @@ alias bh='bat --line-range :10'
 alias i="ipython3"
 alias shellcheck="shellcheck --color=always"
 alias dd="dd status=progress"
+alias po="popd"
+alias pu="pushd"
