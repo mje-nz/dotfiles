@@ -39,8 +39,8 @@ fi
 export GOPATH="$HOME/Code/go"
 export PATH="$GOPATH/bin:$PATH"
 
-# Add bin folder to path
-export PATH="$DOTFILES/bin:$PATH"
+# Add bin folders to path
+export PATH="$HOME/.local/bin:$DOTFILES/bin:$PATH"
 
 if [ "$(less --version | egrep "less [[:digit:]]+ " | awk '{print $2}')" -ge 530 ]; then
     # Default less options
