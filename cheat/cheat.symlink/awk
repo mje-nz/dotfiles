@@ -12,3 +12,6 @@ printf '1 2 3' | awk 'BEGIN {OFS=":"}; {print $1,$2,$3}'
 
 # Print the first field of each line in the input
 awk '{print $1}'
+
+# Print the first field of each line in the input, up to the last character
+awk '{print substr($1, 1, length($1) - 1)}'

@@ -85,3 +85,9 @@ git push <remote> -d refs/tags/<tag>
 
 # To rebase a child branch back onto master (master-parent-child to master-child)
 git rebase --onto master parent
+
+# To rebase without changing dates (doesn't work with --interactive, do it after)
+git rebase --committer-date-is-author-date SHA
+
+# To rewrite history and remove a file (use on a fresh checkout)
+git filter-repo --path FILE --invert-paths
