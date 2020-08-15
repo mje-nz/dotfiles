@@ -30,6 +30,7 @@ brew 'zsh'
 
 # For pyenv
 brew 'pyenv'
+brew 'pyenv-virtualenv'
 brew 'openssl'
 brew 'readline'
 brew 'sqlite3'
