@@ -91,3 +91,6 @@ git rebase --committer-date-is-author-date SHA
 
 # To rewrite history and remove a file (use on a fresh checkout)
 git filter-repo --path FILE --invert-paths
+
+# To stash unstaged changes
+git stash -k
