@@ -64,3 +64,9 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Basically ctrl+T but including folders
 alias f="fd $FZF_FD_OPTS | fzf $FZF_PREVIEW_OPTS --preview 'bat $FZF_BAT_OPTS {} 2>/dev/null'"
+
+
+# Exclude file types from completions for specific commands (which don't have custom completions)
+LATEX_GENERATED="aux|bbl|blg|fdb_latexmk|fls|glg-abr|glo-abr|gls-abr|ist|slg|slo|sls|pytxcode|tdo|toc"
+compdef '_files -g "^*.('"$LATEX_GENERATED"'|pdf)"' subl
+compdef '_files -g "^*.('"$LATEX_GENERATED"'|log|tex)"' o
