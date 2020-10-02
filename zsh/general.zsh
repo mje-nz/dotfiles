@@ -67,6 +67,8 @@ alias f="fd $FZF_FD_OPTS | fzf $FZF_PREVIEW_OPTS --preview 'bat $FZF_BAT_OPTS {}
 
 
 # Exclude file types from completions for specific commands (which don't have custom completions)
+# (^ is from EXTENDED_GLOB, which is always on inside completion functions)
 LATEX_GENERATED="aux|bbl|blg|fdb_latexmk|fls|glg-abr|glo-abr|gls-abr|ist|slg|slo|sls|pytxcode|tdo|toc"
 compdef '_files -g "^*.('"$LATEX_GENERATED"'|pdf)"' subl
 compdef '_files -g "^*.('"$LATEX_GENERATED"'|log|tex)"' o
+compdef '_files -g "*.py"' black
