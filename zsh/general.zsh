@@ -72,3 +72,4 @@ LATEX_GENERATED="aux|bbl|blg|fdb_latexmk|fls|glg-abr|glo-abr|gls-abr|ist|slg|slo
 compdef '_files -g "^*.('"$LATEX_GENERATED"'|pdf)"' subl
 compdef '_files -g "^*.('"$LATEX_GENERATED"'|log|tex)"' o
 compdef '_files -g "*.py"' black
+compdef '_files -g "*.py"' isort
