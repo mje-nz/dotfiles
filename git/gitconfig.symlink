@@ -48,6 +48,14 @@
     # Show full diffs for changes inside submodules.
     submodule = diff
 
+[difftool]
+    # Do not prompt before launching a diff tool
+    prompt = false
+
+    # Exit when an invoked diff tool returns a non-zero exit code, and forward the
+    # exit code of the invoked tool
+    trustExitCode = true
+
 [fetch]
     # Fetch and pull will only recurse into a populated submodule when its superproject
     # retrieves a commit that updates the submodule's reference (default).
@@ -72,6 +80,10 @@
     # In addition to the <<<<<<<, =======, and >>>>>>> markers, add a ||||||| marker
     # that is followed by the text from the common ancestor.
     conflictStyle = diff3
+
+[mergetool]
+    # Do not prompt before launching a merge tool
+    prompt = false
 
 [pull]
     # Allow only fast-forward merges when pulling (never create a merge commit).
