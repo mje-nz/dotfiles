@@ -9,6 +9,12 @@ setopt HIST_IGNORE_SPACE
 # Autoload some built-in functions
 autoload -Uz zcalc zmv
 
+# zmv aliases
+alias zmv='noglob zmv'
+alias zcp='noglob zmv -C'
+alias zln='noglob zmv -L'
+alias zsy='noglob zmv -Ls'
+
 
 # Override builtin fg and bg to add bash compatibility (i.e. fg 1 instead of fg %1)
 fg() {
