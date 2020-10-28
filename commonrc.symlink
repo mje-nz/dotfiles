@@ -40,7 +40,7 @@ export GOPATH="$HOME/Code/go"
 export PATH="$GOPATH/bin:$PATH"
 
 # Add bin folders to path
-export PATH="$HOME/.local/bin:$DOTFILES/bin:$PATH"
+export PATH="$HOME/.local/bin:$DOTFILES/bin:$HOME/Library/texmf/bin:$PATH"
 
 if [ "$(less --version | egrep "less [[:digit:]]+ " | awk '{print $2}')" -ge 530 ]; then
     # Default less options
