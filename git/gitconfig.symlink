@@ -67,6 +67,12 @@
     # the entered text, nothing will be executed.
     autoCorrect = 1
 
+[init]
+    # Files and directories in the template directory whose name do not start with a
+    # dot will be copied to the $GIT_DIR after it is created.  I'm using it install
+    # pre-commit globally.
+    templateDir = $DOTFILES/git/template
+
 [log]
     # Instead of showing the full 40-byte hexadecimal commit object name, show only
     # a partial prefix.
