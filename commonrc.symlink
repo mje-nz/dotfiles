@@ -62,3 +62,6 @@ export BAT_PAGER="less -$LESS"
 # if command -v pyenv 1>/dev/null 2>&1; then
 #   eval "$(pyenv init -)"
 # fi
+
+# Refuse to overwrite files using > output redirection, use >| if you mean it
+set -o noclobber

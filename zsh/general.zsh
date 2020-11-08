@@ -79,3 +79,7 @@ compdef '_files -g "^*.('"$LATEX_GENERATED"'|pdf)"' subl
 compdef '_files -g "^*.('"$LATEX_GENERATED"'|log|tex)"' o
 compdef '_files -g "*.py"' black
 compdef '_files -g "*.py"' isort
+
+
+# Appending to a non-existent file with >> will create it (which is otherwise an error with noclobber)
+set -o append_create
