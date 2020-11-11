@@ -208,6 +208,18 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 
 
 	###############################################################################
+	echo "Mail.app"
+	###############################################################################
+	# Show most recent message at the top
+	defaults write com.apple.mail ConversationViewSortDescending -boolean true
+	# Check for new mail automatically
+	defaults write com.apple.mail AutoFetch -boolean true
+	defaults write com.apple.mail PollTime -int -1
+	# Automatically try sending later if outgoing server is unavailable
+	defaults write com.apple.mail SuppressDeliveryFailure -boolean true
+
+
+	###############################################################################
 	echo "Sourcetree.app"
 	###############################################################################
 	defaults write com.torusknot.SourceTreeNotMAS agreedToUpdateConfig -bool false
