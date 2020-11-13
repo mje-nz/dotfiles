@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 #
-# Copyright 2013-2017 - Ingy döt Net <ingy@ingy.net>
+# Copyright 2013-2020 - Ingy döt Net <ingy@ingy.net>
 #
 
 
@@ -26,9 +26,9 @@ else
 fi
 bash+:import :std can
 
-VERSION=0.4.0
+VERSION=0.4.1
 REQUIRED_GIT_VERSION=2.7.0
-GIT_TMP=.git/tmp
+GIT_TMP="$(git rev-parse --git-common-dir 2> /dev/null || echo .git)/tmp"
 
 # `git rev-parse` turns this into a getopt parser and a command usage message:
 GETOPT_SPEC="\
@@ -405,8 +405,8 @@ command:help() {
 command:version() {
   cat <<...
 git-subrepo Version: $VERSION
-Copyright 2013-2017 Ingy döt Net
-https://github.com/git-commands/git-subrepo
+Copyright 2013-2020 Ingy döt Net
+https://github.com/ingydotnet/git-subrepo
 $BASH_SOURCE
 Git Version: $git_version
 
@@ -581,8 +581,9 @@ subrepo:push() {
     if ! OK; then
       # Check if we are pushing to a new upstream repo (or branch) and just
       # push the commit directly. This is common after a `git subrepo init`:
-      local re="(^|"$'\n'")fatal: Couldn't find remote ref "
-      if [[ $output =~ $re ]]; then
+      # Force to case in
+      local re="(^|"$'\n'")fatal: couldn't find remote ref "
+      if [[ ${output,,} =~ $re ]]; then
         o "Pushing to new upstream: $subrepo_remote ($subrepo_branch)."
         new_upstream=true
       else
@@ -704,7 +705,7 @@ subrepo:branch() {
     local prev_commit=
     local ancestor=
     o "Create new commits with parents into the subrepo fetch"
-    OUT=true RUN git rev-list --reverse --ancestry-path "$subrepo_parent..HEAD"
+    OUT=true RUN git rev-list --reverse --ancestry-path --topo-order "$subrepo_parent..HEAD"
     local commit_list="$output"
     for commit in $commit_list; do
       o "Working on $commit"
@@ -737,7 +738,7 @@ subrepo:branch() {
       o "Check for rebase"
       if git:rev-exists "$refs_subrepo_fetch"; then
         if ! git:commit-in-rev-list  "$gitrepo_commit" "$refs_subrepo_fetch"; then
-          error "Local repository does not contain $gitrepo_commit. Try to 'git subrepo fetch $subref' of add the '-F' flag to always fetch the latest content."
+          error "Local repository does not contain $gitrepo_commit. Try to 'git subrepo fetch $subref' or add the '-F' flag to always fetch the latest content."
         fi
       fi
 
@@ -962,11 +963,15 @@ subrepo:clean() {
 
   if "$force_wanted"; then
     o "Remove all subrepo refs."
-    if "$all_wanted"; then
-      RUN rm -fr .git/refs/subrepo/
-    else
-      RUN rm -fr .git/refs/subrepo/$subref/
+    local suffix=""
+    if ! $all_wanted; then
+      suffix="$subref/"
     fi
+    git show-ref | while read hash ref; do
+      if [[ "$ref" == refs/subrepo/$suffix* ]]; then
+        git update-ref -d "$ref"
+      fi
+    done
   fi
 }
 
@@ -1412,6 +1417,17 @@ assert-environment-ok() {
     error "Requires git version $REQUIRED_GIT_VERSION or higher; "`
          `"you have '$git_version'."
   fi
+
+  if [[ ${BASH_VERSINFO[0]} -lt 4 ]] ; then
+    echo "The git-subrepo command requires that 'Bash 4+' is installed."
+    echo "It doesn't need to be your shell, but it must be in your PATH."
+    if [[ $OSTYPE == darwin* ]]; then
+      echo "You appear to be on macOS."
+      echo "Try: 'brew install bash'."
+      echo "This will not change your user shell, it just installs 'Bash 5.x'."
+    fi
+    exit 1
+  fi
 }
 
 # Make sure git repo is ready:
@@ -1504,13 +1520,7 @@ assert-subdir-empty() {
 # Find all the current subrepos by looking for all the subdirectories that
 # contain a `.gitrepo` file.
 get-all-subrepos() {
-  local paths=($(
-    find . -name '.gitrepo' |
-      grep -v '/.git/' |
-      grep '/.gitrepo$' |
-      sed 's/.gitrepo$//' |
-      sort
-  ))
+  local paths=($(git ls-files | sed -n 's!/\.gitrepo$!!p' | sort))
   subrepos=()
   local path
   for path in "${paths[@]}"; do

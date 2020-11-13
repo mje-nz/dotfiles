@@ -36,11 +36,11 @@ test:
 
 # Install support:
 install:
-	install -C -d -m 0755 $(INSTALL_LIB)/
+	install -d -m 0755 $(INSTALL_LIB)/
 	install -C -m 0755 $(LIB) $(INSTALL_LIB)/
-	install -C -d -m 0755 $(INSTALL_EXT)/
+	install -d -m 0755 $(INSTALL_EXT)/
 	install -C -m 0755 $(EXTS) $(INSTALL_EXT)/
-	install -C -d -m 0755 $(INSTALL_MAN1)/
+	install -d -m 0755 $(INSTALL_MAN1)/
 	install -C -m 0644 $(MAN1)/$(NAME).1 $(INSTALL_MAN1)/
 
 # Uninstall support:
@@ -57,20 +57,22 @@ env:
 .PHONY: doc
 update: doc compgen
 
+force:
+
 doc: ReadMe.pod Intro.pod $(MAN1)/$(NAME).1
 	perl pkg/bin/generate-help-functions.pl $(DOC) > \
 	    $(EXT)/help-functions.bash
 
-ReadMe.pod: $(DOC)
+ReadMe.pod: $(DOC) force
 	swim --to=pod --wrap --complete $< > $@
 
-Intro.pod: doc/intro-to-subrepo.swim
+Intro.pod: doc/intro-to-subrepo.swim force
 	swim --to=pod --wrap --complete $< > $@
 
-$(MAN1)/%.1: doc/%.swim Makefile
+$(MAN1)/%.1: doc/%.swim Makefile force
 	swim --to=man --wrap $< > $@
 
-compgen:
+compgen: force
 	perl pkg/bin/generate-completion.pl bash $(DOC) $(LIB) > \
 	    $(SHARE)/completion.bash
 	perl pkg/bin/generate-completion.pl zsh $(DOC) $(LIB) > \
