@@ -4,8 +4,9 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@gitlab.com:mje-nz/git-latexdiff.git
+	remote = https://gitlab.com/git-latexdiff/git-latexdiff.git
 	branch = master
-	commit = cc84a707822e45d8e8d8d0014939e8376595d5bb
-	parent = 8bdf3e7faf42a36dea4edc73790d5460a0f6af65
-	cmdver = 0.3.0
+	commit = 22ac11f9b49415881cd00a186379200be1044bf9
+	parent = 16eb3629aa9cb1a46f9563b89389e0f3bb2823eb
+	cmdver = 0.4.1
+	method = merge

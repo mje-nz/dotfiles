@@ -12,6 +12,8 @@ cleanup () {
 
 trap cleanup 2
 
+cd "$(dirname "$0")"
+
 perl -pi -e 's/New/Uncommited/g' test.tex test.bib
 old=b9a200a6a0c45d6c594cb3c5473edd81a7edb52c
 new=cbce899ba408849a471461bb9b5d648bf02039ef
