@@ -19,6 +19,11 @@ INSTALL_LIB  ?= $(DESTDIR)$(shell git --exec-path)
 INSTALL_EXT  ?= $(INSTALL_LIB)/$(NAME).d
 INSTALL_MAN1 ?= $(DESTDIR)$(PREFIX)/share/man/man1
 
+# Docker variables:
+DOCKER_IMAGE := ingy/bash-testing:0.0.1
+DOCKER_TESTS := 5.1 5.0 4.4 4.3 4.2 4.1 4.0
+DOCKER_TESTS := $(DOCKER_TESTS:%=docker-test-%)
+
 # Basic targets:
 default: help
 
@@ -33,6 +38,13 @@ help:
 .PHONY: test
 test:
 	prove $(PROVEOPT:%=% )test/
+
+test-all: test docker-test
+
+docker-test: $(DOCKER_TESTS)
+
+$(DOCKER_TESTS):
+	$(call docker-make-test,$(@:docker-test-%=%))
 
 # Install support:
 install:
@@ -78,5 +90,19 @@ compgen: force
 	perl pkg/bin/generate-completion.pl zsh $(DOC) $(LIB) > \
 	    $(SHARE)/zsh-completion/_git-subrepo
 
-clean purge:
-	rm -fr tmp
+clean:
+	rm -fr tmp test/tmp
+
+define docker-make-test
+	docker run -i -t --rm \
+	    -v $(PWD):/git-subrepo \
+	    -w /git-subrepo \
+	    $(DOCKER_IMAGE) \
+		/bin/bash -c ' \
+		    set -x && \
+		    [[ -d /bash-$(1) ]] && \
+		    export PATH=/bash-$(1)/bin:$$PATH && \
+		    bash --version && \
+		    make test \
+		'
+endef
