@@ -40,8 +40,8 @@ prompt () {
 # https://stackoverflow.com/a/1885534
 yesno() {
   local message=$1 result=
-  read -p "$prompt_prefix $1 [Y/n]: " -n 1 -r action
-  [[ $action ]] && echo
+  read -p "$prompt_prefix $1 [Y/n]: " -n 1 -r action || true
+  echo
   [[ ! $action || $action =~ ^[Yy]$ ]]
   return $?
 }
@@ -49,8 +49,8 @@ yesno() {
 # Prompt user for yes/no (default no)
 noyes() {
   local message=$1 result=
-  read -p "$prompt_prefix $1 [y/N]: " -n 1 -r action
-  [[ $action ]] && echo
+  read -p "$prompt_prefix $1 [y/N]: " -n 1 -r action || true
+  echo
   [[ $action =~ ^[Yy]$ ]]
   return $?
 }
@@ -76,8 +76,8 @@ link_file () {
       else
         echo "$prompt_prefix File already exists: $dst ($(basename "$src")), what do you want to do?"
         printf "         [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -r -n 1 action
-        [[ $action ]] && echo
+        read -r -n 1 action || true
+        echo
 
         case "$action" in
           o )

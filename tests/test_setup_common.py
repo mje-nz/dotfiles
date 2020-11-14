@@ -26,7 +26,7 @@ def run_bash(command, input_=None, return_value=0, timeout: float = 0.5):
     common_path = Path(__file__).parent.parent / "setup_common.sh"
     if type(command) != str:
         command = "; ".join(command)
-    command = f"source {common_path}; {command}"
+    command = f"set -e; source {common_path}; {command}"
     command = f'bash -c "{command}"'
     print("Running", command)
     # TODO: why does this hang in the debugger, or crash with encoding specified?
@@ -138,7 +138,7 @@ def test_yesno(input_, return_value):
 
 
 def test_yesno_no_stdin():
-    """Test yesno returns yes with no input."""
+    """Test yesno returns yes with no stdin."""
     command = "yesno 'Do the thing?' </dev/null"
     run_bash(command, return_value=0)
 
@@ -165,7 +165,7 @@ def test_noyes(input_, return_value):
 
 
 def test_noyes_no_stdin():
-    """Test noyes returns no with no input."""
+    """Test noyes returns no with no stdin."""
     command = "noyes 'Do the thing?' </dev/null"
     run_bash(command, return_value=1)
 
@@ -279,3 +279,28 @@ def test_link_multiple_files(
     else:
         with pytest.raises(pexpect.TIMEOUT):
             run_bash(**kwargs)
+
+
+@pytest.mark.parametrize(
+    "dest,expected",
+    (
+        # Should link file with no questions if the dest doesn't exist
+        (None, "source"),
+        # Should skip if the dest does exist
+        ("dest", "dest"),
+    ),
+)
+def test_link_file_no_stdin(in_temp_dir, dest, expected, src="source"):
+    """Test link_file helper skips with no stdin.
+
+    Args:
+        dest: initial content of dest file, or None for nonexistent
+        expected: final content of dest file
+        src: content of source file
+    """
+    open("src", "w").write(src)
+    if dest:
+        open("dest", "w").write(dest)
+
+    run_bash("link_file src dest </dev/null")
+    assert open("dest").read() == expected
