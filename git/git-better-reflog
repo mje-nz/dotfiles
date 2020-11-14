@@ -48,7 +48,7 @@ get_name() {
 	# Optimisation: fill cache if empty
 	if [[ ${#rev_names} -eq 0 ]]; then
 		git for-each-ref --format='%(objectname) %(refname:short)' |
-		while read commit name; do
+		while read -r commit name; do
 		    rev_names[$commit]=$name
 		done
 	fi
@@ -124,7 +124,7 @@ fi
 
 if [[ -t 1 ]]; then
 	# Basically the git pager
-	main "$1" | "$(git var GIT_PAGER)"
+	main "$1" | eval "$(git var GIT_PAGER)"
 else
 	set -x
 	main "$1"

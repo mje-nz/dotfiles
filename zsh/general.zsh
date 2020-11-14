@@ -1,9 +1,9 @@
 # General zsh settings
 
 # History
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTFILE=~/.zsh_history
+export HISTSIZE=10000
+export SAVEHIST=10000
 setopt HIST_IGNORE_SPACE
 
 # Autoload some built-in functions
@@ -68,7 +68,8 @@ FZF_FD_OPTS="--color=always --follow --hidden --exclude .git"
 export FZF_DEFAULT_COMMAND="fd --type file $FZF_FD_OPTS"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
-# Basically ctrl+T but including folders
+# Basically ctrl+T but including folders (expands when defined)
+# shellcheck disable=SC2139
 alias f="fd $FZF_FD_OPTS | fzf $FZF_PREVIEW_OPTS --preview 'bat $FZF_BAT_OPTS {} 2>/dev/null'"
 
 

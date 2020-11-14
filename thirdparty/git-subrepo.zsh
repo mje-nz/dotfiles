@@ -5,4 +5,5 @@
 export GIT_SUBREPO_ROOT=$DOTFILES/thirdparty/git-subrepo
 export PATH=$GIT_SUBREPO_ROOT/lib:$PATH
 export MANPATH=$GIT_SUBREPO_ROOT/man:$MANPATH
+#shellcheck disable=SC2206
 fpath=($GIT_SUBREPO_ROOT/share/zsh-completion $fpath)
