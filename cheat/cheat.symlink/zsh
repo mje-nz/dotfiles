@@ -1,0 +1,27 @@
+## History expansion
+# To insert arguments from the previous command anywhere in a command:
+!*    # all the arguments
+!^    # the first argument
+!$    # the last argument
+# Press tab or enter to expand.  See also `cheat readline`.
+
+# The full syntax for history expansion is:
+#   ![event designator][word designator][modifiers]
+# Event designators let you refer to a history item other than the previous
+# command, e.g.:
+!-n   # the current command minus n
+!str  # the most recent command starting with str
+# Word designators indicate which part of the command to include.  A ":" is
+# required after the event designator unless the word designator begins with
+# one of "^$*-%". Word designators include:
+0     # the first input word (the command)
+n     # the nth argument
+^     # the first argument (same as 1)
+$     # the last argument
+x-y   # a range of words; x defaults to 0
+*     # all the arguments, or a null value if there are none
+x*    # abbreviates ‘x-$’
+x-    # like ‘x*’ but omitting word $.
+# Modifiers do things like turn filenames in to absolute paths, convert an
+# argument to lowercase, perform substituts etc, but you'll probably never
+# use them.
