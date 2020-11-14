@@ -47,7 +47,7 @@ cheatpaths:
   # Once downloaded, ensure that 'path' below points to the location at which
   # you downloaded the community cheatsheets.
   - name: community
-    path: ~/.config/cheat/cheatsheets/community
+    path: ~/.dotfiles/cheat/community-cheatsheets
     tags: [ community ]
     readonly: true
 
