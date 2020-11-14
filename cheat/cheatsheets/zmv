@@ -150,4 +150,3 @@ zmv -W '*.txt' '*.txt'
 # Rename pic1.jpg, pic2.jpg, .. to pic0001.jpg, pic0002.jpg, ..
   $ zmv 'pic(*).jpg' 'pic${(l:4::0:)1}.jpg'
   $ zmv '(**/)pic(*).jpg' '$1/pic${(l:4::0:)2}.jpg' # recursively
-

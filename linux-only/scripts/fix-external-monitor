@@ -16,5 +16,3 @@ case "$1" in
 	echo "Usage: $0 {1080-above|1200-above}"
 	exit 1
 esac
-
-

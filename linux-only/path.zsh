@@ -4,4 +4,3 @@
 
 # shellcheck disable=SC2206
 path=($DOTFILES/linux-only/scripts $path)
-

@@ -5,7 +5,7 @@ index e9e29b6..d3641f2 100644
 @@ -77,8 +77,6 @@ int main(void) {
              continue;
          }
- 
+
 -        if (input.code == KEY_ESC)
 -            input.code = KEY_CAPSLOCK;
          write_event(&input);

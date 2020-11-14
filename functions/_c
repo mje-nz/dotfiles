@@ -4,14 +4,13 @@
 _c() {
 	local -a special_subdirs
 	special_subdirs=(Personal Thirdparty Uni PhD ROS)
-	
+
 	#TODO Why does the for loop also show other top-level folders?
 	#_files -W $PROJECTS -/ -F special_subdirs
-	
+
 	for special_subdir in $special_subdirs; do
 		_files -W $PROJECTS -/ -g "$special_subdir/*"
 	done
 }
 
 _c "$@"
-

@@ -21,4 +21,3 @@ main() {
 	"$SCRIPTS_DIR/update_plugin.sh" --shell-echo "$*" # has correct exit code
 }
 main "$*"
-

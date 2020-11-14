@@ -91,4 +91,3 @@ if yesno "Install Homebrew and tools?"; then
 	info "Installing exa, fzf, tmux, and git-filter-repo..."
 	brew install exa fzf tmux git-filter-repo
 fi
-

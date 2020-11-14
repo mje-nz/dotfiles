@@ -1,2 +1,2 @@
 :set autosourcereload
-:highlight SelectedLineNr ctermbg=Green	
+:highlight SelectedLineNr ctermbg=Green
