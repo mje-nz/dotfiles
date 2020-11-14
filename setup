@@ -15,9 +15,6 @@ source "$DOTFILES/setup_common.sh"
 install_dotfiles () {
   info "Installing dotfiles"
 
-  # shellcheck disable=SC2034
-  local overwrite_all=false backup_all=false skip_all=false
-
   for src in $(find_in_topics -name "*.symlink"); do
     dst="$HOME/.$(basename "${src%.*}")"
     link_file "$src" "$dst"
