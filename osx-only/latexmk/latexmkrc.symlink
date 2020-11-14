@@ -2,7 +2,7 @@
 #(shebang is for syntax highlighting)
 
 # Set PDF previewer to Skim.app
-$pdf_previewer = "open -a /Applications/Skim.app"; 
+$pdf_previewer = "open -a /Applications/Skim.app";
 $pdf_update_method = 4;
 $pdf_update_command = "~/.dotfiles/osx-only/latexmk/skim-reload %S";
 
