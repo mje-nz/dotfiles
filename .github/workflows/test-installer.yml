@@ -1,0 +1,16 @@
+name: Test installer
+on: [push]
+jobs:
+  install:
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-20.04, macos-10.15, macos-11.0]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install
+      run: |
+        ./setup
+    - name: Run zsh for the first time
+      run: |
+        zsh -i -c :
