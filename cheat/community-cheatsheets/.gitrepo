@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/cheat/cheatsheets.git
+	branch = master
+	commit = 00a6bc9be5c6073b8ef8409e71970fa6d65bbbef
+	parent = 4e05703d1a08f67ec3da482da844905cb5e3cf4a
+	method = merge
+	cmdver = 0.4.1
