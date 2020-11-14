@@ -1,0 +1,25 @@
+name: Run shellcheck
+on: [push]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Install pre-commit
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install pre-commit
+    - name: Install shellcheck
+      run: |
+        # System shellcheck is outdated
+        scversion="stable"
+        wget -qO- "https://github.com/koalaman/shellcheck/releases/download/${scversion?}/shellcheck-${scversion?}.linux.x86_64.tar.xz" | tar -xJv
+        sudo cp "shellcheck-${scversion}/shellcheck" /usr/bin/
+        shellcheck --version
+    - name: Run pre-commit
+      run: |
+        pre-commit run -a
