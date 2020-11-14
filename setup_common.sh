@@ -67,7 +67,7 @@ link_file () {
   if [ -f "$dst" ] || [ -d "$dst" ] || [ -L "$dst" ]; then
     # Dest exists
 
-    if [ "$overwrite_all" == false ] && [ "$backup_all" == false ] && [ "$skip_all" == false ]; then
+    if [ -z "$overwrite_all" ] && [ -z "$backup_all" ] && [ -z "$skip_all" ]; then
       # No default behaviour
 
       if [ "$(readlink "$dst")" == "$src" ]; then
