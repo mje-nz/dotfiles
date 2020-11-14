@@ -9,8 +9,10 @@ jobs:
       uses: actions/setup-python@v1
       with:
         version: 3.7
-    - name: Install and run pytest
+    - name: Install pytest
       run: |
         python -m pip install --upgrade pip
         pip install pexpect pytest
+    - name: Run tests
+      run: |
         pytest
