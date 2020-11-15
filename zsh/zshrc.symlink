@@ -26,6 +26,8 @@ fpath=($DOTFILES/functions $fpath)
 # shellcheck disable=SC2086
 autoload -U $DOTFILES/functions/*(:t)
 
+autoload -Uz compinit
+
 # Source all the zsh files in the topic directories for the current OS
 for file in $(find_in_topics -name "*.zsh"); do
   source "$file"
