@@ -6,3 +6,8 @@
         email = AUTHOREMAIL
 [credential]
         helper = GIT_CREDENTIAL_HELPER
+
+# This is in here so that it can be stubbed out in CI
+[url "ssh://git@github.com/"]
+    # Replace HTTPS GitHub URLs with the SSH equivalent
+    insteadOf = https://github.com/

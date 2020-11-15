@@ -8,6 +8,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
+    - name: Stub out gitconfig.local to prevent rewriting git URLS with SSH
+      run: |
+        touch $HOME/.gitconfig.local
     - name: Install
       run: |
         ./setup

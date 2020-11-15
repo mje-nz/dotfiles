@@ -129,10 +129,6 @@
     # Sort tags in order of version where possible (e.g., 1.1, 1.2, ..., 1.9, 1.10).
     sort = version:refname
 
-[url "ssh://git@github.com/"]
-    # Replace HTTPS GitHub URLs with the SSH equivalent
-    insteadOf = https://github.com/
-
 [versionsort]
     # Sort tags with these suffixes first, in this order
     suffix = -pre
