@@ -19,7 +19,7 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 	osascript -e 'tell application "System Preferences" to quit'
 
 	# Ask for the administrator password upfront
-	sudo -v
+	sudo -n true
 
 	# Keep-alive: update existing sudo time stamp until the current process has finished
 	while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
@@ -262,7 +262,7 @@ fi
 
 if yesno "Install Homebrew and tools?"; then
 	# Ask for the administrator password upfront
-	sudo -v
+	sudo -n true
 
 	# Keep-alive: update existing sudo time stamp until the current process has finished
 	# Probably doesn't matter if we have two of these
