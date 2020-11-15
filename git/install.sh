@@ -8,7 +8,7 @@ set -e
 source "$DOTFILES/setup_common.sh"
 
 
-if ! [ -f git/gitconfig.local.symlink ]; then
+if ! [ -f "$HOME/.gitconfig.local.symlink" ]; then
 	echo "Setting up gitconfig"
 
 	# See https://help.github.com/articles/caching-your-github-password-in-git/
