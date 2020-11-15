@@ -3,10 +3,18 @@
 # Common setup for bash and zsh
 
 # Refer to dotfiles path as $DOTFILES
-export DOTFILES=$HOME/.dotfiles
+if [ -n "$ZSH_VERSION" ]; then
+    # https://stackoverflow.com/a/28336473
+    # https://unix.stackexchange.com/a/115431
+    local this_file_path="$(realpath ${(%):-%x})"
+    export DOTFILES="${this_file_path:A:h}"
+elif [ -n "$BASH_VERSION" ]; then
+    # https://stackoverflow.com/a/9107028
+    export DOTFILES="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+fi
 
 # Repeat dotfiles path in this alias so alias-tips catches it
-alias c.="cd ~/.dotfiles"
+alias c.="cd $DOTFILES"
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
