@@ -40,7 +40,8 @@ prompt () {
 # https://stackoverflow.com/a/1885534
 yesno() {
   local message=$1 result=
-  read -p "$prompt_prefix $1 [Y/n]: " -n 1 -r action || true
+  echo -n "$prompt_prefix $1 [Y/n]: "
+  read -n 1 -r action || true
   echo
   [[ ! $action || $action =~ ^[Yy]$ ]]
   return $?
@@ -49,7 +50,8 @@ yesno() {
 # Prompt user for yes/no (default no)
 noyes() {
   local message=$1 result=
-  read -p "$prompt_prefix $1 [y/N]: " -n 1 -r action || true
+  echo -n "$prompt_prefix $1 [y/N]: "
+  read -n 1 -r action || true
   echo
   [[ $action =~ ^[Yy]$ ]]
   return $?
