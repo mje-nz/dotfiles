@@ -15,7 +15,8 @@ if yesno "Install zsh, git, ipython, tree, ag and cheat (will use sudo)?"; then
 	echo "Installing packages"
 
 	# Install my usual packages
-	sudo apt-get install -y zsh zsh-common git ipython ipython3 tree silversearcher-ag python-pip
+	sudo apt-get install -y zsh zsh-common git ipython3 tree silversearcher-ag python3-pip
+	sudo apt-get install -y ipython python-pip || true
 	sudo pip install cheat
 
 	success "Installed packages"
