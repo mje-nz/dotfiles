@@ -297,8 +297,15 @@ if yesno "Install Homebrew and tools?"; then
 	  echo "${BREW_PREFIX}/bin/zsh" | sudo tee -a /etc/shells
 	fi
 
-	if yesno "Change shell to zsh?"; then
-		chsh -s "$(command -v zsh)"
+	# TODO: factor out
+	if [ "$SHELL" != "$(command -v zsh)" ]; then
+		if yesno "Change shell to zsh (will prompt for password)?"; then
+			if chsh -s "$(command -v zsh)"; then
+				success "You will need to log out and in again"
+			else
+				echo "Failed to change shell, continuing"
+			fi
+		fi
 	fi
 
 	if noyes "Install GUI apps with Homebrew Cask?"; then
