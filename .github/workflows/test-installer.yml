@@ -17,4 +17,4 @@ jobs:
         ./setup
     - name: Run zsh for the first time
       run: |
-        zsh -i -c :
+        zsh -c "source $HOME/.zshrc"
