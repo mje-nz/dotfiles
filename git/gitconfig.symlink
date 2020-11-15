@@ -1,8 +1,3 @@
-# Local/private config and platform-specific configs go in separate files
-[include]
-    path = ~/.gitconfig.local
-    path = ~/.gitconfig.platform
-
 [alias]
     better-reflog = !$DOTFILES/git/git-better-reflog
     dsf = !$DOTFILES/git/git-dsf
@@ -152,3 +147,8 @@
     suffix = -rc
     suffix = .rc
     suffix = rc
+
+# Local/private config and platform-specific configs go in separate files
+[include]
+    path = ~/.gitconfig.local
+    path = ~/.gitconfig.platform
