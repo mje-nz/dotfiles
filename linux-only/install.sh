@@ -24,8 +24,11 @@ fi
 
 if [ "$SHELL" != "$(command -v zsh)" ]; then
 	if yesno "Change shell to zsh (will prompt for password)?"; then
-		chsh -s "$(command -v zsh)"
-		success "You will need to log out and in again"
+		if chsh -s "$(command -v zsh)"; then
+			success "You will need to log out and in again"
+		else
+			echo "Failed to change shell, continuing"
+		fi
 	fi
 fi
 
