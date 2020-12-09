@@ -1,19 +1,23 @@
 #!/bin/sh
 # (shebang is only for shellcheck)
 # Common setup for bash and zsh
+# shellcheck disable=SC2039
 
 # Refer to dotfiles path as $DOTFILES
 if [ -n "$ZSH_VERSION" ]; then
     # https://stackoverflow.com/a/28336473
     # https://unix.stackexchange.com/a/115431
-    local this_file_path="$(realpath ${(%):-%x})"
+    local this_file_path
+    this_file_path="$(realpath "${(%):-%x}")"
     export DOTFILES="${this_file_path:A:h}"
 elif [ -n "$BASH_VERSION" ]; then
     # https://stackoverflow.com/a/9107028
-    export DOTFILES="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+    export DOTFILES
+    DOTFILES="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 fi
 
 # Repeat dotfiles path in this alias so alias-tips catches it
+# shellcheck disable=SC2139
 alias c.="cd $DOTFILES"
 
 # your project folder that we can `c [tab]` to
@@ -50,7 +54,7 @@ export PATH="$GOPATH/bin:$PATH"
 # Add bin folders to path
 export PATH="$HOME/.local/bin:$DOTFILES/bin:$HOME/Library/texmf/bin:$PATH"
 
-if [ "$(less --version | egrep "less [[:digit:]]+ " | awk '{print $2}')" -ge 530 ]; then
+if [ "$(less --version | grep -E "less [[:digit:]]+ " | awk '{print $2}')" -ge 530 ]; then
     # Default less options
     # -R passes through ANSI colour codes (default)
     # -F makes less quit if the output is less than a page
@@ -73,3 +77,11 @@ export BAT_PAGER="less -$LESS"
 
 # Refuse to overwrite files using > output redirection, use >| if you mean it
 set -o noclobber
+
+# Colour temp files grey in ls
+TMP_FILETYPES="tmp log out aux bbl blg fdb_latexmk fls glg-abr glo-abr gls-abr ist slg slo sls pytxcode tdo toc"
+export LS_COLORS=
+# shellcheck disable=SC2116
+for t in $( echo "$TMP_FILETYPES" ); do
+    export LS_COLORS="$LS_COLORS:*.$t=00;90"
+done
