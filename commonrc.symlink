@@ -83,5 +83,5 @@ TMP_FILETYPES="tmp log out aux bbl blg fdb_latexmk fls glg-abr glo-abr gls-abr i
 export LS_COLORS=
 # shellcheck disable=SC2116
 for t in $( echo "$TMP_FILETYPES" ); do
-    export LS_COLORS="$LS_COLORS:*.$t=00;90"
+    export LS_COLORS="$LS_COLORS:*.$t=2"
 done
