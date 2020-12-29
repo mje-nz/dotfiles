@@ -13,3 +13,28 @@ function muteOnWake(eventType)
 end
 caffeinateWatcher = hs.caffeinate.watcher.new(muteOnWake)
 caffeinateWatcher:start()
+
+
+-- Unmute on play/pause
+
+tap = hs.eventtap.new({hs.eventtap.event.types.NSSystemDefined}, function(event)
+	-- print("event tap debug got event:")
+	-- print(hs.inspect.inspect(event:getRawEventData()))
+	-- print(hs.inspect.inspect(event:getFlags()))
+	-- print(hs.inspect.inspect(event:systemKey()))
+	if not event:systemKey() or event:systemKey().key ~= "PLAY" or event:systemKey().down then
+		return false
+	end
+	-- Play/pause key was just released
+	local output = hs.audiodevice.defaultOutputDevice()
+	if output:name() ~= "Built-in Output" or output:jackConnected() then
+		return false
+	end
+	-- Audio output device is built-in speakers
+	if output:outputMuted() then
+		print("Unmuting speakers on play/pause")
+		output:setMuted(false)
+	end
+	return false
+end)
+tap:start()
