@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
+# Tell Skim.app to reload a file
+# See https://sourceforge.net/p/skim-app/wiki/TeX_and_PDF_Synchronization/
 
 /usr/bin/osascript << EOF
   set theFile to POSIX file "$1" as alias
   tell application "Skim"
-  activate
+  # Uncomment to switch to the Skim window each time the file is reloaded
+  # activate
   set theDocs to get documents whose path is (get POSIX path of theFile)
   if (count of theDocs) > 0 then revert theDocs
   open theFile

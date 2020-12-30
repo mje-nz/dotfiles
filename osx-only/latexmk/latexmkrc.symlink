@@ -1,9 +1,16 @@
 #!/usr/bin/env perl
 #(shebang is for syntax highlighting)
 
+# Output PDF file, using $pdflatex
+$pdf_mode = 1;
+
+# By default, enable SyncTeX and quit on errors
+$pdflatex = 'pdflatex -synctex=1 -interaction=nonstopmode %O %S';
+
+# Files that are generated and used later, so might prompt a rebuild
+@generated_exts = (@generated_exts, 'synctex.gz');
+
 # Set PDF previewer to Skim.app
-$pdf_previewer = "open -a /Applications/Skim.app";
+$pdf_previewer = "open -a Skim";
 $pdf_update_method = 4;
 $pdf_update_command = "~/.dotfiles/osx-only/latexmk/skim-reload %S";
-
-$clean_ext = "paux lox pdfsync out cb cb2 bbl dvi";
