@@ -142,8 +142,10 @@ if noyes "Install macOS settings (will use sudo, and restart various application
 	# Set Dock position to left
 	defaults write com.apple.dock orientation -string left
 
-	# Automatically hide and show the Dock
+	# Automatically hide and show the Dock, quickly
 	defaults write com.apple.dock autohide -bool true
+	defaults write com.apple.Dock autohide-delay -float 0.05
+	defaults write com.apple.dock autohide-time-modifier -float 0.25
 
 	# Set the icon size of Dock items to 45 pixels
 	defaults write com.apple.dock tilesize -int 45
