@@ -25,6 +25,7 @@ HISTFILESIZE=
 shopt -s checkwinsize
 
 if command -v brew >/dev/null 2>&1; then
+    eval "$(brew shellenv)"
     if [ -f "$(brew --prefix)/share/bash-completion/bash_completion" ]; then
         source "$(brew --prefix)/share/bash-completion/bash_completion"
     fi
