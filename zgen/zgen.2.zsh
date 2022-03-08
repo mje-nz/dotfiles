@@ -32,6 +32,7 @@ load-plugin-list() {
   zgen oh-my-zsh plugins/macos
   zgen oh-my-zsh plugins/pip
   zgen oh-my-zsh plugins/python
+  zgen oh-my-zsh plugins/terraform
 
   # Load more completion files for zsh from the zsh-lovers github repo
   zgen load zsh-users/zsh-completions src
