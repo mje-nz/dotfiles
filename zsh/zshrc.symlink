@@ -35,3 +35,5 @@ source "$DOTFILES/aliases.sh"
 if [[ -a ~/.localrc ]]; then
   source_sh ~/.localrc
 fi
+
+compinit
