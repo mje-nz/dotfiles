@@ -12,6 +12,9 @@ set -g renumber-windows on
 ###     Theme      ###
 ######################
 
+# tmux-sensible seems to have broken this
+set -g default-terminal "tmux-256color"
+
 ## Panes
 set -g pane-border-style fg=colour238
 set -g pane-active-border-style fg=colour51
