@@ -23,6 +23,7 @@ load-plugin-list() {
   zgen load paulirish/git-open
 
   # Load some oh-my-zsh plugins
+  zgen oh-my-zsh plugins/aws
   zgen oh-my-zsh plugins/colored-man-pages
   zgen oh-my-zsh plugins/docker
   zgen oh-my-zsh plugins/fancy-ctrl-z
