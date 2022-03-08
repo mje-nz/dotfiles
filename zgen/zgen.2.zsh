@@ -29,7 +29,7 @@ load-plugin-list() {
   zgen oh-my-zsh plugins/fd
   zgen oh-my-zsh plugins/fzf
   zgen oh-my-zsh plugins/git
-  zgen oh-my-zsh plugins/osx
+  zgen oh-my-zsh plugins/macos
   zgen oh-my-zsh plugins/pip
   zgen oh-my-zsh plugins/python
 
