@@ -63,6 +63,7 @@
     autoCorrect = 1
 
 [init]
+    defaultBranch = master
     # Files and directories in the template directory whose name do not start with a
     # dot will be copied to the $GIT_DIR after it is created.  I'm using it install
     # pre-commit globally.
