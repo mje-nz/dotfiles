@@ -50,6 +50,10 @@ alias rcp='rsync -aHAXxv --numeric-ids --no-i-r --info=progress2 -e "ssh -T -c c
 # From oh-my-zsh/common-aliases
 alias dud="du -d 1 -h"
 
+# Terraform
+alias tfos='tf output'
+alias tfo='tfos -raw'
+
 # Other aliases
 alias ag='ag --pager="less"'
 alias bh='bat --line-range :10'
