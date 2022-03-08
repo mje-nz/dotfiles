@@ -42,3 +42,11 @@ fi
 # Silence errors so it doesn't complain in non-interact shells
 bind 'set bind-tty-special-chars off' 2>/dev/null
 bind '"\C-w":unix-filename-rubout' 2>/dev/null
+
+# Local customisations (runs last so it can override the rest).
+# Stash your environment variables here. This means they'll stay out of your
+# main dotfiles repository (which may be public, like this one), but you'll
+# have access to them in your scripts.
+if [[ -a ~/.localrc ]]; then
+  source ~/.localrc
+fi

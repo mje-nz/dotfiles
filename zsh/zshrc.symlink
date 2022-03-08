@@ -12,14 +12,6 @@ source_sh () {
 # Source common profile
 source_sh ~/.commonrc
 
-# Stash your environment variables in ~/.localrc. This means they'll stay out
-# of your main dotfiles repository (which may be public, like this one), but
-# you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
-fi
-
 # Add functions/ to fpath and autoload all files in it
 # shellcheck disable=SC2206
 fpath=($DOTFILES/functions $fpath)
@@ -35,3 +27,11 @@ done
 
 # Load aliases
 source "$DOTFILES/aliases.sh"
+
+# Local customisations (runs last so it can override the rest).
+# Stash your environment variables here. This means they'll stay out of your
+# main dotfiles repository (which may be public, like this one), but you'll
+# have access to them in your scripts.
+if [[ -a ~/.localrc ]]; then
+  source_sh ~/.localrc
+fi
