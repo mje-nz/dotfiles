@@ -1,0 +1,2 @@
+# Start a stopped EC2 instance in your default region
+aws ec2 start-instances --instance-ids <instance id>
