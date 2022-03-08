@@ -92,6 +92,6 @@ if yesno "Install Homebrew and tools?"; then
 		# Path setup is in linuxbrew.zsh (haven't bothered for bash)
 	fi
 
-	info "Installing exa, fzf, tmux, and git-filter-repo..."
-	brew install exa fzf tmux git-filter-repo
+	info "Installing exa, fzf, tmux, nano, and git-filter-repo..."
+	brew install exa fzf tmux nano git-filter-repo
 fi
