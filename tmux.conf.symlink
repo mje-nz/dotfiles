@@ -18,10 +18,14 @@ set -g default-terminal "tmux-256color"
 ## Panes
 set -g pane-border-style fg=colour238
 set -g pane-active-border-style fg=colour51
-setw -g window-active-style bg=colour233
-setw -g window-style bg=colour235
 set -g pane-border-status top
 set -g pane-border-format "#{pane_index} #{pane_current_command}"
+
+## Windows
+setw -g window-active-style bg=colour233
+setw -g window-style bg=colour235
+# This is the default window title plus the current working dir
+setw -g automatic-rename-format "#{?pane_in_mode,[tmux],#{pane_current_command}} #{s|$HOME|~|:pane_current_path}#{?pane_dead,[dead],}" 
 
 ## Statusbar
 set -g status-position bottom
