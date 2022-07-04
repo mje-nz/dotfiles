@@ -16,7 +16,7 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/jumanjihouse/pre-commit-hooks
-    rev: 2.1.4
+    rev: 2.1.6
     hooks:
       - id: shellcheck
         args: [-e, SC1091, --shell=bash]
