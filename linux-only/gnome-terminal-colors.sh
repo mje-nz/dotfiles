@@ -24,9 +24,10 @@ dlist_append() {
     local key="$1"; shift
     local val="$1"; shift
 
-    local entries="$(
+    local entries
+    entries="$(
         {
-            "$DCONF" read "$key" | tr -d '[]' | tr , "\n" | fgrep -v "$val"
+            "$DCONF" read "$key" | tr -d '[]' | tr , "\n" | grep -Fv "$val"
             echo "'$val'"
         } | head -c-1 | tr "\n" ,
     )"
@@ -38,15 +39,15 @@ dlist_append() {
 if which "$DCONF" > /dev/null 2>&1; then
     [[ -z "$BASE_KEY_NEW" ]] && BASE_KEY_NEW=/org/gnome/terminal/legacy/profiles:
 
-    if [[ -n "`$DCONF list $BASE_KEY_NEW/`" ]]; then
+    if [[ -n "$($DCONF list $BASE_KEY_NEW/)" ]]; then
         if which "$UUIDGEN" > /dev/null 2>&1; then
-            PROFILE_SLUG=`uuidgen`
+            PROFILE_SLUG="$(uuidgen)"
         fi
 
-        if [[ -n "`$DCONF read $BASE_KEY_NEW/default`" ]]; then
-            DEFAULT_SLUG=`$DCONF read $BASE_KEY_NEW/default | tr -d \'`
+        if [[ -n "$($DCONF read $BASE_KEY_NEW/default)" ]]; then
+            DEFAULT_SLUG="$($DCONF read $BASE_KEY_NEW/default | tr -d \')"
         else
-            DEFAULT_SLUG=`$DCONF list $BASE_KEY_NEW/ | grep '^:' | head -n1 | tr -d :/`
+            DEFAULT_SLUG="$($DCONF list $BASE_KEY_NEW/ | grep '^:' | head -n1 | tr -d :/)"
         fi
 
         DEFAULT_KEY="$BASE_KEY_NEW/:$DEFAULT_SLUG"
@@ -96,14 +97,15 @@ glist_append() {
     local key="$1"; shift
     local val="$1"; shift
 
-    local entries="$(
+    local entries
+    entries="$(
         {
-            "$GCONFTOOL" --get "$key" | tr -d '[]' | tr , "\n" | fgrep -v "$val"
+            "$GCONFTOOL" --get "$key" | tr -d '[]' | tr , "\n" | grep -Fv "$val"
             echo "$val"
         } | head -c-1 | tr "\n" ,
     )"
 
-    "$GCONFTOOL" --set --type list --list-type $type "$key" "[$entries]"
+    "$GCONFTOOL" --set --type list --list-type "$type" "$key" "[$entries]"
 }
 
 # Append the Base16 profile to the profile list
@@ -122,4 +124,3 @@ unset PROFILE_NAME
 unset PROFILE_SLUG
 unset DCONF
 unset UUIDGEN
-
