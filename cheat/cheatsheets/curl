@@ -36,3 +36,6 @@ curl http://ifconfig.me/all/json
 
 # Limit the rate of a download
 curl --limit-rate 1000B -O http://path.to.the/file
+
+# Specify which IP to use for a name
+curl --resolve example.com:80:127.0.0.1 http://example.com/

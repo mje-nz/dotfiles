@@ -1,0 +1,5 @@
+# Preserve user environment when running command
+sudo -E <cmd>
+
+# Start a session as another user (requires less permission than su)
+sudo -u <user> -i

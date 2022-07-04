@@ -1,0 +1,2 @@
+# List tags, including messages for annotated tags
+git tag -n
