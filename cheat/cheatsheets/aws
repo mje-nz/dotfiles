@@ -3,3 +3,6 @@ aws ec2 start-instances --instance-ids <instance id>
 
 # Copy files into an S3 bucket
 aws s3 cp Event20210913004857004.Avi s3://aws-trial-temp-sydney/
+
+# List non-zero EC2 quotas
+aws service-quotas list-service-quotas --region us-east-2 --service-code ec2 --query 'Quotas[? starts_with(QuotaName, `Running`) && Value > `0`].[QuotaName,Value]' --output table
