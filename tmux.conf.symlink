@@ -60,6 +60,16 @@ set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"  # Fix scrolling in `l
 
 set -g @plugin 'tmux-plugins/tmux-yank'
 
+
+######################
+###    Bindings    ###
+######################
+# Set new panes to open in current directory
+bind c new-window -c "#{pane_current_path}"
+bind '"' split-window -c "#{pane_current_path}"
+bind % split-window -h -c "#{pane_current_path}"
+
+
 ######################
 ###    Plugins     ###
 ######################
