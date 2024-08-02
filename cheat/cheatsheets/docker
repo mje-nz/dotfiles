@@ -42,3 +42,6 @@ docker rmi $(docker images --filter=reference="*:stuff_*" -q)
 
 # To remove all volumes not used by at least one container:
 docker volume prune
+
+# List container with custom format including ports
+docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a

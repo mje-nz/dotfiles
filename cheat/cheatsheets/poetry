@@ -1,0 +1,4 @@
+# If poetry misbehaves around python versions (https://github.com/python-poetry/poetry/issues/6938#issuecomment-1328346542):
+# First, remove old venv, then
+poetry env use 3.10
+poetry shell
