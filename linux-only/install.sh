@@ -12,7 +12,7 @@ if [ "$(whoami)" == "root" ]; then
 fi
 
 if yesno "Install zsh, git, ipython, tree, and ag (will use sudo)?"; then
-	echo "Installing packages"
+	info "Installing packages"
 
 	# Install my usual packages
 	sudo apt-get install -y zsh zsh-common git ipython3 tree silversearcher-ag python3-pip
@@ -32,50 +32,32 @@ if [ "$SHELL" != "$(command -v zsh)" ]; then
 fi
 
 if noyes "Install caps2esc (will use sudo)?"; then
-	echo "Installing dependencies"
-	sudo apt-get install -y build-essential cmake libevdev-dev libyaml-cpp-dev
-	echo "Building and installing interception tools"
+	info "Installing dependencies"
+	sudo apt-get install -y build-essential cmake libevdev-dev libudev-dev libyaml-cpp-dev libboost-dev
+	info "Building and installing interception tools"
 	pushd "$(mktemp -d)" > /dev/null
-	echo "(in temp directory $(pwd)"
+	info "(in temp directory $(pwd))"
 	git clone https://gitlab.com/interception/linux/tools.git
 	cd tools
-	mkdir build
-	cd build
-	cmake ..
-	make
-	sudo make install
+	cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+	cmake --build build
+	sudo cmake --build build --target install
 	popd > /dev/null
-	echo "Building and installing caps2esc"
+
+    info "Building and installing caps2esc"
 	pushd "$(mktemp -d)" > /dev/null
-	echo "(in temp directory $(pwd)"
+	info "(in temp directory $(pwd))"
 	git clone https://gitlab.com/interception/linux/plugins/caps2esc.git
 	cd caps2esc
-	git apply "$DOTFILES/linux-only/caps2esc.patch"
-	mkdir build
-	cd build
-	cmake ..
-	make
-	sudo make install
+	cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local
+	cmake --build build
+	sudo cmake --build build --target install
 	popd > /dev/null
-	echo "Creating and starting udevmon service"
-	sudo tee "/etc/udevmon.yaml" > /dev/null <<EOF
-- JOB: "intercept -g \$DEVNODE | caps2esc | uinput -d \$DEVNODE"
-  DEVICE:
-    EVENTS:
-      EV_KEY: [KEY_CAPSLOCK]
-EOF
-	sudo tee "/etc/systemd/system/udevmon.service" > /dev/null <<EOF
-[Unit]
-Description=udevmon
-After=systemd-user-sessions.service
-
-[Service]
-ExecStart=/usr/bin/nice -n -20 /usr/local/bin/udevmon -c /etc/udevmon.yaml
-
-[Install]
-WantedBy=multi-user.target
-EOF
+	info "Creating and starting udevmon service"
+	sudo cp "$HOME/.dotfiles/linux-only/udevmon.service" /etc/systemd/system/
+	sudo cp "$HOME/.dotfiles/linux-only/udevmon.yaml" /etc/
 	sudo systemctl enable udevmon
+	sudo systemctl start udevmon
 	success "Installed caps2esc"
 fi
 
