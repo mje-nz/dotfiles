@@ -91,12 +91,16 @@
     # Allow only fast-forward merges when pulling (never create a merge commit).
     # https://blog.sffc.xyz/post/185195398930/why-you-should-use-git-pull-ff-only-git-is-a
     ff = only
+
 [push]
     # Set to git 2.0 default to suppress warning message.
     default = simple
     # Verify that all submodule commits that changed in the revisions to be pushed
     # are available on at least one remote of the submodule.
     recurseSubmodules = check
+    # Assume --set-upstream on default push when no upstream tracking exists for
+    # the current branch.
+    autoSetupRemote = true
 
 [rerere]
     # Activate recording of resolved conflicts, so that identical conflict hunks
