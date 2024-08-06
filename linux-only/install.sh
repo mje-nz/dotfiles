@@ -11,12 +11,11 @@ if [ "$(whoami)" == "root" ]; then
 	function sudo() { "$@"; }
 fi
 
-if yesno "Install zsh, git, ipython, tree, and ag (will use sudo)?"; then
+if yesno "Install zsh, git, tree, and ag (will use sudo)?"; then
 	info "Installing packages"
 
 	# Install my usual packages
-	sudo apt-get install -y zsh zsh-common git ipython3 tree silversearcher-ag python3-pip
-	sudo apt-get install -y ipython python-pip || true
+	sudo apt-get install -y zsh zsh-common git tree silversearcher-ag
 
 	success "Installed packages"
 fi
