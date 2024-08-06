@@ -69,7 +69,7 @@ if yesno "Install Homebrew and tools?"; then
 	fi
 
 	info "Installing Homebrew packages..."
-	brew install bat cheat eza fzf git git-filter-repo nano tfenv tmux
+	brew install bat cheat eza fzf git git-filter-repo nano pkg-config tfenv tmux
 fi
 
 if  yesno "Install pyenv and Pythons (will use sudo)?"; then
