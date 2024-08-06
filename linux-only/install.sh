@@ -71,4 +71,18 @@ if yesno "Install Homebrew and tools?"; then
 	info "Installing Homebrew packages..."
 	brew install bat cheat eza fzf git git-filter-repo nano tfenv tmux
 fi
+
+if  yesno "Install pyenv and Pythons (will use sudo)?"; then
+	if ! command -v pyenv >/dev/null 2>&1; then
+		info "Installing pyenv..."
+		# Don't install with Homebrew, there's all sorts of weird bugs
+		curl https://pyenv.run | bash
+	fi
+
+	info "Installing Python build deps..."
+	sudo apt-get install libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev \
+		libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+	info "Installing Pythons..."
+	pyenv install 3.8 3.9 3.10 3.11 3.12
 fi
