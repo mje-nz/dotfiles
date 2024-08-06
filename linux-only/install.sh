@@ -11,7 +11,7 @@ if [ "$(whoami)" == "root" ]; then
 	function sudo() { "$@"; }
 fi
 
-if yesno "Install zsh, git, tree, and ag (will use sudo)?"; then
+if yesno "Install system packages (will use sudo)?"; then
 	info "Installing packages"
 
 	# Install my usual packages
@@ -62,16 +62,13 @@ fi
 
 if yesno "Install Homebrew and tools?"; then
 	if ! command -v brew >/dev/null 2>&1; then
-		# The install script doesn't work as root, so do a manual install
 		info "Installing Homebrew..."
-		sudo apt-get install build-essential curl file git
-		git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew
-		mkdir /home/linuxbrew/.linuxbrew/bin
-		ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 		eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 		# Path setup is in linuxbrew.zsh (haven't bothered for bash)
 	fi
 
-	info "Installing exa, fzf, tmux, nano, cheat, and git-filter-repo..."
-	brew install exa fzf tmux nano cheat git-filter-repo
+	info "Installing Homebrew packages..."
+	brew install bat cheat eza fzf git git-filter-repo nano tfenv tmux
+fi
 fi

@@ -3,6 +3,9 @@
 # This is a separate file so that under zsh it can be sourced after loading
 # oh-my-zsh to override omz aliases.
 
+if command -v eza >/dev/null; then
+    alias exa="eza"
+fi
 if command -v exa >/dev/null; then
     # Aliases for ls
     alias l="exa --classify"
