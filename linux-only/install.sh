@@ -15,7 +15,7 @@ if yesno "Install system packages (will use sudo)?"; then
 	info "Installing packages"
 
 	# Install my usual packages
-	sudo apt-get install -y zsh zsh-common git tree silversearcher-ag
+	sudo apt-get install -y zsh zsh-common git htop tree silversearcher-ag
 
 	success "Installed packages"
 fi
