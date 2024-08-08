@@ -14,5 +14,5 @@ alias drig='dri --gpus=all'
 # Both (mnemonic "docker run interactive seeo")
 alias dris='dri -v $(pwd):/working --gpus=all'
 
-Run a cuntainer with X forwarding enabled
+#Run a cuntainer with X forwarding enabled
 alias drx='dri --volume "/tmp/.X11-unix:/tmp/.X11-unix" --env DISPLAY=$DISPLAY'
