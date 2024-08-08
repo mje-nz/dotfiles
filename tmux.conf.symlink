@@ -63,7 +63,9 @@ set -g @scroll-speed-num-lines-per-scroll "1"
 set -g @emulate-scroll-for-no-mouse-alternate-buffer "on"  # Fix scrolling in `less` etc
 
 set -g @plugin 'tmux-plugins/tmux-yank'
-
+set -g @yank_selection 'clipboard'
+set -g @yank_selection_mouse 'clipboard'
+set -g @yank_action 'copy-pipe'
 
 ######################
 ###    Bindings    ###
