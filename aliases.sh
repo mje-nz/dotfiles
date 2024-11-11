@@ -57,6 +57,46 @@ alias dud="du -d 1 -h"
 alias tfos='tf output'
 alias tfo='tfos -raw'
 
+
+# ansible-vault
+# N.B. as long as completealiases is off, aliases complete how you'd expect but
+# functions get their own completions
+ave() {
+  if [[ $# -lt 2 ]]; then
+    echo "Error: Insufficient arguments. Usage: ave PROFILE COMMAND [ARGS...]" >&2
+    return 1
+  fi
+  aws-vault exec "$1" -- "${@:2}"
+}
+_ave() {
+  if (( CURRENT > 2 )); then
+    words=("${words[@]:2}")
+    let "CURRENT-=2"
+    _normal
+  else
+    # No completion for profile
+    return 0
+  fi
+}
+compdef _ave ave
+alias avnw="ave nonprod-webapp"
+alias avp="ave prod"
+
+avtf() {
+  if [[ $# -lt 2 ]]; then
+    echo "Error: Insufficient arguments. Usage: avtf PROFILE SUBCOMMAND [ARGS...]" >&2
+    return 1
+  fi
+  ave "$1" terraform "${@:2}"
+}
+_avtf() {
+  words=(terraform "${words[@]:2}")
+  let "CURRENT-=1"
+  _normal
+}
+compdef _avtf avtf
+
+
 # Other aliases
 alias ag='ag --pager="less"'
 alias bh='bat --line-range :10'
