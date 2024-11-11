@@ -2,6 +2,7 @@ set emptyline
 set guidestripe 80
 set linenumbers
 set tabsize 4
+set tabstospaces
 
 # set element fgcolor,bgcolor
 set titlecolor magenta
