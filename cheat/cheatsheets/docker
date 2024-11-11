@@ -45,3 +45,6 @@ docker volume prune
 
 # List container with custom format including ports
 docker container ls --format "table {{.ID}}\t{{.Names}}\t{{.Ports}}" -a
+
+# Remove container with name matching a pattern
+docker stop $(docker container ls -q --filter "name=seeo*")
